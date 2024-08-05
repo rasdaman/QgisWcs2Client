@@ -8,17 +8,17 @@
 # Mandatory items:
 
 [general]
-name = QgsWcsClient2
+name = QgisWcs2Client
 qgisMinimumVersion = 3.0
-description = A OGC WCS 2.0/EO-WCS Client; a tool to download (and subset in space and time) a time-series of raster data.
-version = version 0.3.2
+description = A OGC WCS 2.0 / EO-WCS Client to download spatio-temporal subsets from time-series datacubes.
+version = version 0.4
 
 category = Web
-author = Christian Schiller at EOX IT Services GmbH, Vienna, Austria
-email = christian.schiller@eox.at
+author = Christian Schiller at EOX IT Services GmbH, Vienna, Austria; Mikhail Rodionychev; Dimitar Misev
+email = misev@rasdaman.com
 
-about = The WCS 2.0/EO-WCS Client allows to specify an Area-Of-Interest and a Time-Of-Interest and then access/download the raster data (coverages) from OGC WCS-2.0 and WCS-2.0/EO-WCS compliant servers.
-   Unlike WMS, WCS enables the access to the original data (and not just to portrayals).
+about = The WCS 2.0/EO-WCS Client allows to specify an Area-Of-Interest and a Time-Of-Interest and then access / download the raster data (coverages) from OGC WCS 2.0 and WCS 2.0 / EO-WCS compliant servers.
+   Unlike WMS, WCS enables access to the original data (and not just to portrayals).
    The tool also handles the EO-WCS Application profile which allows to access/download a full time-series of coverages with just a few clicks.
    For multi-band EO-imagery the bands of interest can also be selected/sub-setted and their order in the output can be chosen.
    The downloaded coverages are directly loaded as layers into QGIS.
@@ -32,9 +32,9 @@ about = The WCS 2.0/EO-WCS Client allows to specify an Area-Of-Interest and a Ti
 # tags are comma separated with spaces allowed
 tags = raster, wcs, wcs 2.0/eo-wcs, webservice, ogc, download service, subsetting, AreaOfInterest, TimeOfInterest, online-access, time-series
 
-homepage=https://github.com/EOX-A/QgsWcsClient2
-tracker=https://github.com/EOX-A/QgsWcsClient2/issues
-repository=https://github.com/EOX-A/QgsWcsClient2
+homepage=https://github.com/rasdaman/QgisWcs2Client
+tracker=https://github.com/rasdaman/QgisWcs2Client/issues
+repository=https://github.com/rasdaman/QgisWcs2Client
 icon=icon.png
 # experimental flag
 experimental=False
@@ -50,5 +50,4 @@ changelog=
   0.3.1: fixed issue with Windows installation of 'config_srvlist.pkl' - due to differernt line endings in Linux/Windows
   0.3.2: fixed issue when modifying a Server-URL without changing Server-Name;
          fixed issue with DescribeEOCoverageSet requests when using sections parameter
-
-
+  0.4: updated with support for QGIS 3.x

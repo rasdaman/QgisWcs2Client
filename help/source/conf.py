@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'qgswcsclient2'
-copyright = u'2013, Christian Schiller / EOX IT Services GmbH, Vienna, Austria'
+copyright = u'2013, Christian Schiller / EOX IT Services GmbH, Vienna, Austria; 2024, Mikhail Rodyonichev; 2024, Dimitar Misev / rasdaman GmbH'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
