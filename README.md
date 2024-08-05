@@ -17,23 +17,20 @@ It would be more than welcome to receive accessible EO-WCS server-urls for addit
 
 
 Added Features & Fixed Bugs:
+
 2024-01-15
 - Update for QGIS 3.x
+
 2017-05-03 - verison 0.3:
 - added Button to import WCS-Urls already stored in native QGis settings
 - added Button to sort the Server_List
 - enabled resizing of QgsWcsClient2-Client Window
 - added "WGS84 UpperCorner & WGS84LowerCorner" (BoundingBox) fields to GetCapabilities and DescribeEOCoverageSet Results-View
-- added a uniq "Browser tag" to be submitted with the requests, to verify in the access log-files that the Qgis-plugin was used
-    (Identifies now with User-Agent => 'Python-urllib/2.7,QgsWcsClient-plugin')
+- added a uniq "Browser tag" to be submitted with the requests, to verify in the access log-files that the Qgis-plugin was used (Identifies now with User-Agent => 'Python-urllib/2.7,QgsWcsClient-plugin')
 - enabled support to access https:// sites
-- config_server.pkl file (containing the server entries) will not get overwritten during update/re-installatinon anymore
-    (a default one will only be installed if it is not available at plugin startup)
-- added possibility to view full GetCapabilities XML response-document (also made more clear to view DescribeEOCoverageSet XML)
-    (now all are accessible => GetCap, DescCov, DescEOCov:  just use copy/paste to save them)
-- better error checking e.g. for http errors -> warning messages (e.g. for redirects, automatic redirection is not supported to
-    minimize security issues)
-
+- config_server.pkl file (containing the server entries) will not get overwritten during update/re-installatinon anymore (a default one will only be installed if it is not available at plugin startup)
+- added possibility to view full GetCapabilities XML response-document (also made more clear to view DescribeEOCoverageSet XML) (now all are accessible => GetCap, DescCov, DescEOCov:  just use copy/paste to save them)
+- better error checking e.g. for http errors -> warning messages (e.g. for redirects, automatic redirection is not supported to minimize security issues)
 - fixed xml_parsing error
 - fixed issue with "offered CRS"
 - fixed issue "offered interpolation"
@@ -43,8 +40,7 @@ Added Features & Fixed Bugs:
 - fixed various the xml-namespace handling issues
 - fixed issue with the "clock" icon shown permanently
 - fixed Time selection (BeginTime/EndTime) for DescribeEOCoverageSet (2.5 D coverages i.e 2D plus Time), added plausability check
-- fixed issue with associateing the corresponding axisLabel / CRS etc. with each coverage (once DescribeCoverage is executed for a specific
-    Coverage)
+- fixed issue with associateing the corresponding axisLabel / CRS etc. with each coverage (once DescribeCoverage is executed for a specific Coverage)
 
 2017-09-22 - version 0.3.1:
 - fixed minor issue with Windows installation of 'config_srvlist.pkl' - due to differernt line endings in Linux/Windows
