@@ -33,7 +33,7 @@ TRANSLATIONS =
 
 PLUGINNAME = qgswcsclient2
 
-PY_FILES = qgswcsclient2.py qgswcsclient2dialog.py __init__.py
+PY_FILES = qgsnewhttpconnectionbasedialog.py display_txtdialog.py EOxWCSClient qgswcsclient2.py downloader.py qgswcsclient2dialog.py qgsnewhttpconnectionbase.py ui_qgswcsclient2.py display_txt.py config.py
 
 EXTRAS = icon.png metadata.txt
 
@@ -61,11 +61,11 @@ compile: $(UI_FILES) $(RESOURCE_FILES)
 # $HOME/$(QGISDIR)/python/plugins
 deploy: compile doc transcompile
 	mkdir -p $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
-	cp -vf $(PY_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
+	cp -rvf $(PY_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(UI_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(RESOURCE_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(EXTRAS) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
-	cp -vfr i18n $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
+	#cp -vfr i18n $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vfr $(HELP) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)/help
 
 # The dclean target removes compiled python files from plugin directory

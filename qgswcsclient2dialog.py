@@ -403,12 +403,12 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
 
         self.textBrowser_Serv.setText(msg)
 
-        if FGCa_sect is True:
-            self.checkBox_GCaDaSerSum.setChecked(True)
-            self.checkBox_GCaCovSum.setChecked(True)
-        else:
-            self.checkBox_GCaDaSerSum.setChecked(False)
-            self.checkBox_GCaCovSum.setChecked(False)
+        # if FGCa_sect is True:
+        #     self.checkBox_GCaDaSerSum.setChecked(True)
+        #     self.checkBox_GCaCovSum.setChecked(True)
+        # else:
+        self.checkBox_GCaDaSerSum.setChecked(False)
+        self.checkBox_GCaCovSum.setChecked(False)
 
 
 #---------------

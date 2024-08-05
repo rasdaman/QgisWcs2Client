@@ -8,7 +8,7 @@
 # Mandatory items:
 
 [general]
-name = QgisWcs2Client
+name = WCS 2
 qgisMinimumVersion = 3.0
 description = A OGC WCS 2.0 / EO-WCS Client to download spatio-temporal subsets from time-series datacubes.
 version = version 0.4

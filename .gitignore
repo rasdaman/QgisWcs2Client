@@ -58,3 +58,5 @@ docs/_build/
 *.orig
 *.pkl
 
+zip_build
+resources.py

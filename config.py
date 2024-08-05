@@ -87,31 +87,16 @@ def chk_srvlist(insrvlst):
     print("(lp3", file=f)
     # fix_print_with_import
     # fix_print_with_import
-    print("VOGC: WCS 2.0/EO-WCS 1.0 - Reference Implemetation (EOxServer)", file=f)
+    print("VOGC WCS 2.x - Reference Implemetation (rasdaman)", file=f)
     # fix_print_with_import
     # fix_print_with_import
     print("p4", file=f)
     # fix_print_with_import
     # fix_print_with_import
-    print("aVhttp://ows.eox.at/cite/eoxserver/ows?", file=f)
+    print("aVhttps://ows.rasdaman.org/rasdaman/ows?", file=f)
     # fix_print_with_import
     # fix_print_with_import
     print("p5", file=f)
-    # fix_print_with_import
-    # fix_print_with_import
-    print("aa(lp6", file=f)
-    # fix_print_with_import
-    # fix_print_with_import
-    print("VOGC: WCS 2.0 - Reference Implementation (MapServer)", file=f)
-    # fix_print_with_import
-    # fix_print_with_import
-    print("p7", file=f)
-    # fix_print_with_import
-    # fix_print_with_import
-    print("aVhttp://ows.eox.at/cite/mapserver/ows?", file=f)
-    # fix_print_with_import
-    # fix_print_with_import
-    print("p8", file=f)
     # fix_print_with_import
     # fix_print_with_import
     print("aas.", end=' ', file=f)
