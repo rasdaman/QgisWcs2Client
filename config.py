@@ -36,8 +36,6 @@
  *********************************************************************************/
 configuration for the QgsWcsClient2 plugin
 """
-from __future__ import print_function
-
 # some global setttings
 settings = {}
 

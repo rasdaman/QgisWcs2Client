@@ -60,3 +60,5 @@ docs/_build/
 
 zip_build
 resources.py
+.idea
+.venv

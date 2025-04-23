@@ -37,7 +37,6 @@
  a popoup window to display the full-version of XML-Response messages and Error
  as well as Error or other messages
 """
-from __future__ import absolute_import
 
 import os, pickle
 #from PyQt5 import QtCore, QtGui

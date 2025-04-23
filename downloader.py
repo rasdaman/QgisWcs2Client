@@ -36,7 +36,6 @@
  *********************************************************************************/
  A donwload tool utilizing the QNetworkAccessManager instance
 """
-from __future__ import print_function
 
 from builtins import str
 from qgis.PyQt.QtCore import QCoreApplication, QFile, QUrl

@@ -36,9 +36,7 @@
  *********************************************************************************/
  initialisation, etc.  of the QgsWcsClient2 plugin
 """
-from __future__ import absolute_import
     # Import the PyQt and QGIS libraries
-from builtins import object
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *

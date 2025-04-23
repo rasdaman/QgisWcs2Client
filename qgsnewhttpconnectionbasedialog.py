@@ -36,10 +36,7 @@
  *********************************************************************************/
  Function for the Server / Url  setup dialog
 """
-from __future__ import absolute_import
 
-from builtins import str
-from builtins import zip
 import os, pickle
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
