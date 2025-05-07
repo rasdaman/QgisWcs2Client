@@ -62,3 +62,5 @@ zip_build
 resources.py
 .idea
 .venv
+
+*.patch
