@@ -103,8 +103,8 @@ def mouse_busy(function):
             #function(self)
             return function(*args, **kwargs)
         except Exception as e:
-            raise e
             print("Error {}".format(e.args[0]))
+            raise e
         finally:
             QApplication.restoreOverrideCursor()
 
@@ -563,8 +563,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
         tree1 = etree.XML(join_xml)
 
         offered_version = tree1.attrib['version']
-        # fix_print_with_import
-        # fix_print_with_import
         print('WCS-Version: ', offered_version)
 
             # since this is for plugin WCS >2.0 and EO-WCS, we skip the WCS 1.x and issue an error
@@ -588,7 +586,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
             use_wcs_GCo_call = 1
 
         my_nsp = self.get_namespace(tree1.getroottree())
-        #print 'MY_NSP: ',my_nsp
 
         interpol = self.getlist_interpol(tree1, my_nsp)
         outcrs = self.getlist_crs(tree1, my_nsp)
@@ -599,8 +596,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
         interpol_num = len(interpol)
         support_outcrs = []
         support_interpol = []
-        #print 'INT-1: ', interpol
-        #print 'INT-1a: ', outcrs
 
             # set the output-crs, output-format, and interpolation possibilities
             # in the corresponding combo-boxes
@@ -609,10 +604,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
 
         for elem in interpol:
             support_interpol.append(os.path.basename(elem))
-
-        #print 'supported_format: ',oformat_num, type(outformat), outformat
-        #print 'supported_outcrs: ',ocrs_num, type(outcrs), outcrs
-        #print 'supported_interpol: ', interpol_num, type(interpol), interpol
 
         for elem in range(0, oformat_num):
             self.comboBox_GCOvOutFormat.addItem(_fromUtf8(""))
@@ -687,18 +678,15 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
             'sections' : req_sections}
 
         req_params = self.clear_req_params(req_params)
-        #print 'GCa: ',req_params
 
             # issue the WCS request
         GCa_result = self.myWCS.GetCapabilities(req_params)
-        #print "GCa_result: ", type(GCa_result), GCa_result[0], GCa_result[1], GCa_result
         if  type(GCa_result) is list and GCa_result[0] == 'ERROR':
             self.textBrowser_Serv.setText(GCa_result[0]+'\n'+GCa_result[1].decode()+'\n    HINT:  Select only the "All" setting or select none')
             warning_msg(GCa_result[0]+'\n'+GCa_result[1].decode()+'\n    HINT:  Select only the All setting or select none')
             return
 
 
-        #print 'RESULT: ',GCa_result
         if req_full_GCa is False:
                 # parse the results and place them in the crespective widgets
             # try:
@@ -743,9 +731,8 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
 
             #  place selected items also in the DescribeCoverage, DescribeEOCoverageSet, GetCoverage Tab widgets
         for elem in sel_GCa_items:
-          #                           covID          BeginTime       EndTime            UpperCorner      LowerCorner      [C]/[S]
-            # fix_print_with_import
-            print('Selected Item: ', elem.data(0, 0), elem.data(1, 0), elem.data(2, 0), elem.data(3, 0), elem.data(4, 0), elem.data(5, 0))
+            #                           covID          BeginTime       EndTime            UpperCorner      LowerCorner      [C]/[S]
+            #   print('Selected Item: ', elem.data(0, 0), elem.data(1, 0), elem.data(2, 0), elem.data(3, 0), elem.data(4, 0), elem.data(5, 0))
             if elem.data(0, 0) in cov_ids:
                 item = QtWidgets.QTreeWidgetItem(self.treeWidget_DC, (elem.data(0, 0), ))
                 item2 = QtWidgets.QTreeWidgetItem(self.treeWidget_GCov, (elem.data(0, 0), ))
@@ -1093,9 +1080,7 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
         sel_DCS_items = self.treeWidget_DCS.selectedItems()
         for elem in sel_DCS_items:
             selected_eoid.append(elem.data(0, 0).encode())
-            # fix_print_with_import
-            # fix_print_with_import
-            print("Selected EO-Series: ", selected_eoid)  #, type(selected_eoid)   #, sel_DC_items[0].data(0,0)
+            # print("Selected EO-Series: ", selected_eoid)  #, type(selected_eoid)   #, sel_DC_items[0].data(0,0)
             item2 = QtWidgets.QTreeWidgetItem(self.treeWidget_GCov, elem)
 
 
@@ -1255,7 +1240,7 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
         except NameError as EEE:
             # fix_print_with_import
             print('NameError: ', EEE)
-            msg = "Error:    You need to select one or more CoverageIDs first!\n "
+            msg = "Error:    You need to select one or more CoverageIDs first.\n "
             warning_msg(msg)
             return
 
@@ -1269,8 +1254,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
         sel_GCov_items = self.treeWidget_GCov.selectedItems()
         for elem in sel_GCov_items:
             selected_gcovid.append(elem.data(0, 0))
-            # fix_print_with_import
-            # fix_print_with_import
             print("Selected CoverageID: ", selected_gcovid)
                 # to allow a DescribeCoverage request for a Coverage comeing from a DescribeEOCoverageSet request
                 # we add the selected Coverage to the DescribeCoverage window

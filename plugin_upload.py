@@ -3,7 +3,7 @@
 #
 # Author: A. Pasotti, V. Picavet
 
-import xmlrpc.client, sys, os
+import xmlrpc.client, sys
 import getpass
 from optparse import OptionParser
 
@@ -15,52 +15,32 @@ ENDPOINT = '/plugins/RPC2/'
 VERBOSE = False
 
 def main(options, args):
-    address = "%s://%s:%s@%s:%s%s" % (PROTOCOL, options.username, options.password,
-            options.server, options.port, ENDPOINT)
-    # fix_print_with_import
-    # fix_print_with_import
-    print("Connecting to: %s" % hidepassword(address))
+    address = f"{PROTOCOL}://{options.username}:{options.password}@{options.server}:{options.port}{ENDPOINT}"
+    print("Connecting to:", hidepassword(address))
 
     server = xmlrpc.client.ServerProxy(address, verbose=VERBOSE)
 
     try:
-        plugin_id, version_id = server.plugin.upload(xmlrpc.client.Binary(open(args[0]).read()))
-        # fix_print_with_import
-        # fix_print_with_import
-        print("Plugin ID: %s" % plugin_id)
-        # fix_print_with_import
-        # fix_print_with_import
-        print("Version ID: %s" % version_id)
+        with open(args[0], 'rb') as plugin_file:
+            plugin_id, version_id = server.plugin.upload(xmlrpc.client.Binary(plugin_file.read()))
+        print("Plugin ID:", plugin_id)
+        print("Version ID:", version_id)
     except xmlrpc.client.ProtocolError as err:
-        # fix_print_with_import
         print("A protocol error occurred")
-        # fix_print_with_import
-        # fix_print_with_import
-        print("URL: %s" % hidepassword(err.url, 0))
-        # fix_print_with_import
-        # fix_print_with_import
-        print("HTTP/HTTPS headers: %s" % err.headers)
-        # fix_print_with_import
-        # fix_print_with_import
-        print("Error code: %d" % err.errcode)
-        # fix_print_with_import
-        # fix_print_with_import
-        print("Error message: %s" % err.errmsg)
+        print("URL:", hidepassword(err.url, 0))
+        print("HTTP/HTTPS headers:", err.headers)
+        print("Error code:", err.errcode)
+        print("Error message:", err.errmsg)
     except xmlrpc.client.Fault as err:
-        # fix_print_with_import
         print("A fault occurred")
-        # fix_print_with_import
-        # fix_print_with_import
-        print("Fault code: %d" % err.faultCode)
-        # fix_print_with_import
-        # fix_print_with_import
-        print("Fault string: %s" % err.faultString)
+        print("Fault code:", err.faultCode)
+        print("Fault string:", err.faultString)
 
 def hidepassword(url, start=6):
     """Returns the http url with password part replaced with '*'."""
     passdeb = url.find(':', start) + 1
     passend = url.find('@')
-    return "%s%s%s" % (url[:passdeb], '*' * (passend - passdeb), url[passend:])
+    return f"{url[:passdeb]}{'*' * (passend - passdeb)}{url[passend:]}"
 
 
 if __name__ == "__main__":
@@ -88,7 +68,7 @@ if __name__ == "__main__":
         username = getpass.getuser()
         # fix_print_with_import
         # fix_print_with_import
-        print("Please enter user name [%s] :"%username, end=' ')
+        print(f"Please enter user name [{username}] : ", end=' ')
         res = input()
         if res != "":
             options.username = res
@@ -98,4 +78,3 @@ if __name__ == "__main__":
         # interactive mode
         options.password = getpass.getpass()
     main(options, args)
-

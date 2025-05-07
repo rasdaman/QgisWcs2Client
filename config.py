@@ -56,9 +56,8 @@ def read_srv_list():
     if not os.path.isfile(insrvlst):
         chk_srvlist(insrvlst)
 
-    fo = open(insrvlst, 'rb')
-    sl = pickle.load(fo)
-    fo.close()
+    with open(insrvlst, 'rb') as fo:
+        sl = pickle.load(fo)
     return sl
 
 
@@ -85,7 +84,7 @@ def chk_srvlist(insrvlst):
     print("(lp3", file=f)
     # fix_print_with_import
     # fix_print_with_import
-    print("VOGC WCS 2.x - Reference Implemetation (rasdaman)", file=f)
+    print("VOGC WCS 2.x - Reference Implementation (rasdaman)", file=f)
     # fix_print_with_import
     # fix_print_with_import
     print("p4", file=f)

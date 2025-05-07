@@ -148,9 +148,6 @@ def download_url(manager, url, output_path, progress_dialog=None):
 
     if reply.attribute(QNetworkRequest.RedirectionTargetAttribute):
         redir_url = reply.attribute(QNetworkRequest.RedirectionTargetAttribute).toString().split('?')[0]+'?'
-        # fix_print_with_import
-        # fix_print_with_import
-        print('Redirection-Url:',redir_url, type(redir_url))
         return True, None, 'Redirection-URL:\t'+redir_url
 
     if result == QNetworkReply.NoError:
@@ -163,7 +160,6 @@ def download_url(manager, url, output_path, progress_dialog=None):
         if output_path is not None:
             out_file.close()
         return result, str(reply.errorString())
-
 
     if  progress_dialog:
         progress_dialog.close()

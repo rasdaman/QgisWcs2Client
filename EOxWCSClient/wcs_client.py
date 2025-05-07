@@ -612,9 +612,7 @@ class wcsClient(object):
             Returns:  either XML response document  or  a list of coverageIDs
             Output: prints out the submitted http_request  or Error_XML in case of failure
         """
-      #  print "I'm in "+sys._getframe().f_code.co_name
-        # fix_print_with_import
-        # fix_print_with_import
+        #  print "I'm in "+sys._getframe().f_code.co_name
         print('REQUEST: ',http_request)  #@@
 
         try:
@@ -642,20 +640,17 @@ class wcsClient(object):
 
         except urllib.error.URLError as url_ERROR:
             if hasattr(url_ERROR, 'reason'):
-                # fix_print_with_import
                 print('\n', time.strftime("%Y-%m-%dT%H:%M:%S%Z"), "- ERROR:  Server not accessible -" , url_ERROR.reason)
                 err_msg=['ERROR', url_ERROR.read()]
                 return err_msg
 
                 try:
-                    # fix_print_with_import
                     print(url_ERROR.read(), '\n')
 
                 except:
                     pass
 
             elif hasattr(url_ERROR, 'code'):
-                # fix_print_with_import
                 print(time.strftime("%Y-%m-%dT%H:%M:%S%Z"), "- ERROR:  The server couldn\'t fulfill the request - Code returned:  ", url_ERROR.code, url_ERROR.read())
                 err_msg = str(url_ERROR.code)+'--'+url_ERROR.read()
                 return err_msg
@@ -681,9 +676,6 @@ class wcsClient(object):
                     saves Error-XML (-> access_error_"TimeStamp".xml) at output location (in case of failure)
             Returns:  HttpCode (if success)
         """
-       # print "I'm in "+sys._getframe().f_code.co_name
-        # fix_print_with_import
-        # fix_print_with_import
         print('REQUEST:', http_request)
 
         now = time.strftime('_%Y%m%dT%H%M%S')
@@ -712,8 +704,6 @@ class wcsClient(object):
         else:
             outfile = temp_storage+dsep+out_coverageID
 
-            # fix_print_with_import
-            # fix_print_with_import
             print('REQUEST-GetCov: ',http_request)  #@@
 
         try:
@@ -736,17 +726,14 @@ class wcsClient(object):
 
             except IOError as xxx_todo_changeme:
                 (errno, strerror) = xxx_todo_changeme.args
-                # fix_print_with_import
                 print("I/O error({0}): {1}".format(errno, strerror))
             except:
-                # fix_print_with_import
                 print("Unexpected error:", sys.exc_info()[0])
                 raise
 
 
         except urllib.error.URLError as url_ERROR:
             if hasattr(url_ERROR, 'reason'):
-                # fix_print_with_import
                 print('\n', time.strftime("%Y-%m-%dT%H:%M:%S%Z"), "- ERROR:  Server not accessible -", url_ERROR.reason)
                     # write out the servers return msg
                 errfile = outfile.rpartition(dsep)[0]+dsep+'access_error'+now+'.xml'
@@ -755,7 +742,6 @@ class wcsClient(object):
                 access_err.flush()
                 access_err.close()
             elif hasattr(url_ERROR, 'code'):
-                # fix_print_with_import
                 print(time.strftime("%Y-%m-%dT%H:%M:%S%Z"), "- ERROR:  The server couldn\'t fulfill the request - Code returned:  ", url_ERROR.code, url_ERROR.read())
                 err_msg = str(url_ERROR.code)+'--'+url_ERROR.read()
                 return err_msg
