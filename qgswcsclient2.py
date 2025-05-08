@@ -63,6 +63,7 @@ class QgsWcsClient2(object):
             # initialize locale
         locale = QSettings().value("locale/userLocale")[0:2]
         localePath = os.path.join(config.plugin_dir, 'i18n', 'qgswcsclient2_{}.qm'.format(locale))
+        self.plugin_dir = os.path.dirname(__file__)
 
         if os.path.exists(localePath):
             self.translator = QTranslator()
@@ -76,10 +77,17 @@ class QgsWcsClient2(object):
 
 
     def initGui(self):
+
+        # Only used for debug (!). NOTE: disable these pydevd_pycharm lines before submitting to repository
+        import pydevd_pycharm
+        pydevd_pycharm.settrace('localhost', port=5678, stdoutToServer=True, stderrToServer=True)
+
+        icon_path = f'{self.plugin_dir}/icon.png'
+
             # Create action that will start plugin configuration
         self.action = QAction(
-            QIcon(":/plugins/qgswcsclient2/icon.png"),
-            u"WCS 2.0/EO-WCS Client", self.iface.mainWindow())
+            QIcon(icon_path),
+            u"WCS 2 Client", self.iface.mainWindow())
             # connect the action to the run method
         self.action.triggered.connect(self.run)
 

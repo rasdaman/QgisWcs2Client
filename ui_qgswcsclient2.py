@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 
 # Form implementation generated from reading ui file 'ui_qgswcsclient2.ui'
 #
@@ -12,7 +13,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_QgsWcsClient2(object):
+
     def setupUi(self, QgsWcsClient2):
+        self.plugin_dir = os.path.dirname(__file__)
+
         QgsWcsClient2.setObjectName("QgsWcsClient2")
         QgsWcsClient2.resize(830, 748)
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(QgsWcsClient2)
@@ -25,6 +29,7 @@ class Ui_QgsWcsClient2(object):
         self.tab_Serv.setObjectName("tab_Serv")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.tab_Serv)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
+
         self.GroupBox_9 = QtWidgets.QGroupBox(self.tab_Serv)
         self.GroupBox_9.setObjectName("GroupBox_9")
         self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.GroupBox_9)
@@ -32,10 +37,39 @@ class Ui_QgsWcsClient2(object):
         self.label_6 = QtWidgets.QLabel(self.GroupBox_9)
         self.label_6.setObjectName("label_6")
         self.verticalLayout_15.addWidget(self.label_6)
+
         self.cmbConnections_Serv = QtWidgets.QComboBox(self.GroupBox_9)
         self.cmbConnections_Serv.setObjectName("cmbConnections_Serv")
         self.verticalLayout_15.addWidget(self.cmbConnections_Serv)
+
+        # Layout for username
+        self.layout_username = QtWidgets.QHBoxLayout()
+        self.label_username = QtWidgets.QLabel("Username:")
+        self.textbox_username = QtWidgets.QLineEdit()
+        self.textbox_username.setToolTip("rasdaman username to authenticate to the selected server")
+
+        self.layout_username.addWidget(self.label_username)
+        self.layout_username.addWidget(self.textbox_username)
+        self.layout_username.addStretch()
+
+        self.verticalLayout_15.addLayout(self.layout_username)
+
+        # Layout for password
+        self.layout_password = QtWidgets.QHBoxLayout()
+        self.label_password = QtWidgets.QLabel("Password: ")
+        self.textbox_password = QtWidgets.QLineEdit()
+        self.textbox_password.setToolTip("rasdaman password to authenticate to the selected server")
+
+        self.layout_password.addWidget(self.label_password)
+        self.layout_password.addWidget(self.textbox_password)
+        self.layout_password.addStretch()
+
+        self.verticalLayout_15.addLayout(self.layout_password)
+
+        # Layout buttons
+
         self.horizontalLayout_21 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_21.setContentsMargins(0, 10, 0, 0)  # top = 10px, others = 0
         self.horizontalLayout_21.setObjectName("horizontalLayout_21")
         self.btnConnectServer_Serv = QtWidgets.QPushButton(self.GroupBox_9)
         self.btnConnectServer_Serv.setEnabled(True)
@@ -46,12 +80,10 @@ class Ui_QgsWcsClient2(object):
         self.btnNew_Serv.setObjectName("btnNew_Serv")
         self.horizontalLayout_21.addWidget(self.btnNew_Serv)
         self.btnEdit_Serv = QtWidgets.QPushButton(self.GroupBox_9)
-        self.btnEdit_Serv.setEnabled(False)
         self.btnEdit_Serv.setAutoDefault(False)
         self.btnEdit_Serv.setObjectName("btnEdit_Serv")
         self.horizontalLayout_21.addWidget(self.btnEdit_Serv)
         self.btnDelete_Serv = QtWidgets.QPushButton(self.GroupBox_9)
-        self.btnDelete_Serv.setEnabled(False)
         self.btnDelete_Serv.setAutoDefault(False)
         self.btnDelete_Serv.setObjectName("btnDelete_Serv")
         self.horizontalLayout_21.addWidget(self.btnDelete_Serv)
@@ -71,6 +103,7 @@ class Ui_QgsWcsClient2(object):
         self.horizontalLayout_21.addWidget(self.btnImport_QgsWcsUrls)
         self.verticalLayout_15.addLayout(self.horizontalLayout_21)
         self.verticalLayout_11.addWidget(self.GroupBox_9)
+
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.label_2 = QtWidgets.QLabel(self.tab_Serv)
@@ -119,7 +152,9 @@ class Ui_QgsWcsClient2(object):
         self.tab_GCa.setObjectName("tab_GCa")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.tab_GCa)
         self.verticalLayout_8.setObjectName("verticalLayout_8")
-        self.GroupBox_4 = QtWidgets.QGroupBox(self.tab_GCa)
+
+
+        self.GroupBox_4 = QtWidgets.QGroupBox()
         self.GroupBox_4.setObjectName("GroupBox_4")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.GroupBox_4)
         self.verticalLayout_9.setObjectName("verticalLayout_9")
@@ -196,8 +231,8 @@ class Ui_QgsWcsClient2(object):
         self.checkBox_GCaServMeta.setObjectName("checkBox_GCaServMeta")
         self.gridLayout_5.addWidget(self.checkBox_GCaServMeta, 2, 1, 1, 1)
         self.verticalLayout_9.addLayout(self.gridLayout_5)
-        self.verticalLayout_8.addWidget(self.GroupBox_4)
-        self.GroupBox_5 = QtWidgets.QGroupBox(self.tab_GCa)
+
+        self.GroupBox_5 = QtWidgets.QGroupBox()
         self.GroupBox_5.setMinimumSize(QtCore.QSize(431, 50))
         self.GroupBox_5.setTitle("")
         self.GroupBox_5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
@@ -229,7 +264,8 @@ class Ui_QgsWcsClient2(object):
         self.horizontalLayout_2.addWidget(self.dateEdit_GCaDocUpdate)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem2)
-        self.verticalLayout_8.addWidget(self.GroupBox_5)
+        # self.verticalLayout_8.addWidget(self.GroupBox_5)
+
         self.verticalLayout_10 = QtWidgets.QVBoxLayout()
         self.verticalLayout_10.setObjectName("verticalLayout_10")
         self.label_3 = QtWidgets.QLabel(self.tab_GCa)
@@ -247,22 +283,20 @@ class Ui_QgsWcsClient2(object):
         self.label_3.setWordWrap(True)
         self.label_3.setObjectName("label_3")
         self.verticalLayout_10.addWidget(self.label_3)
-        self.label_7 = QtWidgets.QLabel(self.tab_GCa)
-        self.label_7.setIndent(15)
-        self.label_7.setObjectName("label_7")
-        self.verticalLayout_10.addWidget(self.label_7)
+
+        # Tree views for coverages in GetCapabilities tab
         self.treeWidget_GCa = QtWidgets.QTreeWidget(self.tab_GCa)
         self.treeWidget_GCa.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked)
         self.treeWidget_GCa.setAlternatingRowColors(False)
         self.treeWidget_GCa.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
-        self.treeWidget_GCa.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.treeWidget_GCa.setAutoExpandDelay(-1)
         self.treeWidget_GCa.setIndentation(4)
-        self.treeWidget_GCa.setColumnCount(6)
+        self.treeWidget_GCa.setColumnCount(4)
         self.treeWidget_GCa.setObjectName("treeWidget_GCa")
         self.treeWidget_GCa.header().setDefaultSectionSize(220)
         self.treeWidget_GCa.header().setMinimumSectionSize(70)
         self.treeWidget_GCa.header().setStretchLastSection(True)
+
         self.verticalLayout_10.addWidget(self.treeWidget_GCa)
         self.verticalLayout_8.addLayout(self.verticalLayout_10)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -360,409 +394,7 @@ class Ui_QgsWcsClient2(object):
         self.horizontalLayout_4.addWidget(self.pushButton_DC)
         self.verticalLayout_7.addLayout(self.horizontalLayout_4)
         self.tabWidget_EOWcsClient2.addTab(self.tab_DC, "")
-        self.tab_DCS = QtWidgets.QWidget()
-        self.tab_DCS.setEnabled(False)
-        self.tab_DCS.setObjectName("tab_DCS")
-        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.tab_DCS)
-        self.verticalLayout_14.setObjectName("verticalLayout_14")
-        self.verticalLayout_17 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_17.setObjectName("verticalLayout_17")
-        self.label_DCSInfo1 = QtWidgets.QLabel(self.tab_DCS)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_DCSInfo1.setFont(font)
-        self.label_DCSInfo1.setObjectName("label_DCSInfo1")
-        self.verticalLayout_17.addWidget(self.label_DCSInfo1)
-        self.label_DCSInfo2 = QtWidgets.QLabel(self.tab_DCS)
-        self.label_DCSInfo2.setObjectName("label_DCSInfo2")
-        self.verticalLayout_17.addWidget(self.label_DCSInfo2)
-        self.label_5 = QtWidgets.QLabel(self.tab_DCS)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setItalic(True)
-        font.setWeight(75)
-        self.label_5.setFont(font)
-        self.label_5.setObjectName("label_5")
-        self.verticalLayout_17.addWidget(self.label_5)
-        self.treeWidget_DCS = QtWidgets.QTreeWidget(self.tab_DCS)
-        self.treeWidget_DCS.setMinimumSize(QtCore.QSize(0, 200))
-        self.treeWidget_DCS.setIndentation(4)
-        self.treeWidget_DCS.setColumnCount(5)
-        self.treeWidget_DCS.setObjectName("treeWidget_DCS")
-        self.treeWidget_DCS.header().setDefaultSectionSize(197)
-        self.treeWidget_DCS.header().setMinimumSectionSize(70)
-        self.verticalLayout_17.addWidget(self.treeWidget_DCS)
-        self.verticalLayout_14.addLayout(self.verticalLayout_17)
-        self.horizontalLayout_20 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
-        self.gridLayout_2 = QtWidgets.QGridLayout()
-        self.gridLayout_2.setSpacing(6)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.GroupBox_10 = QtWidgets.QGroupBox(self.tab_DCS)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.GroupBox_10.sizePolicy().hasHeightForWidth())
-        self.GroupBox_10.setSizePolicy(sizePolicy)
-        self.GroupBox_10.setMinimumSize(QtCore.QSize(450, 62))
-        self.GroupBox_10.setObjectName("GroupBox_10")
-        self.gridLayoutWidget_5 = QtWidgets.QWidget(self.GroupBox_10)
-        self.gridLayoutWidget_5.setGeometry(QtCore.QRect(10, 23, 441, 24))
-        self.gridLayoutWidget_5.setObjectName("gridLayoutWidget_5")
-        self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.gridLayoutWidget_5)
-        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
-        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_13.addItem(spacerItem5)
-        self.checkBox_DCSAll = QtWidgets.QCheckBox(self.gridLayoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.checkBox_DCSAll.sizePolicy().hasHeightForWidth())
-        self.checkBox_DCSAll.setSizePolicy(sizePolicy)
-        self.checkBox_DCSAll.setObjectName("checkBox_DCSAll")
-        self.horizontalLayout_13.addWidget(self.checkBox_DCSAll)
-        self.checkBox_DCSDatSerDesc = QtWidgets.QCheckBox(self.gridLayoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.checkBox_DCSDatSerDesc.sizePolicy().hasHeightForWidth())
-        self.checkBox_DCSDatSerDesc.setSizePolicy(sizePolicy)
-        self.checkBox_DCSDatSerDesc.setObjectName("checkBox_DCSDatSerDesc")
-        self.horizontalLayout_13.addWidget(self.checkBox_DCSDatSerDesc)
-        self.checkBox_DCSCovDesc = QtWidgets.QCheckBox(self.gridLayoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.checkBox_DCSCovDesc.sizePolicy().hasHeightForWidth())
-        self.checkBox_DCSCovDesc.setSizePolicy(sizePolicy)
-        self.checkBox_DCSCovDesc.setObjectName("checkBox_DCSCovDesc")
-        self.horizontalLayout_13.addWidget(self.checkBox_DCSCovDesc)
-        self.label_8 = QtWidgets.QLabel(self.GroupBox_10)
-        self.label_8.setGeometry(QtCore.QRect(95, 43, 181, 17))
-        self.label_8.setObjectName("label_8")
-        self.gridLayout_2.addWidget(self.GroupBox_10, 0, 0, 1, 2)
-        self.groupBox_21 = QtWidgets.QGroupBox(self.tab_DCS)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_21.sizePolicy().hasHeightForWidth())
-        self.groupBox_21.setSizePolicy(sizePolicy)
-        self.groupBox_21.setMinimumSize(QtCore.QSize(450, 210))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.groupBox_21.setFont(font)
-        self.groupBox_21.setObjectName("groupBox_21")
-        self.layoutWidget_5 = QtWidgets.QWidget(self.groupBox_21)
-        self.layoutWidget_5.setGeometry(QtCore.QRect(10, 25, 441, 164))
-        self.layoutWidget_5.setObjectName("layoutWidget_5")
-        self.verticalLayout_18 = QtWidgets.QVBoxLayout(self.layoutWidget_5)
-        self.verticalLayout_18.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_18.setObjectName("verticalLayout_18")
-        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        spacerItem6 = QtWidgets.QSpacerItem(148, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_8.addItem(spacerItem6)
-        self.label_DCSMaxLat = QtWidgets.QLabel(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_DCSMaxLat.sizePolicy().hasHeightForWidth())
-        self.label_DCSMaxLat.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_DCSMaxLat.setFont(font)
-        self.label_DCSMaxLat.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_DCSMaxLat.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_DCSMaxLat.setObjectName("label_DCSMaxLat")
-        self.horizontalLayout_8.addWidget(self.label_DCSMaxLat)
-        spacerItem7 = QtWidgets.QSpacerItem(158, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_8.addItem(spacerItem7)
-        self.verticalLayout_18.addLayout(self.horizontalLayout_8)
-        self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        spacerItem8 = QtWidgets.QSpacerItem(128, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_9.addItem(spacerItem8)
-        self.lineEdit_DCSMaxLat = QtWidgets.QLineEdit(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_DCSMaxLat.sizePolicy().hasHeightForWidth())
-        self.lineEdit_DCSMaxLat.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.lineEdit_DCSMaxLat.setFont(font)
-        self.lineEdit_DCSMaxLat.setObjectName("lineEdit_DCSMaxLat")
-        self.horizontalLayout_9.addWidget(self.lineEdit_DCSMaxLat)
-        spacerItem9 = QtWidgets.QSpacerItem(148, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_9.addItem(spacerItem9)
-        self.verticalLayout_18.addLayout(self.horizontalLayout_9)
-        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
-        self.label_DCSMinLon = QtWidgets.QLabel(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_DCSMinLon.sizePolicy().hasHeightForWidth())
-        self.label_DCSMinLon.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_DCSMinLon.setFont(font)
-        self.label_DCSMinLon.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_DCSMinLon.setObjectName("label_DCSMinLon")
-        self.horizontalLayout_10.addWidget(self.label_DCSMinLon)
-        self.lineEdit_DCSMinLon = QtWidgets.QLineEdit(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_DCSMinLon.sizePolicy().hasHeightForWidth())
-        self.lineEdit_DCSMinLon.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.lineEdit_DCSMinLon.setFont(font)
-        self.lineEdit_DCSMinLon.setObjectName("lineEdit_DCSMinLon")
-        self.horizontalLayout_10.addWidget(self.lineEdit_DCSMinLon)
-        self.lineEdit_DCSMaxLon = QtWidgets.QLineEdit(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_DCSMaxLon.sizePolicy().hasHeightForWidth())
-        self.lineEdit_DCSMaxLon.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.lineEdit_DCSMaxLon.setFont(font)
-        self.lineEdit_DCSMaxLon.setObjectName("lineEdit_DCSMaxLon")
-        self.horizontalLayout_10.addWidget(self.lineEdit_DCSMaxLon)
-        self.label_DCSMaxLon = QtWidgets.QLabel(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_DCSMaxLon.sizePolicy().hasHeightForWidth())
-        self.label_DCSMaxLon.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_DCSMaxLon.setFont(font)
-        self.label_DCSMaxLon.setScaledContents(False)
-        self.label_DCSMaxLon.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_DCSMaxLon.setObjectName("label_DCSMaxLon")
-        self.horizontalLayout_10.addWidget(self.label_DCSMaxLon)
-        self.verticalLayout_18.addLayout(self.horizontalLayout_10)
-        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
-        spacerItem10 = QtWidgets.QSpacerItem(128, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_11.addItem(spacerItem10)
-        self.lineEdit_DCSMinLat = QtWidgets.QLineEdit(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_DCSMinLat.sizePolicy().hasHeightForWidth())
-        self.lineEdit_DCSMinLat.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.lineEdit_DCSMinLat.setFont(font)
-        self.lineEdit_DCSMinLat.setObjectName("lineEdit_DCSMinLat")
-        self.horizontalLayout_11.addWidget(self.lineEdit_DCSMinLat)
-        spacerItem11 = QtWidgets.QSpacerItem(148, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_11.addItem(spacerItem11)
-        self.verticalLayout_18.addLayout(self.horizontalLayout_11)
-        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
-        spacerItem12 = QtWidgets.QSpacerItem(158, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_12.addItem(spacerItem12)
-        self.label_DCSMinLat = QtWidgets.QLabel(self.layoutWidget_5)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_DCSMinLat.sizePolicy().hasHeightForWidth())
-        self.label_DCSMinLat.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_DCSMinLat.setFont(font)
-        self.label_DCSMinLat.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_DCSMinLat.setObjectName("label_DCSMinLat")
-        self.horizontalLayout_12.addWidget(self.label_DCSMinLat)
-        spacerItem13 = QtWidgets.QSpacerItem(158, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_12.addItem(spacerItem13)
-        self.verticalLayout_18.addLayout(self.horizontalLayout_12)
-        self.gridLayout_2.addWidget(self.groupBox_21, 3, 0, 1, 2)
-        self.groupBox_12 = QtWidgets.QGroupBox(self.tab_DCS)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_12.sizePolicy().hasHeightForWidth())
-        self.groupBox_12.setSizePolicy(sizePolicy)
-        self.groupBox_12.setMinimumSize(QtCore.QSize(450, 105))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.groupBox_12.setFont(font)
-        self.groupBox_12.setObjectName("groupBox_12")
-        self.layoutWidget = QtWidgets.QWidget(self.groupBox_12)
-        self.layoutWidget.setGeometry(QtCore.QRect(7, 33, 431, 64))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.layoutWidget)
-        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        spacerItem14 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem14)
-        self.checkBox_DCS_ActiveDate = QtWidgets.QCheckBox(self.layoutWidget)
-        self.checkBox_DCS_ActiveDate.setEnabled(False)
-        self.checkBox_DCS_ActiveDate.setText("")
-        self.checkBox_DCS_ActiveDate.setCheckable(True)
-        self.checkBox_DCS_ActiveDate.setObjectName("checkBox_DCS_ActiveDate")
-        self.horizontalLayout_7.addWidget(self.checkBox_DCS_ActiveDate)
-        self.gridLayout_3 = QtWidgets.QGridLayout()
-        self.gridLayout_3.setObjectName("gridLayout_3")
-        self.dateTimeEdit_DCSEnd = QtWidgets.QDateTimeEdit(self.layoutWidget)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.dateTimeEdit_DCSEnd.setFont(font)
-        self.dateTimeEdit_DCSEnd.setDateTime(QtCore.QDateTime(QtCore.QDate(2016, 12, 31), QtCore.QTime(22, 59, 59)))
-        self.dateTimeEdit_DCSEnd.setDate(QtCore.QDate(2016, 12, 31))
-        self.dateTimeEdit_DCSEnd.setTime(QtCore.QTime(22, 59, 59))
-        self.dateTimeEdit_DCSEnd.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(1899, 12, 30), QtCore.QTime(23, 0, 0)))
-        self.dateTimeEdit_DCSEnd.setMaximumTime(QtCore.QTime(22, 59, 59))
-        self.dateTimeEdit_DCSEnd.setCurrentSection(QtWidgets.QDateTimeEdit.YearSection)
-        self.dateTimeEdit_DCSEnd.setCalendarPopup(True)
-        self.dateTimeEdit_DCSEnd.setTimeSpec(QtCore.Qt.UTC)
-        self.dateTimeEdit_DCSEnd.setObjectName("dateTimeEdit_DCSEnd")
-        self.gridLayout_3.addWidget(self.dateTimeEdit_DCSEnd, 1, 1, 1, 1)
-        self.dateTimeEdit_DCSBegin = QtWidgets.QDateTimeEdit(self.layoutWidget)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.dateTimeEdit_DCSBegin.setFont(font)
-        self.dateTimeEdit_DCSBegin.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedKingdom))
-        self.dateTimeEdit_DCSBegin.setDateTime(QtCore.QDateTime(QtCore.QDate(2016, 12, 30), QtCore.QTime(23, 0, 0)))
-        self.dateTimeEdit_DCSBegin.setDate(QtCore.QDate(2016, 12, 30))
-        self.dateTimeEdit_DCSBegin.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(1899, 12, 30), QtCore.QTime(23, 0, 0)))
-        self.dateTimeEdit_DCSBegin.setMinimumTime(QtCore.QTime(23, 0, 0))
-        self.dateTimeEdit_DCSBegin.setCalendarPopup(True)
-        self.dateTimeEdit_DCSBegin.setTimeSpec(QtCore.Qt.UTC)
-        self.dateTimeEdit_DCSBegin.setObjectName("dateTimeEdit_DCSBegin")
-        self.gridLayout_3.addWidget(self.dateTimeEdit_DCSBegin, 0, 1, 1, 1)
-        self.label_DCSEnd = QtWidgets.QLabel(self.layoutWidget)
-        self.label_DCSEnd.setObjectName("label_DCSEnd")
-        self.gridLayout_3.addWidget(self.label_DCSEnd, 1, 0, 1, 1)
-        self.label_DCSBegin = QtWidgets.QLabel(self.layoutWidget)
-        self.label_DCSBegin.setObjectName("label_DCSBegin")
-        self.gridLayout_3.addWidget(self.label_DCSBegin, 0, 0, 1, 1)
-        self.horizontalLayout_7.addLayout(self.gridLayout_3)
-        spacerItem15 = QtWidgets.QSpacerItem(118, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_7.addItem(spacerItem15)
-        self.gridLayout_2.addWidget(self.groupBox_12, 1, 0, 1, 1)
-        self.gridLayout_2.setRowStretch(0, 1)
-        self.gridLayout_2.setRowStretch(1, 2)
-        self.gridLayout_2.setRowStretch(2, 4)
-        self.horizontalLayout_20.addLayout(self.gridLayout_2)
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.gridLayout_6 = QtWidgets.QGridLayout()
-        self.gridLayout_6.setContentsMargins(139, -1, -1, -1)
-        self.gridLayout_6.setObjectName("gridLayout_6")
-        self.groupBox_14 = QtWidgets.QGroupBox(self.tab_DCS)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_14.sizePolicy().hasHeightForWidth())
-        self.groupBox_14.setSizePolicy(sizePolicy)
-        self.groupBox_14.setMinimumSize(QtCore.QSize(180, 70))
-        self.groupBox_14.setObjectName("groupBox_14")
-        self.spinBox_DCSCount = QtWidgets.QSpinBox(self.groupBox_14)
-        self.spinBox_DCSCount.setEnabled(False)
-        self.spinBox_DCSCount.setGeometry(QtCore.QRect(55, 30, 101, 27))
-        self.spinBox_DCSCount.setMinimum(1)
-        self.spinBox_DCSCount.setMaximum(9999)
-        self.spinBox_DCSCount.setProperty("value", 10)
-        self.spinBox_DCSCount.setObjectName("spinBox_DCSCount")
-        self.checkBox_DCS_ActiveCount = QtWidgets.QCheckBox(self.groupBox_14)
-        self.checkBox_DCS_ActiveCount.setGeometry(QtCore.QRect(22, 33, 31, 22))
-        self.checkBox_DCS_ActiveCount.setText("")
-        self.checkBox_DCS_ActiveCount.setChecked(True)
-        self.checkBox_DCS_ActiveCount.setObjectName("checkBox_DCS_ActiveCount")
-        self.gridLayout_6.addWidget(self.groupBox_14, 2, 0, 1, 1)
-        self.groupBox_13 = QtWidgets.QGroupBox(self.tab_DCS)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_13.sizePolicy().hasHeightForWidth())
-        self.groupBox_13.setSizePolicy(sizePolicy)
-        self.groupBox_13.setMinimumSize(QtCore.QSize(180, 90))
-        self.groupBox_13.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.groupBox_13.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.groupBox_13.setObjectName("groupBox_13")
-        self.radioButton_ContOver = QtWidgets.QRadioButton(self.groupBox_13)
-        self.radioButton_ContOver.setGeometry(QtCore.QRect(13, 28, 87, 22))
-        self.radioButton_ContOver.setChecked(True)
-        self.radioButton_ContOver.setAutoExclusive(True)
-        self.radioButton_ContOver.setObjectName("radioButton_ContOver")
-        self.radioButton_ContCont = QtWidgets.QRadioButton(self.groupBox_13)
-        self.radioButton_ContCont.setGeometry(QtCore.QRect(13, 59, 87, 22))
-        self.radioButton_ContCont.setObjectName("radioButton_ContCont")
-        self.gridLayout_6.addWidget(self.groupBox_13, 1, 0, 1, 1)
-        self.verticalLayout_2.addLayout(self.gridLayout_6)
-        spacerItem16 = QtWidgets.QSpacerItem(20, 128, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
-        self.verticalLayout_2.addItem(spacerItem16)
-        self.checkBox_DCSFull = QtWidgets.QCheckBox(self.tab_DCS)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.checkBox_DCSFull.sizePolicy().hasHeightForWidth())
-        self.checkBox_DCSFull.setSizePolicy(sizePolicy)
-        self.checkBox_DCSFull.setMinimumSize(QtCore.QSize(300, 40))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.checkBox_DCSFull.setFont(font)
-        self.checkBox_DCSFull.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.checkBox_DCSFull.setIconSize(QtCore.QSize(16, 16))
-        self.checkBox_DCSFull.setObjectName("checkBox_DCSFull")
-        self.verticalLayout_2.addWidget(self.checkBox_DCSFull)
-        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_6.setContentsMargins(41, 2, 0, 0)
-        self.horizontalLayout_6.setSpacing(5)
-        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.btnClose_DCS = QtWidgets.QPushButton(self.tab_DCS)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btnClose_DCS.sizePolicy().hasHeightForWidth())
-        self.btnClose_DCS.setSizePolicy(sizePolicy)
-        self.btnClose_DCS.setMinimumSize(QtCore.QSize(85, 27))
-        self.btnClose_DCS.setBaseSize(QtCore.QSize(40, 30))
-        self.btnClose_DCS.setObjectName("btnClose_DCS")
-        self.horizontalLayout_6.addWidget(self.btnClose_DCS)
-        self.pushButton_DCS = QtWidgets.QPushButton(self.tab_DCS)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_DCS.sizePolicy().hasHeightForWidth())
-        self.pushButton_DCS.setSizePolicy(sizePolicy)
-        self.pushButton_DCS.setMinimumSize(QtCore.QSize(190, 40))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.pushButton_DCS.setFont(font)
-        self.pushButton_DCS.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.pushButton_DCS.setObjectName("pushButton_DCS")
-        self.horizontalLayout_6.addWidget(self.pushButton_DCS)
-        self.horizontalLayout_6.setStretch(0, 1)
-        self.horizontalLayout_6.setStretch(1, 1)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_6)
-        self.horizontalLayout_20.addLayout(self.verticalLayout_2)
-        self.verticalLayout_14.addLayout(self.horizontalLayout_20)
-        self.tabWidget_EOWcsClient2.addTab(self.tab_DCS, "")
+
         self.tab_GCov = QtWidgets.QWidget()
         self.tab_GCov.setEnabled(False)
         self.tab_GCov.setObjectName("tab_GCov")
@@ -787,17 +419,22 @@ class Ui_QgsWcsClient2(object):
         self.label_GCOvInfo2.setFont(font)
         self.label_GCOvInfo2.setObjectName("label_GCOvInfo2")
         self.verticalLayout_24.addWidget(self.label_GCOvInfo2)
+
+        # List of coverage Ids for GetCoverage
         self.treeWidget_GCov = QtWidgets.QTreeWidget(self.tab_GCov)
-        self.treeWidget_GCov.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
         self.treeWidget_GCov.setColumnCount(1)
         self.treeWidget_GCov.setObjectName("treeWidget_GCov")
         self.treeWidget_GCov.header().setDefaultSectionSize(200)
+        self.treeWidget_GCov.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection) # select only one row
+        self.treeWidget_GCov.itemClicked.connect(self.handle_get_cov_tree_item_clicked)
+
         self.verticalLayout_24.addWidget(self.treeWidget_GCov)
         self.verticalLayout_26.addLayout(self.verticalLayout_24)
         self.verticalLayout_25 = QtWidgets.QVBoxLayout()
         self.verticalLayout_25.setObjectName("verticalLayout_25")
         self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+
         self.groupBox_15 = QtWidgets.QGroupBox(self.tab_GCov)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -814,352 +451,87 @@ class Ui_QgsWcsClient2(object):
         self.groupBox_15.setObjectName("groupBox_15")
         self.gridLayout_7 = QtWidgets.QGridLayout(self.groupBox_15)
         self.gridLayout_7.setObjectName("gridLayout_7")
-        self.groupBox_16 = QtWidgets.QGroupBox(self.groupBox_15)
-        self.groupBox_16.setObjectName("groupBox_16")
-        self.label_GCovMinLat = QtWidgets.QLabel(self.groupBox_16)
-        self.label_GCovMinLat.setGeometry(QtCore.QRect(146, 120, 89, 17))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_GCovMinLat.sizePolicy().hasHeightForWidth())
-        self.label_GCovMinLat.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_GCovMinLat.setFont(font)
-        self.label_GCovMinLat.setObjectName("label_GCovMinLat")
-        self.label_GCovMaxLat = QtWidgets.QLabel(self.groupBox_16)
-        self.label_GCovMaxLat.setGeometry(QtCore.QRect(149, -2, 92, 17))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_GCovMaxLat.sizePolicy().hasHeightForWidth())
-        self.label_GCovMaxLat.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_GCovMaxLat.setFont(font)
-        self.label_GCovMaxLat.setObjectName("label_GCovMaxLat")
-        self.lineEdit_GCovMinLat = QtWidgets.QLineEdit(self.groupBox_16)
-        self.lineEdit_GCovMinLat.setGeometry(QtCore.QRect(121, 87, 151, 27))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_GCovMinLat.sizePolicy().hasHeightForWidth())
-        self.lineEdit_GCovMinLat.setSizePolicy(sizePolicy)
-        self.lineEdit_GCovMinLat.setObjectName("lineEdit_GCovMinLat")
-        self.label_GCovMaxLon = QtWidgets.QLabel(self.groupBox_16)
-        self.label_GCovMaxLon.setGeometry(QtCore.QRect(306, 47, 71, 41))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_GCovMaxLon.sizePolicy().hasHeightForWidth())
-        self.label_GCovMaxLon.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_GCovMaxLon.setFont(font)
-        self.label_GCovMaxLon.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_GCovMaxLon.setObjectName("label_GCovMaxLon")
-        self.label_GCovMinLon = QtWidgets.QLabel(self.groupBox_16)
-        self.label_GCovMinLon.setGeometry(QtCore.QRect(-4, 47, 81, 41))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_GCovMinLon.sizePolicy().hasHeightForWidth())
-        self.label_GCovMinLon.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.label_GCovMinLon.setFont(font)
-        self.label_GCovMinLon.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_GCovMinLon.setObjectName("label_GCovMinLon")
-        self.lineEdit_GCovMaxLat = QtWidgets.QLineEdit(self.groupBox_16)
-        self.lineEdit_GCovMaxLat.setGeometry(QtCore.QRect(121, 21, 151, 27))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_GCovMaxLat.sizePolicy().hasHeightForWidth())
-        self.lineEdit_GCovMaxLat.setSizePolicy(sizePolicy)
-        self.lineEdit_GCovMaxLat.setObjectName("lineEdit_GCovMaxLat")
-        self.lineEdit_GCovMinLon = QtWidgets.QLineEdit(self.groupBox_16)
-        self.lineEdit_GCovMinLon.setGeometry(QtCore.QRect(76, 54, 101, 27))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_GCovMinLon.sizePolicy().hasHeightForWidth())
-        self.lineEdit_GCovMinLon.setSizePolicy(sizePolicy)
-        self.lineEdit_GCovMinLon.setObjectName("lineEdit_GCovMinLon")
-        self.lineEdit_GCovMaxLon = QtWidgets.QLineEdit(self.groupBox_16)
-        self.lineEdit_GCovMaxLon.setGeometry(QtCore.QRect(200, 54, 101, 27))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_GCovMaxLon.sizePolicy().hasHeightForWidth())
-        self.lineEdit_GCovMaxLon.setSizePolicy(sizePolicy)
-        self.lineEdit_GCovMaxLon.setObjectName("lineEdit_GCovMaxLon")
-        self.label_GCovMinLat.raise_()
-        self.label_GCovMaxLat.raise_()
-        self.lineEdit_GCovMinLat.raise_()
-        self.lineEdit_GCovMaxLat.raise_()
-        self.lineEdit_GCovMinLon.raise_()
-        self.lineEdit_GCovMaxLon.raise_()
-        self.label_GCovMinLon.raise_()
-        self.label_GCovMaxLon.raise_()
-        self.gridLayout_7.addWidget(self.groupBox_16, 0, 0, 1, 1)
+
+
         self.formLayout = QtWidgets.QFormLayout()
         self.formLayout.setObjectName("formLayout")
-        self.label_GCOvBands = QtWidgets.QLabel(self.groupBox_15)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_GCOvBands.setFont(font)
-        self.label_GCOvBands.setObjectName("label_GCOvBands")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_GCOvBands)
-        self.lineEdit_GCovBands = QtWidgets.QLineEdit(self.groupBox_15)
-        self.lineEdit_GCovBands.setObjectName("lineEdit_GCovBands")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_GCovBands)
-        self.label_GCovInterpol = QtWidgets.QLabel(self.groupBox_15)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_GCovInterpol.setFont(font)
-        self.label_GCovInterpol.setObjectName("label_GCovInterpol")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_GCovInterpol)
-        self.comboBox_GCovInterpol = QtWidgets.QComboBox(self.groupBox_15)
-        self.comboBox_GCovInterpol.setObjectName("comboBox_GCovInterpol")
-        self.comboBox_GCovInterpol.addItem("")
-        self.comboBox_GCovInterpol.addItem("")
-        self.comboBox_GCovInterpol.addItem("")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.comboBox_GCovInterpol)
+
         self.label_GCovOutFormat = QtWidgets.QLabel(self.groupBox_15)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
         self.label_GCovOutFormat.setFont(font)
         self.label_GCovOutFormat.setObjectName("label_GCovOutFormat")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_GCovOutFormat)
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_GCovOutFormat)
         self.comboBox_GCOvOutFormat = QtWidgets.QComboBox(self.groupBox_15)
         self.comboBox_GCOvOutFormat.setObjectName("comboBox_GCOvOutFormat")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.comboBox_GCOvOutFormat)
-        self.label_GCovOutCRS = QtWidgets.QLabel(self.groupBox_15)
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.comboBox_GCOvOutFormat)
+
+        self.label_GCOvBands = QtWidgets.QLabel(self.groupBox_15)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
-        self.label_GCovOutCRS.setFont(font)
-        self.label_GCovOutCRS.setObjectName("label_GCovOutCRS")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_GCovOutCRS)
-        self.comboBox_GCovOutCRS = QtWidgets.QComboBox(self.groupBox_15)
-        self.comboBox_GCovOutCRS.setObjectName("comboBox_GCovOutCRS")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.comboBox_GCovOutCRS)
+        self.label_GCOvBands.setFont(font)
+        self.label_GCOvBands.setObjectName("label_GCOvBands")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_GCOvBands)
+        self.lineEdit_GCovBands = QtWidgets.QLineEdit(self.groupBox_15)
+        self.lineEdit_GCovBands.setObjectName("lineEdit_GCovBands")
+        self.lineEdit_GCovBands.setPlaceholderText("e.g. Red from a RGB coverage")
+
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_GCovBands)
+
+        self.label_GCovInterpol = QtWidgets.QLabel(self.groupBox_15)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_GCovInterpol.setFont(font)
+        self.label_GCovInterpol.setObjectName("label_GCovInterpol")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_GCovInterpol)
+        self.comboBox_GCovInterpol = QtWidgets.QComboBox(self.groupBox_15)
+        self.comboBox_GCovInterpol.setObjectName("comboBox_GCovInterpol")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.comboBox_GCovInterpol)
+
+        # Output CRS group box
+        self.groupBox_17 = QtWidgets.QGroupBox()
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.groupBox_17)
+
+        self.groupBox_17.setMinimumSize(QtCore.QSize(370, 100))
+        self.groupBox_17.setObjectName("groupBox_17")
+
+        self.radioButton_GCovOutputCRSOrig = QtWidgets.QRadioButton(self.groupBox_17)
+        self.radioButton_GCovOutputCRSOrig.setGeometry(QtCore.QRect(54, 23, 116, 22))
+        self.radioButton_GCovOutputCRSOrig.setChecked(True)
+        self.radioButton_GCovOutputCRSOrig.setObjectName("radioButton_GCovOutputCRSOrig")
+        self.radioButton_GCovOutputCRS = QtWidgets.QRadioButton(self.groupBox_17)
+        self.radioButton_GCovOutputCRS.setGeometry(QtCore.QRect(185, 23, 81, 22))
+        self.radioButton_GCovOutputCRS.setObjectName("radioButton_GCovOutputCRS")
+
+        self.lineEdit_GCovOutputEPSG = QtWidgets.QLineEdit(self.groupBox_17)
+        self.lineEdit_GCovOutputEPSG.setEnabled(False)
+        self.lineEdit_GCovOutputEPSG.setToolTip("Project the 2D geo-referenced output to the target EPSG:code CRS")
+        self.lineEdit_GCovOutputEPSG.setPlaceholderText("e.g. 3857")
+        self.lineEdit_GCovOutputEPSG.setGeometry(QtCore.QRect(185, 71, 70, 27))
+        self.lineEdit_GCovOutputEPSG.setObjectName("lineEdit_GCovOutputEPSG")
+
+        self.label_GCovOutputCRS = QtWidgets.QLabel(self.groupBox_17)
+        self.label_GCovOutputCRS.setGeometry(QtCore.QRect(187, 51, 66, 17))
+        self.label_GCovOutputCRS.setObjectName("label_GCovOutputCRS")
+
+
+        # Right column
         self.gridLayout_7.addLayout(self.formLayout, 1, 0, 1, 1)
         self.horizontalLayout_16.addWidget(self.groupBox_15)
         self.gridLayout_8 = QtWidgets.QGridLayout()
         self.gridLayout_8.setObjectName("gridLayout_8")
-        self.groupBox_17 = QtWidgets.QGroupBox(self.tab_GCov)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_17.sizePolicy().hasHeightForWidth())
-        self.groupBox_17.setSizePolicy(sizePolicy)
-        self.groupBox_17.setMinimumSize(QtCore.QSize(370, 100))
-        font = QtGui.QFont()
-        font.setPointSize(11)
-        font.setBold(False)
-        font.setItalic(False)
-        font.setWeight(50)
-        font.setKerning(True)
-        self.groupBox_17.setFont(font)
-        self.groupBox_17.setObjectName("groupBox_17")
-        self.radioButton_GCovSubOrig = QtWidgets.QRadioButton(self.groupBox_17)
-        self.radioButton_GCovSubOrig.setGeometry(QtCore.QRect(54, 23, 116, 22))
-        self.radioButton_GCovSubOrig.setChecked(True)
-        self.radioButton_GCovSubOrig.setObjectName("radioButton_GCovSubOrig")
-        self.radioButton_GCovSubCRS = QtWidgets.QRadioButton(self.groupBox_17)
-        self.radioButton_GCovSubCRS.setGeometry(QtCore.QRect(185, 23, 81, 22))
-        self.radioButton_GCovSubCRS.setObjectName("radioButton_GCovSubCRS")
-        self.radioButton_GCovSubPixel = QtWidgets.QRadioButton(self.groupBox_17)
-        self.radioButton_GCovSubPixel.setGeometry(QtCore.QRect(288, 23, 71, 22))
-        self.radioButton_GCovSubPixel.setObjectName("radioButton_GCovSubPixel")
-        self.lineEdit_GCovSubEPSG = QtWidgets.QLineEdit(self.groupBox_17)
-        self.lineEdit_GCovSubEPSG.setEnabled(False)
-        self.lineEdit_GCovSubEPSG.setGeometry(QtCore.QRect(185, 71, 101, 27))
-        self.lineEdit_GCovSubEPSG.setObjectName("lineEdit_GCovSubEPSG")
-        self.label_GCovSubEPSG = QtWidgets.QLabel(self.groupBox_17)
-        self.label_GCovSubEPSG.setGeometry(QtCore.QRect(187, 51, 66, 17))
-        self.label_GCovSubEPSG.setObjectName("label_GCovSubEPSG")
-        self.gridLayout_8.addWidget(self.groupBox_17, 0, 0, 1, 1)
-        self.groupBox_18 = QtWidgets.QGroupBox(self.tab_GCov)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_18.sizePolicy().hasHeightForWidth())
-        self.groupBox_18.setSizePolicy(sizePolicy)
-        self.groupBox_18.setMinimumSize(QtCore.QSize(360, 190))
-        self.groupBox_18.setObjectName("groupBox_18")
-        self.groupBox_19 = QtWidgets.QGroupBox(self.groupBox_18)
-        self.groupBox_19.setGeometry(QtCore.QRect(29, 23, 361, 91))
-        self.groupBox_19.setObjectName("groupBox_19")
-        self.layoutWidget1 = QtWidgets.QWidget(self.groupBox_19)
-        self.layoutWidget1.setGeometry(QtCore.QRect(10, 20, 321, 62))
-        self.layoutWidget1.setObjectName("layoutWidget1")
-        self.horizontalLayout_14 = QtWidgets.QHBoxLayout(self.layoutWidget1)
-        self.horizontalLayout_14.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_14.setObjectName("horizontalLayout_14")
+
+        ### NOTE: Axes subsets generated dynamically based on the selected coverage (!)
+        self.groupBox_get_cov_axes_subsets = QtWidgets.QGroupBox()
+        self.groupBox_get_cov_axes_subsets.setMinimumSize(QtCore.QSize(400, 360))
+        self.gridLayout_8.addWidget(self.groupBox_get_cov_axes_subsets, 0, 0, 1, 1)
+
         self.verticalLayout_21 = QtWidgets.QVBoxLayout()
         self.verticalLayout_21.setObjectName("verticalLayout_21")
-        self.radioButton_GCovXSize = QtWidgets.QRadioButton(self.layoutWidget1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.radioButton_GCovXSize.sizePolicy().hasHeightForWidth())
-        self.radioButton_GCovXSize.setSizePolicy(sizePolicy)
-        self.radioButton_GCovXSize.setMinimumSize(QtCore.QSize(93, 25))
-        self.radioButton_GCovXSize.setAutoExclusive(False)
-        self.radioButton_GCovXSize.setObjectName("radioButton_GCovXSize")
-        self.verticalLayout_21.addWidget(self.radioButton_GCovXSize)
-        self.radioButton_GCovXRes = QtWidgets.QRadioButton(self.layoutWidget1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.radioButton_GCovXRes.sizePolicy().hasHeightForWidth())
-        self.radioButton_GCovXRes.setSizePolicy(sizePolicy)
-        self.radioButton_GCovXRes.setMinimumSize(QtCore.QSize(112, 25))
-        self.radioButton_GCovXRes.setAutoExclusive(False)
-        self.radioButton_GCovXRes.setObjectName("radioButton_GCovXRes")
-        self.verticalLayout_21.addWidget(self.radioButton_GCovXRes)
-        self.horizontalLayout_14.addLayout(self.verticalLayout_21)
-        self.verticalLayout_22 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_22.setObjectName("verticalLayout_22")
-        self.label_GCovXRes = QtWidgets.QLabel(self.layoutWidget1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_GCovXRes.sizePolicy().hasHeightForWidth())
-        self.label_GCovXRes.setSizePolicy(sizePolicy)
-        self.label_GCovXRes.setMinimumSize(QtCore.QSize(93, 25))
-        self.label_GCovXRes.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_GCovXRes.setObjectName("label_GCovXRes")
-        self.verticalLayout_22.addWidget(self.label_GCovXRes)
-        self.lineEdit_GCovXAxisLabel = QtWidgets.QLineEdit(self.layoutWidget1)
-        self.lineEdit_GCovXAxisLabel.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_GCovXAxisLabel.sizePolicy().hasHeightForWidth())
-        self.lineEdit_GCovXAxisLabel.setSizePolicy(sizePolicy)
-        self.lineEdit_GCovXAxisLabel.setMinimumSize(QtCore.QSize(93, 25))
-        self.lineEdit_GCovXAxisLabel.setObjectName("lineEdit_GCovXAxisLabel")
-        self.verticalLayout_22.addWidget(self.lineEdit_GCovXAxisLabel)
-        self.horizontalLayout_14.addLayout(self.verticalLayout_22)
-        self.verticalLayout_23 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_23.setObjectName("verticalLayout_23")
-        self.label_GCovXSize = QtWidgets.QLabel(self.layoutWidget1)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_GCovXSize.sizePolicy().hasHeightForWidth())
-        self.label_GCovXSize.setSizePolicy(sizePolicy)
-        self.label_GCovXSize.setMinimumSize(QtCore.QSize(93, 25))
-        self.label_GCovXSize.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_GCovXSize.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_GCovXSize.setObjectName("label_GCovXSize")
-        self.verticalLayout_23.addWidget(self.label_GCovXSize)
-        self.lineEdit_GCovXSize = QtWidgets.QLineEdit(self.layoutWidget1)
-        self.lineEdit_GCovXSize.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_GCovXSize.sizePolicy().hasHeightForWidth())
-        self.lineEdit_GCovXSize.setSizePolicy(sizePolicy)
-        self.lineEdit_GCovXSize.setMinimumSize(QtCore.QSize(93, 25))
-        self.lineEdit_GCovXSize.setObjectName("lineEdit_GCovXSize")
-        self.verticalLayout_23.addWidget(self.lineEdit_GCovXSize)
-        self.horizontalLayout_14.addLayout(self.verticalLayout_23)
-        self.groupBox_20 = QtWidgets.QGroupBox(self.groupBox_18)
-        self.groupBox_20.setGeometry(QtCore.QRect(30, 100, 351, 91))
-        self.groupBox_20.setObjectName("groupBox_20")
-        self.layoutWidget2 = QtWidgets.QWidget(self.groupBox_20)
-        self.layoutWidget2.setGeometry(QtCore.QRect(10, 24, 321, 62))
-        self.layoutWidget2.setObjectName("layoutWidget2")
-        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.layoutWidget2)
-        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.verticalLayout_20 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_20.setObjectName("verticalLayout_20")
-        self.radioButton_GCovYSize = QtWidgets.QRadioButton(self.layoutWidget2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.radioButton_GCovYSize.sizePolicy().hasHeightForWidth())
-        self.radioButton_GCovYSize.setSizePolicy(sizePolicy)
-        self.radioButton_GCovYSize.setMinimumSize(QtCore.QSize(93, 25))
-        self.radioButton_GCovYSize.setAutoExclusive(False)
-        self.radioButton_GCovYSize.setObjectName("radioButton_GCovYSize")
-        self.verticalLayout_20.addWidget(self.radioButton_GCovYSize)
-        self.radioButton_GCovYRes = QtWidgets.QRadioButton(self.layoutWidget2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.radioButton_GCovYRes.sizePolicy().hasHeightForWidth())
-        self.radioButton_GCovYRes.setSizePolicy(sizePolicy)
-        self.radioButton_GCovYRes.setMinimumSize(QtCore.QSize(112, 25))
-        self.radioButton_GCovYRes.setAutoExclusive(False)
-        self.radioButton_GCovYRes.setObjectName("radioButton_GCovYRes")
-        self.verticalLayout_20.addWidget(self.radioButton_GCovYRes)
-        self.horizontalLayout_5.addLayout(self.verticalLayout_20)
-        self.verticalLayout_19 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_19.setObjectName("verticalLayout_19")
-        self.label_GCovYAxisLabel = QtWidgets.QLabel(self.layoutWidget2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_GCovYAxisLabel.sizePolicy().hasHeightForWidth())
-        self.label_GCovYAxisLabel.setSizePolicy(sizePolicy)
-        self.label_GCovYAxisLabel.setMinimumSize(QtCore.QSize(93, 25))
-        self.label_GCovYAxisLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_GCovYAxisLabel.setObjectName("label_GCovYAxisLabel")
-        self.verticalLayout_19.addWidget(self.label_GCovYAxisLabel)
-        self.lineEdit_GCovYAxisLabel = QtWidgets.QLineEdit(self.layoutWidget2)
-        self.lineEdit_GCovYAxisLabel.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_GCovYAxisLabel.sizePolicy().hasHeightForWidth())
-        self.lineEdit_GCovYAxisLabel.setSizePolicy(sizePolicy)
-        self.lineEdit_GCovYAxisLabel.setMinimumSize(QtCore.QSize(93, 25))
-        self.lineEdit_GCovYAxisLabel.setObjectName("lineEdit_GCovYAxisLabel")
-        self.verticalLayout_19.addWidget(self.lineEdit_GCovYAxisLabel)
-        self.horizontalLayout_5.addLayout(self.verticalLayout_19)
-        self.verticalLayout_12 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_12.setObjectName("verticalLayout_12")
-        self.label_GCovYSize = QtWidgets.QLabel(self.layoutWidget2)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_GCovYSize.sizePolicy().hasHeightForWidth())
-        self.label_GCovYSize.setSizePolicy(sizePolicy)
-        self.label_GCovYSize.setMinimumSize(QtCore.QSize(93, 25))
-        self.label_GCovYSize.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_GCovYSize.setObjectName("label_GCovYSize")
-        self.verticalLayout_12.addWidget(self.label_GCovYSize)
-        self.lineEdit_GCovYSize = QtWidgets.QLineEdit(self.layoutWidget2)
-        self.lineEdit_GCovYSize.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_GCovYSize.sizePolicy().hasHeightForWidth())
-        self.lineEdit_GCovYSize.setSizePolicy(sizePolicy)
-        self.lineEdit_GCovYSize.setMinimumSize(QtCore.QSize(93, 25))
-        self.lineEdit_GCovYSize.setObjectName("lineEdit_GCovYSize")
-        self.verticalLayout_12.addWidget(self.lineEdit_GCovYSize)
-        self.horizontalLayout_5.addLayout(self.verticalLayout_12)
-        self.radioButton_GCov_OutSizeOrig = QtWidgets.QRadioButton(self.groupBox_18)
-        self.radioButton_GCov_OutSizeOrig.setGeometry(QtCore.QRect(134, 1, 151, 22))
-        self.radioButton_GCov_OutSizeOrig.setChecked(True)
-        self.radioButton_GCov_OutSizeOrig.setAutoExclusive(True)
-        self.radioButton_GCov_OutSizeOrig.setObjectName("radioButton_GCov_OutSizeOrig")
-        self.gridLayout_8.addWidget(self.groupBox_18, 1, 0, 1, 1)
+
         self.horizontalLayout_16.addLayout(self.gridLayout_8)
         self.verticalLayout_25.addLayout(self.horizontalLayout_16)
         self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
@@ -1190,9 +562,9 @@ class Ui_QgsWcsClient2(object):
         self.tab_Help.setObjectName("tab_Help")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.tab_Help)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.textEdit = QtWidgets.QTextEdit(self.tab_Help)
-        self.textEdit.setObjectName("textEdit")
-        self.verticalLayout_3.addWidget(self.textEdit)
+        self.textEdit_tab_help_content = QtWidgets.QTextEdit(self.tab_Help)
+        self.textEdit_tab_help_content.setObjectName("textEdit")
+        self.verticalLayout_3.addWidget(self.textEdit_tab_help_content)
         self.horizontalLayout_18 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_18.setObjectName("horizontalLayout_18")
         spacerItem18 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -1206,9 +578,9 @@ class Ui_QgsWcsClient2(object):
         self.tab_About.setObjectName("tab_About")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.tab_About)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.textEdit_2 = QtWidgets.QTextEdit(self.tab_About)
-        self.textEdit_2.setObjectName("textEdit_2")
-        self.verticalLayout.addWidget(self.textEdit_2)
+        self.textEdit_tab_about_content = QtWidgets.QTextEdit(self.tab_About)
+        self.textEdit_tab_about_content.setObjectName("textEdit_2")
+        self.verticalLayout.addWidget(self.textEdit_tab_about_content)
         self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_19.setObjectName("horizontalLayout_19")
         spacerItem19 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -1233,22 +605,14 @@ class Ui_QgsWcsClient2(object):
         self.btnClose_About.clicked.connect(QgsWcsClient2.close) # type: ignore
         self.btnEdit_Serv.clicked.connect(QgsWcsClient2.editServer) # type: ignore
         self.pushButton_GCov.clicked.connect(QgsWcsClient2.exeGetCoverage) # type: ignore
-        self.pushButton_DC.clicked.connect(QgsWcsClient2.exeDescribeCoverage) # type: ignore
-        self.btnClose_DCS.clicked.connect(QgsWcsClient2.close) # type: ignore
+        self.pushButton_DC.clicked.connect(lambda: QgsWcsClient2.exeDescribeCoverage(True)) # type: ignore
         self.btnNew_Serv.clicked.connect(QgsWcsClient2.newServer) # type: ignore
-        self.pushButton_DCS.clicked.connect(QgsWcsClient2.exeDescribeEOCoverageSet) # type: ignore
         self.btnConnectServer_Serv.clicked.connect(QgsWcsClient2.connectServer) # type: ignore
-        self.checkBox_DCS_ActiveCount.stateChanged['int'].connect(QgsWcsClient2.enableDCS_ActiveCount) # type: ignore
-        self.radioButton_GCovSubOrig.clicked.connect(QgsWcsClient2.enableGCov_SubOrig) # type: ignore
-        self.radioButton_GCovSubCRS.clicked.connect(QgsWcsClient2.enableGCov_SubCRS) # type: ignore
-        self.radioButton_GCovSubPixel.clicked.connect(QgsWcsClient2.enableGCov_SubPixel) # type: ignore
-        self.radioButton_GCovXSize.clicked.connect(QgsWcsClient2.enableGCov_XSize) # type: ignore
-        self.radioButton_GCovXRes.clicked.connect(QgsWcsClient2.enableGCov_XResolution) # type: ignore
-        self.radioButton_GCovYSize.clicked.connect(QgsWcsClient2.enableGCov_YSize) # type: ignore
-        self.radioButton_GCovYRes.clicked.connect(QgsWcsClient2.enableGCov_YResolution) # type: ignore
-        self.radioButton_GCov_OutSizeOrig.clicked.connect(QgsWcsClient2.disableGCov_OutSize) # type: ignore
-        self.toolButton_Serv_OutputLoc.clicked.connect(QgsWcsClient2.get_outputLoc) # type: ignore
-        self.checkBox_DCS_ActiveDate.stateChanged['int'].connect(QgsWcsClient2.enableDCS_ActiveDate) # type: ignore
+        self.toolButton_Serv_OutputLoc.clicked.connect(QgsWcsClient2.get_outputLoc)  # type: ignore
+
+        self.radioButton_GCovOutputCRSOrig.clicked.connect(QgsWcsClient2.enableGCov_SubOrig) # type: ignore
+        self.radioButton_GCovOutputCRS.clicked.connect(QgsWcsClient2.enableGCov_SubCRS) # type: ignore
+
         self.btnImport_QgsWcsUrls.clicked.connect(QgsWcsClient2.importQgis_ServList) # type: ignore
         self.btnSort_Serv.clicked.connect(QgsWcsClient2.sortServerListing) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(QgsWcsClient2)
@@ -1276,46 +640,18 @@ class Ui_QgsWcsClient2(object):
         QgsWcsClient2.setTabOrder(self.treeWidget_GCa, self.treeWidget_DC)
         QgsWcsClient2.setTabOrder(self.treeWidget_DC, self.pushButton_DC)
         QgsWcsClient2.setTabOrder(self.pushButton_DC, self.btnClose_DC)
-        QgsWcsClient2.setTabOrder(self.btnClose_DC, self.pushButton_DCS)
-        QgsWcsClient2.setTabOrder(self.pushButton_DCS, self.treeWidget_DCS)
-        QgsWcsClient2.setTabOrder(self.treeWidget_DCS, self.btnClose_DCS)
-        QgsWcsClient2.setTabOrder(self.btnClose_DCS, self.radioButton_ContOver)
-        QgsWcsClient2.setTabOrder(self.radioButton_ContOver, self.radioButton_ContCont)
-        QgsWcsClient2.setTabOrder(self.radioButton_ContCont, self.spinBox_DCSCount)
-        QgsWcsClient2.setTabOrder(self.spinBox_DCSCount, self.checkBox_DCS_ActiveCount)
-        QgsWcsClient2.setTabOrder(self.checkBox_DCS_ActiveCount, self.checkBox_DCSAll)
-        QgsWcsClient2.setTabOrder(self.checkBox_DCSAll, self.checkBox_DCSDatSerDesc)
-        QgsWcsClient2.setTabOrder(self.checkBox_DCSDatSerDesc, self.checkBox_DCSCovDesc)
-        QgsWcsClient2.setTabOrder(self.checkBox_DCSCovDesc, self.pushButton_GCov)
         QgsWcsClient2.setTabOrder(self.pushButton_GCov, self.btnClose_GCov)
         QgsWcsClient2.setTabOrder(self.btnClose_GCov, self.treeWidget_GCov)
-        QgsWcsClient2.setTabOrder(self.treeWidget_GCov, self.lineEdit_GCovMaxLat)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovMaxLat, self.lineEdit_GCovMinLon)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovMinLon, self.lineEdit_GCovMaxLon)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovMaxLon, self.lineEdit_GCovMinLat)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovMinLat, self.lineEdit_GCovBands)
+
         QgsWcsClient2.setTabOrder(self.lineEdit_GCovBands, self.comboBox_GCOvOutFormat)
         QgsWcsClient2.setTabOrder(self.comboBox_GCOvOutFormat, self.comboBox_GCovInterpol)
-        QgsWcsClient2.setTabOrder(self.comboBox_GCovInterpol, self.comboBox_GCovOutCRS)
-        QgsWcsClient2.setTabOrder(self.comboBox_GCovOutCRS, self.lineEdit_GCovXAxisLabel)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovXAxisLabel, self.radioButton_GCovXRes)
-        QgsWcsClient2.setTabOrder(self.radioButton_GCovXRes, self.radioButton_GCovXSize)
-        QgsWcsClient2.setTabOrder(self.radioButton_GCovXSize, self.lineEdit_GCovXSize)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovXSize, self.lineEdit_GCovYAxisLabel)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovYAxisLabel, self.radioButton_GCovYSize)
-        QgsWcsClient2.setTabOrder(self.radioButton_GCovYSize, self.radioButton_GCovYRes)
-        QgsWcsClient2.setTabOrder(self.radioButton_GCovYRes, self.lineEdit_GCovYSize)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovYSize, self.radioButton_GCov_OutSizeOrig)
-        QgsWcsClient2.setTabOrder(self.radioButton_GCov_OutSizeOrig, self.radioButton_GCovSubOrig)
-        QgsWcsClient2.setTabOrder(self.radioButton_GCovSubOrig, self.radioButton_GCovSubCRS)
-        QgsWcsClient2.setTabOrder(self.radioButton_GCovSubCRS, self.radioButton_GCovSubPixel)
-        QgsWcsClient2.setTabOrder(self.radioButton_GCovSubPixel, self.lineEdit_GCovSubEPSG)
-        QgsWcsClient2.setTabOrder(self.lineEdit_GCovSubEPSG, self.btnClose_Help)
+
+        QgsWcsClient2.setTabOrder(self.lineEdit_GCovOutputEPSG, self.btnClose_Help)
         QgsWcsClient2.setTabOrder(self.btnClose_Help, self.btnClose_About)
 
     def retranslateUi(self, QgsWcsClient2):
         _translate = QtCore.QCoreApplication.translate
-        QgsWcsClient2.setWindowTitle(_translate("QgsWcsClient2", "QgsWcsClient2"))
+        QgsWcsClient2.setWindowTitle(_translate("QgsWcsClient2", "WCS 2 Client"))
         self.GroupBox_9.setTitle(_translate("QgsWcsClient2", "Server Connections:"))
         self.label_6.setText(_translate("QgsWcsClient2", "Server"))
         self.btnConnectServer_Serv.setText(_translate("QgsWcsClient2", "&Connect to Server"))
@@ -1323,12 +659,16 @@ class Ui_QgsWcsClient2(object):
         self.btnEdit_Serv.setText(_translate("QgsWcsClient2", "&Edit"))
         self.btnDelete_Serv.setText(_translate("QgsWcsClient2", "&Delete"))
         self.btnSort_Serv.setText(_translate("QgsWcsClient2", "Sort List"))
+        self.btnSort_Serv.setVisible(False)
+
         self.btnImport_QgsWcsUrls.setText(_translate("QgsWcsClient2", "&Import  Qgs WCS"))
+        self.btnImport_QgsWcsUrls.setVisible(False)
+
         self.label_2.setText(_translate("QgsWcsClient2", "General Information  / Errors / etc."))
-        self.groupBox.setTitle(_translate("QgsWcsClient2", "Local Storage Path  (only required for downloading with GetCoverage): "))
+        self.groupBox.setTitle(_translate("QgsWcsClient2", "Set local storage path  (only required for downloading output / error file in GetCoverage tab): "))
         self.toolButton_Serv_OutputLoc.setText(_translate("QgsWcsClient2", "..."))
         self.btnClose_Serv.setText(_translate("QgsWcsClient2", "Close"))
-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_Serv), _translate("QgsWcsClient2", "Server / Storage"))
+        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_Serv), _translate("QgsWcsClient2", "Server"))
         self.GroupBox_4.setTitle(_translate("QgsWcsClient2", "Capabilities Document - Select Sections:"))
         self.label.setText(_translate("QgsWcsClient2", "( Note:  some WCS Servers might not respect these section parameters )"))
         self.checkBox_GCaDaSerSum.setText(_translate("QgsWcsClient2", "DatasetSeriesSummary"))
@@ -1345,255 +685,63 @@ class Ui_QgsWcsClient2(object):
         self.dateEdit_GCaDocUpdate.setSpecialValueText(_translate("QgsWcsClient2", "1970-01-01"))
         self.dateEdit_GCaDocUpdate.setDisplayFormat(_translate("QgsWcsClient2", "yyyy-MM-dd"))
         self.label_3.setText(_translate("QgsWcsClient2", "Results of GetCapabilities Request:    Select one or more items for further usage:  "))
-        self.label_7.setText(_translate("QgsWcsClient2", "[C] - Coverage / [S] - DatasetSeries"))
         self.treeWidget_GCa.setSortingEnabled(True)
-        self.treeWidget_GCa.headerItem().setText(0, _translate("QgsWcsClient2", "CoverageID/DataSetSeriesID"))
-        self.treeWidget_GCa.headerItem().setText(1, _translate("QgsWcsClient2", "BeginTime"))
-        self.treeWidget_GCa.headerItem().setText(2, _translate("QgsWcsClient2", "EndTime"))
-        self.treeWidget_GCa.headerItem().setText(3, _translate("QgsWcsClient2", "UpperCorner [WGS84]"))
-        self.treeWidget_GCa.headerItem().setText(4, _translate("QgsWcsClient2", "LowerCorner [WGS84]"))
-        self.treeWidget_GCa.headerItem().setText(5, _translate("QgsWcsClient2", "[C]/[S]"))
+        self.treeWidget_GCa.headerItem().setText(0, _translate("QgsWcsClient2", "CoverageID"))
+        self.treeWidget_GCa.headerItem().setText(1, _translate("QgsWcsClient2", "AxisLabels"))
+        self.treeWidget_GCa.headerItem().setText(2, _translate("QgsWcsClient2", "LowerCorner"))
+        self.treeWidget_GCa.headerItem().setText(3, _translate("QgsWcsClient2", "UpperCorner"))
+
         self.checkBox_GCaFull.setText(_translate("QgsWcsClient2", "View GetCapabilities XML  "))
         self.btnClose_GCa.setText(_translate("QgsWcsClient2", "Close"))
         self.pushButton_GCa.setText(_translate("QgsWcsClient2", "GetCapabilities"))
         self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_GCa), _translate("QgsWcsClient2", "GetCapabilities"))
-        self.label_DCInfo1.setText(_translate("QgsWcsClient2", "Describe a Coverage or a Stitched Mosaic:"))
-        self.label_DCInfo2.setText(_translate("QgsWcsClient2", "Select the CoverageID\'s of interest, then press the DescribeCoverage button."))
+        self.label_DCInfo1.setText(_translate("QgsWcsClient2", "Describe a Coverage:"))
+        self.label_DCInfo2.setText(_translate("QgsWcsClient2", "Select the CoverageID of interest, then press the DescribeCoverage button."))
         self.label_4.setText(_translate("QgsWcsClient2", "Selections from GetCapabilities Result:  Select one item to be used in a DescribeCoverage Requests:"))
         self.treeWidget_DC.setSortingEnabled(True)
         self.treeWidget_DC.headerItem().setText(0, _translate("QgsWcsClient2", "CoverageIDs"))
         self.btnClose_DC.setText(_translate("QgsWcsClient2", "Close"))
         self.pushButton_DC.setText(_translate("QgsWcsClient2", "DescribeCoverage"))
         self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_DC), _translate("QgsWcsClient2", "DescribeCoverage"))
-        self.label_DCSInfo1.setText(_translate("QgsWcsClient2", "Describe a DatsetSeries,  a Coverage, or a Stitched Mosaic:"))
-        self.label_DCSInfo2.setText(_translate("QgsWcsClient2", "     Select the ID of interest, choose optional AOI and TOI, then press the DescribeEOCoverageSet button."))
-        self.label_5.setText(_translate("QgsWcsClient2", "Selections from GetCapabilities Result:   Select item(s) for further usage:"))
-        self.treeWidget_DCS.setSortingEnabled(True)
-        self.treeWidget_DCS.headerItem().setText(0, _translate("QgsWcsClient2", "DataSeriesID"))
-        self.treeWidget_DCS.headerItem().setText(1, _translate("QgsWcsClient2", "BeginTime"))
-        self.treeWidget_DCS.headerItem().setText(2, _translate("QgsWcsClient2", "EndTime"))
-        self.treeWidget_DCS.headerItem().setText(3, _translate("QgsWcsClient2", "UpperCorner [WGS84]"))
-        self.treeWidget_DCS.headerItem().setText(4, _translate("QgsWcsClient2", "LowerCorner [WGS84]"))
-        self.GroupBox_10.setTitle(_translate("QgsWcsClient2", "EOCoverageSet Document - Select Sections:"))
-        self.checkBox_DCSAll.setText(_translate("QgsWcsClient2", "All"))
-        self.checkBox_DCSDatSerDesc.setText(_translate("QgsWcsClient2", "DatasetSeriesDescriptions"))
-        self.checkBox_DCSCovDesc.setText(_translate("QgsWcsClient2", "CoverageDescriptions"))
-        self.label_8.setText(_translate("QgsWcsClient2", "(use only for XML viewing)"))
-        self.groupBox_21.setTitle(_translate("QgsWcsClient2", "Area of Interest  (AOI in WGS-84):"))
-        self.label_DCSMaxLat.setText(_translate("QgsWcsClient2", "Max. Latitude"))
-        self.label_DCSMinLon.setText(_translate("QgsWcsClient2", "Min. \n"
-"Longitude"))
-        self.label_DCSMaxLon.setText(_translate("QgsWcsClient2", "Max. \n"
-"Longitude"))
-        self.label_DCSMinLat.setText(_translate("QgsWcsClient2", "Min. Latitude"))
-        self.groupBox_12.setTitle(_translate("QgsWcsClient2", "Time of Interrest (TOI):"))
-        self.dateTimeEdit_DCSEnd.setDisplayFormat(_translate("QgsWcsClient2", "yyyy-MM-ddThh:mm "))
-        self.dateTimeEdit_DCSBegin.setDisplayFormat(_translate("QgsWcsClient2", "yyyy-MM-ddThh:mm "))
-        self.label_DCSEnd.setText(_translate("QgsWcsClient2", "End Time:"))
-        self.label_DCSBegin.setText(_translate("QgsWcsClient2", "Begin Time:"))
-        self.groupBox_14.setTitle(_translate("QgsWcsClient2", "Hits Count: "))
-        self.groupBox_13.setTitle(_translate("QgsWcsClient2", "Containment:"))
-        self.radioButton_ContOver.setText(_translate("QgsWcsClient2", "overlaps"))
-        self.radioButton_ContCont.setText(_translate("QgsWcsClient2", "contains"))
-        self.checkBox_DCSFull.setText(_translate("QgsWcsClient2", "View DescribeEOCoverageSet XML "))
-        self.btnClose_DCS.setText(_translate("QgsWcsClient2", "Close"))
-        self.pushButton_DCS.setText(_translate("QgsWcsClient2", "DescribeEOCoverageSet"))
-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_DCS), _translate("QgsWcsClient2", "DescribeEOCoverageSet"))
+
         self.label_GCovInfo1.setText(_translate("QgsWcsClient2", "GetCoverage:   download a Coverage "))
-        self.label_GCOvInfo2.setText(_translate("QgsWcsClient2", "Select the ID\'s of interest (and choose optional parameters), then press the GetCoverage button"))
+        self.label_GCOvInfo2.setText(_translate("QgsWcsClient2", "Select the ID of interest (and choose optional parameters), then press the GetCoverage button"))
         self.treeWidget_GCov.setSortingEnabled(True)
         self.treeWidget_GCov.headerItem().setText(0, _translate("QgsWcsClient2", "CoverageID"))
-        self.groupBox_15.setTitle(_translate("QgsWcsClient2", "Output Subset:"))
-        self.groupBox_16.setTitle(_translate("QgsWcsClient2", "    Coordinates:"))
-        self.label_GCovMinLat.setText(_translate("QgsWcsClient2", "Min. Latitude"))
-        self.label_GCovMaxLat.setText(_translate("QgsWcsClient2", "Max. Latitude"))
-        self.label_GCovMaxLon.setText(_translate("QgsWcsClient2", "Max. \n"
-"Longitude"))
-        self.label_GCovMinLon.setText(_translate("QgsWcsClient2", "Min. \n"
-"Longitude"))
-        self.label_GCOvBands.setText(_translate("QgsWcsClient2", "List of Band No.:"))
+        self.groupBox_15.setTitle(_translate("QgsWcsClient2", "Output Parameters:"))
+
+        self.label_GCOvBands.setText(_translate("QgsWcsClient2", "Ranges Subsets:"))
         self.label_GCovInterpol.setText(_translate("QgsWcsClient2", "Interpolation: "))
         self.comboBox_GCovInterpol.setItemText(0, _translate("QgsWcsClient2", "nearest (default)"))
         self.comboBox_GCovInterpol.setItemText(1, _translate("QgsWcsClient2", "bilinear"))
         self.comboBox_GCovInterpol.setItemText(2, _translate("QgsWcsClient2", "average (slow)"))
         self.label_GCovOutFormat.setText(_translate("QgsWcsClient2", "Output Format:"))
-        self.label_GCovOutCRS.setText(_translate("QgsWcsClient2", "Output CRS\n"
-" (EPSG):"))
-        self.groupBox_17.setTitle(_translate("QgsWcsClient2", "   Type of Subsetting:"))
-        self.radioButton_GCovSubOrig.setText(_translate("QgsWcsClient2", "Original"))
-        self.radioButton_GCovSubCRS.setText(_translate("QgsWcsClient2", "CRS"))
-        self.radioButton_GCovSubPixel.setText(_translate("QgsWcsClient2", "Pixel"))
-        self.label_GCovSubEPSG.setText(_translate("QgsWcsClient2", "EPSG No.:"))
-        self.groupBox_18.setTitle(_translate("QgsWcsClient2", "Output SIze:"))
-        self.groupBox_19.setTitle(_translate("QgsWcsClient2", "X-Dimension"))
-        self.radioButton_GCovXSize.setText(_translate("QgsWcsClient2", "X-Size"))
-        self.radioButton_GCovXRes.setText(_translate("QgsWcsClient2", "X-Resolution"))
-        self.label_GCovXRes.setText(_translate("QgsWcsClient2", "X-Axis Label:"))
-        self.label_GCovXSize.setText(_translate("QgsWcsClient2", "Size: "))
-        self.groupBox_20.setTitle(_translate("QgsWcsClient2", "Y-Dimension"))
-        self.radioButton_GCovYSize.setText(_translate("QgsWcsClient2", "Y-Size"))
-        self.radioButton_GCovYRes.setText(_translate("QgsWcsClient2", "Y-Resolution"))
-        self.label_GCovYAxisLabel.setText(_translate("QgsWcsClient2", "Y-Axis Label:"))
-        self.label_GCovYSize.setText(_translate("QgsWcsClient2", "Size: "))
-        self.radioButton_GCov_OutSizeOrig.setText(_translate("QgsWcsClient2", "Original Outsize:"))
+
+        self.groupBox_17.setTitle(_translate("QgsWcsClient2", "Output CRS:"))
+        self.radioButton_GCovOutputCRSOrig.setText(_translate("QgsWcsClient2", "Original"))
+        self.radioButton_GCovOutputCRS.setText(_translate("QgsWcsClient2", "CRS"))
+        self.label_GCovOutputCRS.setText(_translate("QgsWcsClient2", "EPSG No.:"))
+
+
+        # Second right column
+        self.groupBox_get_cov_axes_subsets.setTitle(_translate("QgsWcsClient2", "Axes Subsets:"))
+
         self.btnClose_GCov.setText(_translate("QgsWcsClient2", "Close"))
         self.pushButton_GCov.setText(_translate("QgsWcsClient2", "GetCoverage"))
         self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_GCov), _translate("QgsWcsClient2", "GetCoverage"))
-        self.textEdit.setHtml(_translate("QgsWcsClient2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:xx-large; font-weight:600;\">WCS 2.0 Client</span></p>\n"
-"<p style=\" margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:x-large; font-weight:600;\">A OGC WCS 2.0/EO-WCS Client (v0.4)</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600;\">Author:</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">   Christian Schiller, Mikhail Rodyonichev, Dimitar Misev</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600;\">Copyright:</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">   EOX IT Services GmbH, Vienna, Austria, 2014; rasdaman GmbH 2024</span></p>\n"
-"<hr width=\"100%\"/>\n"
-"<p style=\" margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:x-large; font-weight:600;\">Help - QgsWcsClient2:   Instructions and Hints</span></p>\n"
-"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">A listing of New Features and Bug-Fixes can be found at GitHub: </span><a href=\"https://github.com/rasdaman/QgisWcs2Client\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/rasdaman/QgisWcs2Client</span></a></p>\n"
-"<p style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:large; font-weight:600;\">Content:</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"#Introduction\"><span style=\" text-decoration: underline; color:#0000ff;\">Introduction:</span></a>   What the QgsWcsClient2 plugin is about    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"#Getting Started\"><span style=\" text-decoration: underline; color:#0000ff;\">Getting Started:</span></a>   Initiating the QgsWcsClient2 plugin    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"#How To\"><span style=\" text-decoration: underline; color:#0000ff;\">How To:</span></a>   A detailed description of the available functionalities and settings    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"#Hint\"><span style=\" text-decoration: underline; color:#0000ff;\">Hint - Erroneous behaviour</span></a>    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"#Quick How To\"><span style=\" text-decoration: underline; color:#0000ff;\">Quick How To:</span></a>   A very short, stepwise description    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"#Other Stuff\"><span style=\" text-decoration: underline; color:#0000ff;\">Other Stuff</span></a></li></ul>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"Introduction\"></a><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:large; font-weight:600;\">I</span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:large; font-weight:600;\">ntroduction:</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">This WCS 2.0/EO-WCS client is intended to be used to access/download single Coverages, StitchedMosaics and DatasetSeries (which are offered by OGC WCS 2.0/EO-WCS conformant servers) in a convenient way from within QGis (&gt;2.0). It does not work for WCS v. 1.0 or v1.1 protocol (use the QGis native WCS-client for those). Downloaded datasets are stored locally and loaded directly into QGis for further usage. Multiple GetCoverage request can be issued (e.g. to receive a time-series) by a single click.<br />This client provides the possibility to send OGC </span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-style:italic;\">GetCapabilities</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">, </span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-style:italic;\">DescribeCoverage</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">, </span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-style:italic;\">DescribeEOCoverageSet</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">, and </span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-style:italic;\">GetCoverage</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\"> requests to a selected WCS 2.0/EO-WCS server. The respective request results are received and either shown completely or the relevant information is extracted and provided in the GUI for further usage within the client.<br />The GUI provides tabs for each request, allowing to select optional parameters (e.g. sub-setting in space and/or time) to be sent with the request. However, not all servers may honor all optional parameters. So if you receive an error message or no answser at all try it with different optional settings. See also the \'How To\' section for further details and the \'Hint - Erroneous behaviour\' section.</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"Getting Started\"></a><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:large; font-weight:600;\">G</span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:large; font-weight:600;\">etting Started:</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The first thing which needs to be done is to define at least one server in the &quot;Server/Storage&quot; tab. Press the &quot;New&quot; button, and enter a (personal) &quot;Server Name&quot; and the WCS Access &quot;Server URL&quot;. Press &quot;OK&quot; when done. All server entries are stored in the QgsWcsClient2 plugin installation directory.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Make sure the provided WCS Access &quot;Server URL&quot; complies to OGC OWS (e.g. usually OGC-Service Access-URls end with a &quot;?&quot;).    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The supplied server information can be changed anytime utilizing the &quot;Edit&quot; button.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Any server entry can be deleted utilizing the &quot;Delete&quot; button&quot;.     </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">When the server information has been provided, select the desired &quot;Server&quot; entry from the list and press the &quot;Connect to Server&quot; button.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">You always need to be connected to a server before you can send requests!</li></ul>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"How To\"></a><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:large; font-weight:600;\">H</span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:large; font-weight:600;\">ow To:</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">This section shortly describes a \'typical\' usage scenario, starting with a </span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-style:italic;\">GetCapabilities</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\"> request to the final download of Coverages utilizing a </span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-style:italic;\">GetCoverage</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\"> request.<br />It also explains the provided options available in the GUI.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">Server/Storage tab</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The QgsWcsClient2 plugin always starts with the &quot;Server/Storage&quot; tab.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select the desired &quot;Server&quot; entry from the list and press the &quot;Connect to Server&quot; button. You always need to be connected to a server before you can send requests!    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">When the connection is established successfully, the line <span style=\" font-family:\'Courier New,courier\'; font-size:large;\">&quot;Response:  Server OK&quot;</span> is printed in the &quot;General Information / Errors / etc.&quot; field.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If you want to access/download a Coverage, you need to supply a &quot;Local Storage Path&quot;. Either type the path into the &quot;Local Storage Path&quot; field or use the &quot;...&quot; button for the path selection.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">When the server connection is established click on the &quot;GetCapabilities&quot; tab.</li></ul>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">NEW: You may now also import WCS Server names/Urls from the QGis native settings (but be aware that QgsWcsClient2 is only for WCS &lt;2.0.</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">NEW: You may sort your Server list aphabetically</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">NEW: If a server-redirection is encountered a warning message with the relevant information is presented. So if xou ancounter this,please update the server Url.  An automatic redirection has not been implemented due to security concerns. </li></ul>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">GetCapabilities tab</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The section parameters allows you to limit the amount and type of information retrieved from the WCS server. The following <span style=\" font-style:italic;\">GetCapabilities</span> section parameters are available:</li>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"><br />        </span></p>\n"
-"<ul type=\"circle\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">All:   Requests full information (equals to no selections)            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">DatasetSeriesSummary:   Summary about offered DatasetSeries            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">CoverageSummary:   Summary about offered Coverages            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ServiceIdentification:   Information about available Service Profiles            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ServiceProvider:   Information about the Service Provider            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ServiceMetadata:   Information about offered File Formats, offered CRSs, etc.            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">OperationsMetadata:   Metadata about available Service Operations (e.g. enabled requests)            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Contents:   Overview of offered Content (i.e. list of CoverageIDs and basic DatasetSeries information)            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Languages:   Offered Languages (if available)        </li></ul>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"><br />    </span></p>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">You may select requesting only sections (subsets) of the full <span style=\" font-style:italic;\">GetCapabilities</span> document. The default settings used have been chosen for fast and efficient usage (some WCS servers may return huge results and therefore take quite some time to respond).    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If you use the same server frequently you are probably not interested in \'older\' information. If you want to limit the returned information to \'newer\' offers only activate the &quot;Document Update Sequence&quot; check-box and provide a \'Cutoff Date\', i.e. only newer information shall be provided. However, there is no gurantee that the respective server support this feature.</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">When the desired options are chosen press the &quot;GetCapabilities&quot; button.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The returned results will be shown in the &quot;Results of GetCapabilities Request&quot; field. There you will see the the following columns:        </li>\n"
-"<ul type=\"circle\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">CoverageID/DatasetSeriesID            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">BeginTime            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">EndTime            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">UpperCorner [WGS84]</li>\n"
-"<ul type=\"circle\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">LowerCorner [WGS84]</li></ul>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">[C]overage/[S]eries        </li></ul>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><br /></p>\n"
-"<ul type=\"circle\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">In the first column, either a CoverageID or a DatasetSeriesID is provided. The type of ID can be seen in the last column ([C] indicates a Coverage, [S] indicates a DatasetSerie). The two time columns are assumed to be self-explanatory.    </li></ul>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">When the <span style=\" font-style:italic;\">GetCapabilities</span> results are listed you have to choose at least one CoverageID or DatasetSeriesID. However, the selection of multiple IDs is possible. </li>\n"
-"<ul type=\"circle\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The selected items will automatically show up in the &quot;DescribeCoverage&quot; tab and in the &quot;GetCapabilities&quot; tab (if a Coverage has been selected) or only the &quot;DescribeEOCoverageSet&quot; tab (if a DatasetSeries has been selected).    </li></ul>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Now continue, changing either to the &quot;DescribeCoverage&quot; tab or to the &quot;DescribeEOCoverageSet&quot; tab. If you have chosen only CoverageIDs you may also switch directly to the &quot;GetCapabilities&quot; tab.</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">NEW: By selecting the &quot;<span style=\" font-style:italic;\">View GetCapabilities XML</span>&quot; checkbox (at the lower left) you can look at the actual XML returned. If you want to save it, please simply use copy/paste (Hint: Ctrl-A selects all the text) to do so. </li></ul>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">DescribeCoverage tab</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If one or more CoverageIDs have been selected in the &quot;Results of GetCapabilities Request&quot; field they will be shown in the &quot;Selections from the GetCapabilities Results&quot; field. You need to select a single CoverageID to send a <span style=\" font-style:italic;\">DescribeCoverage</span> request to the server. The full results of this request will be shown in a separate window. No optional parameters are available for a <span style=\" font-style:italic;\">DescribeCoverage</span> request.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The provided information, however, may later be useful e.g. for specification of the Area of Interest (AOI).</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Furthermore, also some of the information required for subsetting (e.g. axis names, projection) is only availbale via a dedicated <span style=\" font-style:italic;\">DescribeCoverage</span> request. It therefroe highly recommended to issue <span style=\" font-style:italic;\">DescribeCoverage</span> before you continue to access a Coverage. </li></ul>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">DescribeEOCoverageSet tab</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If one or more DatasetSeriesIDs have been selected in the &quot;Results of GetCapabilities Request&quot; field they will be shown in the &quot;Selections from the GetCapabilities Results&quot; field.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">For the <span style=\" font-style:italic;\">DescribeEOCoverageSet</span> response document the following sections restrictions are available:</li>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"><br />        </span></p>\n"
-"<ul type=\"circle\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">All:   Requests full information (equals to no selections)            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">DatasetSeriesDescriptions:   Descriptions of the offered DatasetSeries        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">CoverageDescriptions:   Descriptions of the offered Coverages        </li></ul>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"><br />    </span></p>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The <span style=\" font-style:italic;\">DescribeEOCoverageSet</span> request can be limited to a user provided Area of Interest (AOI). Here, the AOI always has to be provided in WGS84 !! coordinates (i.e. long/lat in degrees). To use an AOI just enter the desired coordinate values.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The <span style=\" font-style:italic;\">DescribeEoCoverageSet</span> request can also be limited to a user provided Time of Interest(TOI). The TOI has to be provided in ISO-Format. To activate the use of TOI click the respective check-box and choose the desired Date-Time values. You may modify the /DateTime values also manually. Providing a TOI will limit the returned results to the respective time period.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Containment:   This parameter allows to limit the hits according to:</li>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"><br />        </span></p>\n"
-"<ul type=\"circle\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">overlaps:   Coverages may just touch AOI            </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">contains:   Coverages must be fully inside AOI        </li></ul>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"><br />    </span></p>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Hits Count:   Limits the number of the returned results.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">NEW: Actually not really, but now made more clear.  The &quot;<span style=\" font-style:italic;\">View DescribeEOCoveragSet</span>&quot; checkbox will enable to view the returned XML document.  <br />(In the previous versions this functionality was hidden behind the &quot;Coverage IDs only&quot; checkbox). If you want to save the returned XML document, please simply use copy/paste (Hint: Ctrl-A selects all the text) to do so.</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">NEW: Now also the UperCorner [WGS84] and LowerCorner [WGS84] coordinates are provided in the listing.  </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">You need to select one or more items befor sending a <span style=\" font-style:italic;\">DescribeEOCoverageSet</span> request.</li></ul>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">GetCoverage tab</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The CoverageIDs returned by the <span style=\" font-style:italic;\">DescribeEOCoverageSet</span> request or selected in the &quot;Results of GetCapabilities Request&quot; field  are shown in the &quot;GetCoverage: download a Coverage&quot; field.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select one or more CoverageIDs which you want to download and access in QGis.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The following optional parameters, to limit and configure the resulting downloaded Coverages, are provided:</li>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"><br />    </span></p>\n"
-"<ul type=\"circle\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">AOI:   At the &quot;GetCoverage&quot; tab the AOI values will subset the delivered Coverages to the limits provided by the AOI. The coordinate values to be supplied depend on the setting provided in the &quot;Type of Subsetting&quot; section. See below.        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Type of Subsetting:   These settings influence the coordinate values of the AOI. The default setting is &quot;Original&quot;, i.e. the coordinate values have to correspond to the CRS of the offered Coverages. The list of server supported CRSs (which is gathered during the &quot;Connect to Server&quot; initialisation process) is provided via the the &quot;Output CRS&quot; selection button. However, the &quot;Original&quot; CRS (which corresponds to the CRS of the offered Coverage) is only gathered during a <span style=\" font-style:italic;\">DescribeCoverage</span> or a <span style=\" font-style:italic;\">DescribeEOCoverageSet</span> request (together with the axisLabels). Thereafter the &quot;Output CRS&quot; selection button will be set to show the &quot;Original CRS&quot; as an indication. I.e. if you don\'t issue a <span style=\" font-style:italic;\">DescribeCoverage</span> or a <span style=\" font-style:italic;\">DescribeEOCoverageSet</span> request you have to know by yourself (e.g. by other means) the CRS of the offered/selected Coverage (&quot;Original CRS&quot;).  <br />If you like to provide the coordinates of the AOI in a different CRS you can select the &quot;CRS&quot; radio button and provide the desired EPSG-Code in the designated &quot;EPSG-No.&quot; field (e.g. this method can be used if you don\'t know the &quot;Original CRS&quot;). Attention: when you use this option you might also need to change the &quot;X-Axis &amp; Y-Axis Label&quot; i.e. if you use e.g. EPSG:4326 for the CRS of the &quot;Type of Subsetting&quot; you need to change the labels to \'long\' and \'lat\', respectively. <br />If want to provide pixel coordinates you can select the &quot;Pixel&quot; radio button and provide the AOI in pixel coordinates.<br /> (Note: Not all servers will respect the later two options, so you might get a server error here. See also the <span style=\" font-style:italic;\">Hint - Erroneous behaviour</span> section of this manual for additional information).        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">List of Band Numbers:   Here you may provide a comma-separated list of the desired bands (and their order). The delivered Coverages will be subsetted to contain only the provided bands in the provided order.        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Interpolation:   The method of interpolation applied during subsetting and especially for resizing of the delivered Coverages. Here either the values provided in the Caopabilities document are set or some default values are provided (nearest, bilinear, average). (Note: Not all possibilities might be supported by all WCS servers. The defaults have been chosen on the MapServer\'s capabilities. These are usually overwritten by the values received from the GetCapabilities request).</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Output Format:   You may choose one of the supported &quot;Output Formats&quot; (file formats) in which the Coverages shall be delivered. The listing of the server side supported &quot;Output Formats&quot; is gathered during the &quot;Connect to Server&quot; initialisation process.        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Output CRS:   Independent of the original CRS, you may choose to reproject the delivered Coverages to another CRS offered by the WCS server. The list of offered CRS\'s is provided as a selection button. The listing of server side offered CRS\'s is gathered during the &quot;Connect to Server&quot; initialisation process. As soon as a <span style=\" font-style:italic;\">DescribeCoverage</span> or a <span style=\" font-style:italic;\">DescribeEOCoverageSet</span> request has been issue the value shown correspond to the &quot;Original&quot; CRS of the Coverages.        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Output Size:   This section allows you to resize/rescale the delivered Coverages, independently of the AOI. You may choose either to provide absolute sizes for the &quot;x-&quot; and the &quot;y-dimension&quot; (pixel/line numbers) of the resulting Coverage or you provide the desired resolution (dimension of a pixel according to &quot;Output CRS&quot;) for each of the axis. In either case you may need to run a <span style=\" font-style:italic;\">DescribeCoverage</span> or a <span style=\" font-style:italic;\">DescribeEOCoverageSet</span> request first, in order to gather the correct &quot;Axis-Labels&quot; (if you know them already you may skip this step and provide the &quot;Axis-Labels&quot; manually). To return to the original outsize select the respective &quot;Original Outsize&quot; radio button.        </li></ul>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"><br />    </span></p>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Once you have set all desired \'Output Parameters\', select the &quot;GetCoverage&quot; button to start the download.     </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">This may take some time (according to the number of selected Coverages and their requested size). Please be patient.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The Coverages will be downloaded and stored in the provided location sequentially and will concurrently be shown in the QGis Layers list. .</li></ul>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"Hint\"></a><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">H</span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">int - Erroneous behaviour</span></p>\n"
-"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">In case you encounter an error (except server errors) or other strange behaviour, please close the QgsWcsClient2 plugin, restart QGis, activate the \'Python Console\' from within QGis (Menu: Plugins -&gt; Python Console), reload the QgsWcsClient2 plugin and repeat your previous actions. (Note: in case you have the \'Plugin Reloader\' plugin installed you just need to close the  QgsWcsClient2 plugin, open the \'Python Console\' and reload the QgsWcsClient2 plugin, before repeating your previous actions).    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">You should then get some additional information about the requests sent and errors encountered. Please include this output in an error report to us.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">This output also shows the requests sent to the servers. Please copy these requests and try them in a regular browser and check if they work there and also check the error messages returned from the server, before sending error reports.     </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">In most cases problems will be due to server errors e.g. an optional parameter is not supported. Unfortunately some servers do not indicate this directly but just issue a general server error. So please try the request with differernt parameter settings before sending error reports.</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">NEW:  I tried to anticipate the most common error issues and provide direct infomation and hints to the user. But I certainly haven\'t covered all possibilities. </li></ul>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"Quick How To\"></a><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">Q</span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">uick How To:</span></p>\n"
-"<ol style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select a WCS server from the &quot;Server&quot; list and press the &quot;Connect to Server&quot; button    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Provide a &quot;Local Storage Path&quot; where downloaded Coverages shall be stored    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Switch to the &quot;GetCapabiltites&quot; tab and press the &quot;GetCapabilties&quot; button    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select one or more CoveragesIDs and/or DataSeriesIDs of interest    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If Coverages have been selected, switch to the &quot;DescribeCoverage&quot; tab    </li>\n"
-"<ol type=\"a\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Issue a DescribeCoverage request        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">check the returned DescribeCoverage result and close it        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">switch to the &quot;GetCoverage&quot; tab        </li></ol>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If DatasetSeries have ben selected, switch to the &quot;DescribeEOCoverageSet&quot; tab    </li>\n"
-"<ol type=\"a\" style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 2;\"><li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Maybe provide an AOI and maybe a TOI to which the search for coverages in the respective DatasetSeries shall be limited.</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Select one or more CoveragesIDs and/or DataSeriesIDs of interest        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Press the &quot;DescribeEOCoverageSet&quot; button        </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The received results will be automatically shown in the &quot;GetCoverage&quot; tab        </li></ol>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Optional:    Provide an AOI to which the Coverages shall be subsetted (pay attention to the &quot;Type of Subsetting&quot;; see the \'How To\' for details). You may also provide a comma-separated list of &quot;Bands&quot; considering their order    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Check for the desired &quot;Output Format&quot; and the &quot;Output CRS&quot; !  Only images can be incorporated into QGis i.e. a download in gml will result in an error.</li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Press &quot;GetCoverage&quot; button to start the download    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The Coverages will be downloaded and stored in the provided location (&quot;Local Storage Path&quot;) sequentially and will concurrently be shown in the QGis Layers list.    </li>\n"
-"<li style=\" font-family:\'arial,helvetica,sans-serif\';\" style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Please be patient. This may take some time (according to the number of selected Coverages and their requested size)</li></ol>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a name=\"Other Stuff\"></a><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">O</span><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:medium; font-weight:600;\">ther Stuff:</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:small; font-weight:600;\">About</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">General Information about:   Author / Company / Contact / Copyright / Acknowledgements / License.<br />Please see the separate &quot;About&quot; tab.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">Extra information (e.g. about recent bug-fixes, etc. can be found at GitHub: </span><a href=\"https://github.com/rasdaman/QgisWcs2Client\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/rasdaman/QgisWcs2Client </span></a></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#0000ff;\"><br /></p></body></html>"))
+
+        # Help tab
+        with open(self.plugin_dir + os.path.sep + "help.html") as f:
+            help_content = f.read()
+
+        self.textEdit_tab_help_content.setHtml(help_content)
         self.btnClose_Help.setText(_translate("QgsWcsClient2", "Close"))
         self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_Help), _translate("QgsWcsClient2", "Help"))
-        self.textEdit_2.setHtml(_translate("QgsWcsClient2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:xx-large; font-weight:600;\">WCS 2.0 Client</span></p>\n"
-"<p style=\" margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-size:x-large; font-weight:600;\">A OGC WCS 2.0/EO-WCS Client</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600;\">Author:</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">   Dimitar Misev</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600;\">Company:</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">   </span><a href=\"http://rasdaman.com\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600; text-decoration: underline; color:#0000ff;\">rasdaman GmbH</span></a><span style=\" font-family:\'arial,helvetica,sans-serif\';\">, Bremen, Germany,</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600;\">Contact:</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">   misev at rasdaman dot com</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600;\">Source code: </span><a href=\"https://github.com/rasdaman/QgisWcs2Client\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/rasdaman/QgisWcs2Client</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">A listing of New Features and Bug-Fixes can also be found at GitHub: </span><a href=\"https://github.com/rasdaman/QgisWcs2Client\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/rasdaman/QgisWcs2Client</span></a></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600;\">Acknowledgements:</span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">   The development of this plugin (a OGC WCS 2.0/EO-WCS Client) was partially financed by ESA (European Space Agency) under the ESA-GSTP DREAM/Delta-Dream project (991/C03-YC)</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\'; font-weight:600;\">License: </span><span style=\" font-family:\'arial,helvetica,sans-serif\';\">    The MIT License (MIT)</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">Copyright (c) 2014 EOX IT Services GmbH; 2024 rasdaman GmbH</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span></p>\n"
-"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'arial,helvetica,sans-serif\';\"> </span></p></body></html>"))
+
+        # About tab
+        with open(self.plugin_dir + os.path.sep + "about.html") as f:
+            about_content = f.read()
+
+        self.textEdit_tab_about_content.setHtml(about_content)
         self.btnClose_About.setText(_translate("QgsWcsClient2", "Close"))
         self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_About), _translate("QgsWcsClient2", "About"))

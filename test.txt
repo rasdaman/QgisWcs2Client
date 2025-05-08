@@ -1,0 +1,872 @@
+diff --git a/icon.png b/icon.png
+index 0e75ef5..443597e 100755
+Binary files a/icon.png and b/icon.png differ
+diff --git a/qgsnewhttpconnectionbasedialog.py b/qgsnewhttpconnectionbasedialog.py
+index f407479..a70d40d 100644
+--- a/qgsnewhttpconnectionbasedialog.py
++++ b/qgsnewhttpconnectionbasedialog.py
+@@ -53,7 +53,7 @@ srvlst = []
+ 
+ 
+ class qgsnewhttpconnectionbase(QDialog, QObject, Ui_qgsnewhttpconnectionbase):
+-    MSG_BOX_TITLE = "WCS2.0/EO-WCS Client"
++    MSG_BOX_TITLE = "WCS 2 Client"
+ 
+     def __init__(self, parent, fl, toEdit, choice):
+         QDialog.__init__(self, parent, fl)
+@@ -63,7 +63,7 @@ class qgsnewhttpconnectionbase(QDialog, QObject, Ui_qgsnewhttpconnectionbase):
+         self.flags = fl
+         self.setupUi(self)
+         self.txt_NewSrvName.setFocus(True)
+-        self.setWindowTitle('WCS2.0/EO-WCS Client')  # +version())
++        self.setWindowTitle('WCS 2 Client')  # +version())
+ 
+     def accept(self):
+         global config
+diff --git a/qgswcsclient2dialog.py b/qgswcsclient2dialog.py
+index 4488b1e..bb73053 100644
+--- a/qgswcsclient2dialog.py
++++ b/qgswcsclient2dialog.py
+@@ -156,11 +156,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
+             # instantiate the wcsClient
+         self.myWCS = wcsClient()
+ 
+-        self.treeWidget_GCa.itemClicked.connect(self.on_GCa_clicked)
+-        self.treeWidget_DC.itemClicked.connect(self.on_DC_clicked)
+-        self.treeWidget_DCS.itemClicked.connect(self.on_DCS_clicked)
+-        self.treeWidget_GCov.itemClicked.connect(self.on_GCov_clicked)
+-
+ #---------------
+         # remove all 'keys' which are set to 'None' from the request-parameter dictionary
+     def clear_req_params(self, req_params):
+@@ -333,14 +328,10 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
+             self.tab_GCa.setEnabled(False)
+         if self.tab_DC.isEnabled():
+             self.tab_DC.setEnabled(False)
+-        if self.tab_DCS.isEnabled():
+-            self.tab_DCS.setEnabled(False)
+         if self.tab_GCov.isEnabled():
+             self.tab_GCov.setEnabled(False)
+         if self.checkBox_GCaFull.isChecked():
+             self.checkBox_GCaFull.setChecked(False)
+-        if self.checkBox_DCSFull.isChecked():
+-            self.checkBox_DCSFull.setChecked(False)
+ 
+         url_base = selected_url
+             # request only  &sections=ServiceMetadata -- this makes if faster (especially on large sites),
+@@ -401,7 +392,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
+ 
+         self.treeWidget_GCa.clear()
+         self.treeWidget_DC.clear()
+-        self.treeWidget_DCS.clear()
+         self.treeWidget_GCov.clear()
+ 
+         self.comboBox_GCovInterpol.clear()
+@@ -421,7 +411,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
+             msg = msg + "\n"+ret_msg
+         self.treeWidget_GCa.clear()
+         self.treeWidget_DC.clear()
+-        self.treeWidget_DCS.clear()
+         self.treeWidget_GCov.clear()
+ 
+         self.progress_dialog.close()
+@@ -432,25 +421,12 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
+             self.tab_GCa.setEnabled(True)
+         if not self.tab_DC.isEnabled():
+             self.tab_DC.setEnabled(True)
+-        if not self.tab_DCS.isEnabled():
+-            self.tab_DCS.setEnabled(True)
+         if not self.tab_GCov.isEnabled():
+             self.tab_GCov.setEnabled(True)
+ 
+         if not self.checkBox_GCa_ActiveDate.isEnabled():
+             self.checkBox_GCa_ActiveDate.setEnabled(True)
+ 
+-        if not self.checkBox_DCS_ActiveDate.isEnabled():
+-            self.checkBox_DCS_ActiveDate.setEnabled(True)
+-        if not self.checkBox_DCS_ActiveCount.isEnabled():
+-            self.checkBox_DCS_ActiveCount.setEnabled(True)
+-        if self.dateTimeEdit_DCSBegin.isEnabled():
+-            self.dateTimeEdit_DCSBegin.setEnabled(False)
+-        if self.dateTimeEdit_DCSEnd.isEnabled():
+-            self.dateTimeEdit_DCSEnd.setEnabled(False)
+-        if not self.spinBox_DCSCount.isEnabled():
+-            self.spinBox_DCSCount.setEnabled(True)
+-
+         if self.radioButton_GCovOutputCRS.isChecked():
+             self.radioButton_GCovOutputCRS.setChecked(False)
+         if not self.radioButton_GCovOutputCRSOrig.isChecked():
+@@ -685,21 +661,9 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
+ 
+         sel_GCa_items = self.treeWidget_GCa.selectedItems()
+         self.treeWidget_DC.clear()
+-        self.treeWidget_DCS.clear()
+         self.treeWidget_GCov.clear()
+ 
+-            #  place selected items also in the DescribeCoverage, DescribeEOCoverageSet, GetCoverage Tab widgets
+-        for elem in sel_GCa_items:
+-          #                           covID          BeginTime       EndTime            UpperCorner      LowerCorner      [C]/[S]
+-            print('Selected Item: ', elem.data(0, 0), elem.data(1, 0), elem.data(2, 0), elem.data(3, 0), elem.data(4, 0), elem.data(5, 0))
+-            if elem.data(0, 0) in cov_ids:
+-                item = QtWidgets.QTreeWidgetItem(self.treeWidget_DC, (elem.data(0, 0), ))
+-                item2 = QtWidgets.QTreeWidgetItem(self.treeWidget_GCov, (elem.data(0, 0), ))
+-            elif elem.data(0, 0) in dss_ids:
+-                item1 = QtWidgets.QTreeWidgetItem(self.treeWidget_DCS, (elem.data(0, 0), elem.data(1, 0), elem.data(2, 0), elem.data(3, 0), elem.data(4, 0)))
+-
+         self.treeWidget_DC.resizeColumnToContents(0)
+-        self.treeWidget_DCS.resizeColumnToContents(0)
+         self.treeWidget_GCov.resizeColumnToContents(0)
+ 
+ 
+@@ -823,172 +787,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
+ 
+ ## ====== End of DescribeCoverage section ======
+ 
+-
+-## ====== Beginning DescribeEOCoverageSet section ======
+-        # read-out the DescribeEOCoverageSet Tab, execute a DescribeEOCoverageSet request and display response
+-        # in the GetCoverage Tab (for further selection and execution)
+-    @mouse_busy
+-    def exeDescribeEOCoverageSet(self, *args):
+-        global selected_eoid
+-        global offered_crs
+-        global offered_version
+-
+-        req_sections = []
+-        selected_serv, selected_url = self.get_serv_url()
+-
+-        if self.checkBox_DCSAll.isChecked():
+-            req_sections.append("All")
+-        if self.checkBox_DCSDatSerDesc.isChecked():
+-            req_sections.append("DatasetSeriesDescriptions")
+-        if self.checkBox_DCSCovDesc.isChecked():
+-            req_sections.append("CoverageDescriptions")
+-
+-        req_sections = ','.join(req_sections)
+-        if len(req_sections) == 0:
+-            req_sections = None
+-
+-        if self.radioButton_ContCont.isChecked():
+-            req_contain = "contains"
+-        if self.radioButton_ContOver.isChecked():
+-            req_contain = "overlaps"
+-
+-        if self.checkBox_DCS_ActiveCount.isChecked():
+-            req_count = self.spinBox_DCSCount.text().encode()
+-        else:
+-            req_count = None
+-
+-        if self.checkBox_DCSFull.isChecked():
+-            req_IDs_only = False
+-        else:
+-            req_IDs_only = True
+-
+-        if self.checkBox_DCSFull.isChecked():
+-            self.checkBox_DCSFull.setChecked(False)
+-
+-        min_x = self.lineEdit_DCSMinLon.text()
+-        max_x = self.lineEdit_DCSMaxLon.text()
+-        min_y = self.lineEdit_DCSMinLat.text()
+-        max_y = self.lineEdit_DCSMaxLat.text()
+-        if len(min_x) == 0 or len(max_x) == 0:
+-            req_lon = None
+-        else:
+-            req_lon = str(min_x+","+max_x)
+-        if len(min_y) == 0 or len(max_y) == 0:
+-            req_lat = None
+-        else:
+-            req_lat = str(min_y+","+max_y)
+-
+-        if self.checkBox_DCS_ActiveDate.isChecked():
+-            beginTime = self.dateTimeEdit_DCSBegin.text()
+-            endTime = self.dateTimeEdit_DCSEnd.text()
+-                # check if begin is before end; otherwise err_msg
+-            if beginTime > endTime:
+-                msg="Dates entered: End-Time before Start-Time\nPlease correct the Dates"
+-                warning_msg(msg)
+-                return
+-
+-            req_toi = str(beginTime.strip()+","+endTime.strip())
+-        else:
+-            req_toi = None
+-
+-
+-        try:
+-                # a basic DescribeEOCoverageSet request
+-            if type(selected_eoid) is list:
+-                selected_eoid = ','.join(selected_eoid)
+-
+-            req_params = {'version': offered_version,
+-                'request': 'DescribeEOCoverageSet',
+-                'server_url': selected_url,
+-                'eoID':  selected_eoid,
+-                'subset_lon': req_lon,
+-                'subset_lat': req_lat,
+-                'subset_time': req_toi,
+-                'containment' : req_contain,
+-                'count' : req_count,
+-                'sections' : req_sections,
+-                'IDs_only': req_IDs_only}
+-        except NameError:
+-            msg = "Error:    You need to select an DatasetSeriesID (eoID) first!\n   (see also GetCapabilities TAB)"
+-            warning_msg(msg)
+-            return
+-
+-
+-        req_params = self.clear_req_params(req_params)
+-
+-        if 'IDs_only' in req_params and req_params['IDs_only'] == True:
+-            try:
+-                DCS_result, axis_labels, offered_crs = self.myWCS.DescribeEOCoverageSet(req_params)
+-            except IndexError:
+-                msg='Sorry, it seems that there are no datasets for the chosen parameters.'
+-                warning_msg(msg)
+-                return
+-
+-                # set a default if AxisdLabels, offered_crs are not presented
+-            if len(axis_labels) == 0:
+-                axis_labels = ["", ""]
+-            if len(offered_crs) == 0:
+-                offered_crs = '4326'
+-        else:
+-            DCS_result = self.myWCS.DescribeEOCoverageSet(req_params)
+-
+-
+-            # get only the IDs to be used thereafter in the GetCoverage Tab & Request
+-        if req_params['IDs_only'] == True:
+-            self.treeWidget_GCov.clear()
+-            for elem in DCS_result:
+-                item = QtWidgets.QTreeWidgetItem(self.treeWidget_GCov, [elem])
+-
+-                # once results are available - put 'Focus' on --> tab_GCov
+-            self.tabWidget_EOWcsClient2.setCurrentIndex(4)
+-            self.treeWidget_GCov.resizeColumnToContents(0)
+-        else:
+-                # just display full result with a text-viewer
+-            myDisplay_txt = display_txt(self)
+-            myDisplay_txt.textBrowser_Disp.setText(DCS_result)
+-            myDisplay_txt.show()
+-
+-
+-        self.treeWidget_DCS.resizeColumnToContents(0)
+-
+-        QApplication.changeOverrideCursor(Qt.ArrowCursor)
+-
+-
+-#---------------
+-        # activate the 2 Date-Subsetting selection fields
+-    def enableDCS_ActiveDate(self):
+-        if self.dateTimeEdit_DCSBegin.isEnabled():
+-            self.dateTimeEdit_DCSBegin.setEnabled(False)
+-            self.dateTimeEdit_DCSEnd.setEnabled(False)
+-        else:
+-            self.dateTimeEdit_DCSBegin.setEnabled(True)
+-            self.dateTimeEdit_DCSEnd.setEnabled(True)
+-
+-
+-#---------------
+-        # activate the Count field
+-    def enableDCS_ActiveCount(self):
+-        if self.spinBox_DCSCount.isEnabled():
+-            self.spinBox_DCSCount.setEnabled(False)
+-        else:
+-            self.spinBox_DCSCount.setEnabled(True)
+-
+-
+-#---------------
+-        # DescribeEOCoverageSet Button
+-    def on_DCS_clicked(self):
+-        global selected_eoid
+-        selected_eoid = []
+-        sel_DCS_items = self.treeWidget_DCS.selectedItems()
+-        for elem in sel_DCS_items:
+-            selected_eoid.append(elem.data(0, 0).encode())
+-            print("Selected EO-Series: ", selected_eoid)  #, type(selected_eoid)   #, sel_DC_items[0].data(0,0)
+-            item2 = QtWidgets.QTreeWidgetItem(self.treeWidget_GCov, elem)
+-
+-
+-## ====== End of DescribeEOCoverageSet section ======
+-
+-
+ ## ====== Beginning GetCoverage section ======
+         # read-out the GetCoverage Tab and execute the GetCoverage request
+     @mouse_busy
+@@ -1097,6 +895,19 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
+ 
+ 
+ #---------------
++
++    @mouse_busy
++    def handle_get_cov_tree_item_clicked(self, item, column):
++        """
++        When clicking on an item on GetCoverage tree, then it should send a DescribeCoverage request to server
++        and fetch the axes from that endpoint
++        """
++        global selected_covid
++        selected_covid = item
++        print(f"Clicked on item {selected_covid}")
++        self.exeDescribeCoverage()
++
++
+         # GetCoverage Button
+     def on_GCov_clicked(self):
+         global selected_gcovid
+diff --git a/ui_qgswcsclient2.py b/ui_qgswcsclient2.py
+index 92f9a02..20dd538 100644
+--- a/ui_qgswcsclient2.py
++++ b/ui_qgswcsclient2.py
+@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
+ 
+ 
+ class Ui_QgsWcsClient2(object):
++
+     def setupUi(self, QgsWcsClient2):
+         QgsWcsClient2.setObjectName("QgsWcsClient2")
+         QgsWcsClient2.resize(830, 748)
+@@ -227,8 +228,6 @@ class Ui_QgsWcsClient2(object):
+         self.checkBox_GCaServMeta.setObjectName("checkBox_GCaServMeta")
+         self.gridLayout_5.addWidget(self.checkBox_GCaServMeta, 2, 1, 1, 1)
+         self.verticalLayout_9.addLayout(self.gridLayout_5)
+-        # self.verticalLayout_8.addWidget(self.GroupBox_4)
+-
+ 
+         self.GroupBox_5 = QtWidgets.QGroupBox()
+         self.GroupBox_5.setMinimumSize(QtCore.QSize(431, 50))
+@@ -282,16 +281,11 @@ class Ui_QgsWcsClient2(object):
+         self.label_3.setObjectName("label_3")
+         self.verticalLayout_10.addWidget(self.label_3)
+ 
+-        # self.label_7 = QtWidgets.QLabel(self.tab_GCa)
+-        # self.label_7.setIndent(15)
+-        # self.label_7.setObjectName("label_7")
+-        # self.verticalLayout_10.addWidget(self.label_7)
+-
++        # Tree views for coverages in GetCapabilities tab
+         self.treeWidget_GCa = QtWidgets.QTreeWidget(self.tab_GCa)
+         self.treeWidget_GCa.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked)
+         self.treeWidget_GCa.setAlternatingRowColors(False)
+         self.treeWidget_GCa.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
+-        self.treeWidget_GCa.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+         self.treeWidget_GCa.setAutoExpandDelay(-1)
+         self.treeWidget_GCa.setIndentation(4)
+         self.treeWidget_GCa.setColumnCount(4)
+@@ -299,6 +293,8 @@ class Ui_QgsWcsClient2(object):
+         self.treeWidget_GCa.header().setDefaultSectionSize(220)
+         self.treeWidget_GCa.header().setMinimumSectionSize(70)
+         self.treeWidget_GCa.header().setStretchLastSection(True)
++        self.treeWidget_GCa.itemClicked.connect(self.handle_get_cap_tree_item_clicked)
++
+         self.verticalLayout_10.addWidget(self.treeWidget_GCa)
+         self.verticalLayout_8.addLayout(self.verticalLayout_10)
+         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+@@ -396,409 +392,6 @@ class Ui_QgsWcsClient2(object):
+         self.horizontalLayout_4.addWidget(self.pushButton_DC)
+         self.verticalLayout_7.addLayout(self.horizontalLayout_4)
+         self.tabWidget_EOWcsClient2.addTab(self.tab_DC, "")
+-        self.tab_DCS = QtWidgets.QWidget()
+-        self.tab_DCS.setEnabled(False)
+-        self.tab_DCS.setObjectName("tab_DCS")
+-        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.tab_DCS)
+-        self.verticalLayout_14.setObjectName("verticalLayout_14")
+-        self.verticalLayout_17 = QtWidgets.QVBoxLayout()
+-        self.verticalLayout_17.setObjectName("verticalLayout_17")
+-        self.label_DCSInfo1 = QtWidgets.QLabel(self.tab_DCS)
+-        font = QtGui.QFont()
+-        font.setBold(True)
+-        font.setWeight(75)
+-        self.label_DCSInfo1.setFont(font)
+-        self.label_DCSInfo1.setObjectName("label_DCSInfo1")
+-        self.verticalLayout_17.addWidget(self.label_DCSInfo1)
+-        self.label_DCSInfo2 = QtWidgets.QLabel(self.tab_DCS)
+-        self.label_DCSInfo2.setObjectName("label_DCSInfo2")
+-        self.verticalLayout_17.addWidget(self.label_DCSInfo2)
+-        self.label_5 = QtWidgets.QLabel(self.tab_DCS)
+-        font = QtGui.QFont()
+-        font.setBold(True)
+-        font.setItalic(True)
+-        font.setWeight(75)
+-        self.label_5.setFont(font)
+-        self.label_5.setObjectName("label_5")
+-        self.verticalLayout_17.addWidget(self.label_5)
+-        self.treeWidget_DCS = QtWidgets.QTreeWidget(self.tab_DCS)
+-        self.treeWidget_DCS.setMinimumSize(QtCore.QSize(0, 200))
+-        self.treeWidget_DCS.setIndentation(4)
+-        self.treeWidget_DCS.setColumnCount(5)
+-        self.treeWidget_DCS.setObjectName("treeWidget_DCS")
+-        self.treeWidget_DCS.header().setDefaultSectionSize(197)
+-        self.treeWidget_DCS.header().setMinimumSectionSize(70)
+-        self.verticalLayout_17.addWidget(self.treeWidget_DCS)
+-        self.verticalLayout_14.addLayout(self.verticalLayout_17)
+-        self.horizontalLayout_20 = QtWidgets.QHBoxLayout()
+-        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+-        self.gridLayout_2 = QtWidgets.QGridLayout()
+-        self.gridLayout_2.setSpacing(6)
+-        self.gridLayout_2.setObjectName("gridLayout_2")
+-        self.GroupBox_10 = QtWidgets.QGroupBox(self.tab_DCS)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.GroupBox_10.sizePolicy().hasHeightForWidth())
+-        self.GroupBox_10.setSizePolicy(sizePolicy)
+-        self.GroupBox_10.setMinimumSize(QtCore.QSize(450, 62))
+-        self.GroupBox_10.setObjectName("GroupBox_10")
+-        self.gridLayoutWidget_5 = QtWidgets.QWidget(self.GroupBox_10)
+-        self.gridLayoutWidget_5.setGeometry(QtCore.QRect(10, 23, 441, 24))
+-        self.gridLayoutWidget_5.setObjectName("gridLayoutWidget_5")
+-        self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.gridLayoutWidget_5)
+-        self.horizontalLayout_13.setContentsMargins(0, 0, 0, 0)
+-        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+-        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_13.addItem(spacerItem5)
+-        self.checkBox_DCSAll = QtWidgets.QCheckBox(self.gridLayoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.checkBox_DCSAll.sizePolicy().hasHeightForWidth())
+-        self.checkBox_DCSAll.setSizePolicy(sizePolicy)
+-        self.checkBox_DCSAll.setObjectName("checkBox_DCSAll")
+-        self.horizontalLayout_13.addWidget(self.checkBox_DCSAll)
+-        self.checkBox_DCSDatSerDesc = QtWidgets.QCheckBox(self.gridLayoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.checkBox_DCSDatSerDesc.sizePolicy().hasHeightForWidth())
+-        self.checkBox_DCSDatSerDesc.setSizePolicy(sizePolicy)
+-        self.checkBox_DCSDatSerDesc.setObjectName("checkBox_DCSDatSerDesc")
+-        self.horizontalLayout_13.addWidget(self.checkBox_DCSDatSerDesc)
+-        self.checkBox_DCSCovDesc = QtWidgets.QCheckBox(self.gridLayoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.checkBox_DCSCovDesc.sizePolicy().hasHeightForWidth())
+-        self.checkBox_DCSCovDesc.setSizePolicy(sizePolicy)
+-        self.checkBox_DCSCovDesc.setObjectName("checkBox_DCSCovDesc")
+-        self.horizontalLayout_13.addWidget(self.checkBox_DCSCovDesc)
+-        self.label_8 = QtWidgets.QLabel(self.GroupBox_10)
+-        self.label_8.setGeometry(QtCore.QRect(95, 43, 181, 17))
+-        self.label_8.setObjectName("label_8")
+-        self.gridLayout_2.addWidget(self.GroupBox_10, 0, 0, 1, 2)
+-        self.groupBox_21 = QtWidgets.QGroupBox(self.tab_DCS)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.groupBox_21.sizePolicy().hasHeightForWidth())
+-        self.groupBox_21.setSizePolicy(sizePolicy)
+-        self.groupBox_21.setMinimumSize(QtCore.QSize(450, 210))
+-        font = QtGui.QFont()
+-        font.setBold(True)
+-        font.setWeight(75)
+-        self.groupBox_21.setFont(font)
+-        self.groupBox_21.setObjectName("groupBox_21")
+-        self.layoutWidget_5 = QtWidgets.QWidget(self.groupBox_21)
+-        self.layoutWidget_5.setGeometry(QtCore.QRect(10, 25, 441, 164))
+-        self.layoutWidget_5.setObjectName("layoutWidget_5")
+-        self.verticalLayout_18 = QtWidgets.QVBoxLayout(self.layoutWidget_5)
+-        self.verticalLayout_18.setContentsMargins(0, 0, 0, 0)
+-        self.verticalLayout_18.setObjectName("verticalLayout_18")
+-        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
+-        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+-        spacerItem6 = QtWidgets.QSpacerItem(148, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_8.addItem(spacerItem6)
+-        self.label_DCSMaxLat = QtWidgets.QLabel(self.layoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.label_DCSMaxLat.sizePolicy().hasHeightForWidth())
+-        self.label_DCSMaxLat.setSizePolicy(sizePolicy)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.label_DCSMaxLat.setFont(font)
+-        self.label_DCSMaxLat.setLayoutDirection(QtCore.Qt.LeftToRight)
+-        self.label_DCSMaxLat.setAlignment(QtCore.Qt.AlignCenter)
+-        self.label_DCSMaxLat.setObjectName("label_DCSMaxLat")
+-        self.horizontalLayout_8.addWidget(self.label_DCSMaxLat)
+-        spacerItem7 = QtWidgets.QSpacerItem(158, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_8.addItem(spacerItem7)
+-        self.verticalLayout_18.addLayout(self.horizontalLayout_8)
+-        self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
+-        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+-        spacerItem8 = QtWidgets.QSpacerItem(128, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_9.addItem(spacerItem8)
+-        self.lineEdit_DCSMaxLat = QtWidgets.QLineEdit(self.layoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.lineEdit_DCSMaxLat.sizePolicy().hasHeightForWidth())
+-        self.lineEdit_DCSMaxLat.setSizePolicy(sizePolicy)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.lineEdit_DCSMaxLat.setFont(font)
+-        self.lineEdit_DCSMaxLat.setObjectName("lineEdit_DCSMaxLat")
+-        self.horizontalLayout_9.addWidget(self.lineEdit_DCSMaxLat)
+-        spacerItem9 = QtWidgets.QSpacerItem(148, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_9.addItem(spacerItem9)
+-        self.verticalLayout_18.addLayout(self.horizontalLayout_9)
+-        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
+-        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+-        self.label_DCSMinLon = QtWidgets.QLabel(self.layoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.label_DCSMinLon.sizePolicy().hasHeightForWidth())
+-        self.label_DCSMinLon.setSizePolicy(sizePolicy)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.label_DCSMinLon.setFont(font)
+-        self.label_DCSMinLon.setAlignment(QtCore.Qt.AlignCenter)
+-        self.label_DCSMinLon.setObjectName("label_DCSMinLon")
+-        self.horizontalLayout_10.addWidget(self.label_DCSMinLon)
+-        self.lineEdit_DCSMinLon = QtWidgets.QLineEdit(self.layoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.lineEdit_DCSMinLon.sizePolicy().hasHeightForWidth())
+-        self.lineEdit_DCSMinLon.setSizePolicy(sizePolicy)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.lineEdit_DCSMinLon.setFont(font)
+-        self.lineEdit_DCSMinLon.setObjectName("lineEdit_DCSMinLon")
+-        self.horizontalLayout_10.addWidget(self.lineEdit_DCSMinLon)
+-        self.lineEdit_DCSMaxLon = QtWidgets.QLineEdit(self.layoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.lineEdit_DCSMaxLon.sizePolicy().hasHeightForWidth())
+-        self.lineEdit_DCSMaxLon.setSizePolicy(sizePolicy)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.lineEdit_DCSMaxLon.setFont(font)
+-        self.lineEdit_DCSMaxLon.setObjectName("lineEdit_DCSMaxLon")
+-        self.horizontalLayout_10.addWidget(self.lineEdit_DCSMaxLon)
+-        self.label_DCSMaxLon = QtWidgets.QLabel(self.layoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.label_DCSMaxLon.sizePolicy().hasHeightForWidth())
+-        self.label_DCSMaxLon.setSizePolicy(sizePolicy)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.label_DCSMaxLon.setFont(font)
+-        self.label_DCSMaxLon.setScaledContents(False)
+-        self.label_DCSMaxLon.setAlignment(QtCore.Qt.AlignCenter)
+-        self.label_DCSMaxLon.setObjectName("label_DCSMaxLon")
+-        self.horizontalLayout_10.addWidget(self.label_DCSMaxLon)
+-        self.verticalLayout_18.addLayout(self.horizontalLayout_10)
+-        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+-        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+-        spacerItem10 = QtWidgets.QSpacerItem(128, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_11.addItem(spacerItem10)
+-        self.lineEdit_DCSMinLat = QtWidgets.QLineEdit(self.layoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.lineEdit_DCSMinLat.sizePolicy().hasHeightForWidth())
+-        self.lineEdit_DCSMinLat.setSizePolicy(sizePolicy)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.lineEdit_DCSMinLat.setFont(font)
+-        self.lineEdit_DCSMinLat.setObjectName("lineEdit_DCSMinLat")
+-        self.horizontalLayout_11.addWidget(self.lineEdit_DCSMinLat)
+-        spacerItem11 = QtWidgets.QSpacerItem(148, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_11.addItem(spacerItem11)
+-        self.verticalLayout_18.addLayout(self.horizontalLayout_11)
+-        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
+-        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+-        spacerItem12 = QtWidgets.QSpacerItem(158, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_12.addItem(spacerItem12)
+-        self.label_DCSMinLat = QtWidgets.QLabel(self.layoutWidget_5)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.label_DCSMinLat.sizePolicy().hasHeightForWidth())
+-        self.label_DCSMinLat.setSizePolicy(sizePolicy)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.label_DCSMinLat.setFont(font)
+-        self.label_DCSMinLat.setAlignment(QtCore.Qt.AlignCenter)
+-        self.label_DCSMinLat.setObjectName("label_DCSMinLat")
+-        self.horizontalLayout_12.addWidget(self.label_DCSMinLat)
+-        spacerItem13 = QtWidgets.QSpacerItem(158, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_12.addItem(spacerItem13)
+-        self.verticalLayout_18.addLayout(self.horizontalLayout_12)
+-        self.gridLayout_2.addWidget(self.groupBox_21, 3, 0, 1, 2)
+-        self.groupBox_12 = QtWidgets.QGroupBox(self.tab_DCS)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.groupBox_12.sizePolicy().hasHeightForWidth())
+-        self.groupBox_12.setSizePolicy(sizePolicy)
+-        self.groupBox_12.setMinimumSize(QtCore.QSize(450, 105))
+-        font = QtGui.QFont()
+-        font.setBold(True)
+-        font.setWeight(75)
+-        self.groupBox_12.setFont(font)
+-        self.groupBox_12.setObjectName("groupBox_12")
+-        self.layoutWidget = QtWidgets.QWidget(self.groupBox_12)
+-        self.layoutWidget.setGeometry(QtCore.QRect(7, 33, 431, 64))
+-        self.layoutWidget.setObjectName("layoutWidget")
+-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.layoutWidget)
+-        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+-        spacerItem14 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_7.addItem(spacerItem14)
+-        self.checkBox_DCS_ActiveDate = QtWidgets.QCheckBox(self.layoutWidget)
+-        self.checkBox_DCS_ActiveDate.setEnabled(False)
+-        self.checkBox_DCS_ActiveDate.setText("")
+-        self.checkBox_DCS_ActiveDate.setCheckable(True)
+-        self.checkBox_DCS_ActiveDate.setObjectName("checkBox_DCS_ActiveDate")
+-        self.horizontalLayout_7.addWidget(self.checkBox_DCS_ActiveDate)
+-        self.gridLayout_3 = QtWidgets.QGridLayout()
+-        self.gridLayout_3.setObjectName("gridLayout_3")
+-        self.dateTimeEdit_DCSEnd = QtWidgets.QDateTimeEdit(self.layoutWidget)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.dateTimeEdit_DCSEnd.setFont(font)
+-        self.dateTimeEdit_DCSEnd.setDateTime(QtCore.QDateTime(QtCore.QDate(2016, 12, 31), QtCore.QTime(22, 59, 59)))
+-        self.dateTimeEdit_DCSEnd.setDate(QtCore.QDate(2016, 12, 31))
+-        self.dateTimeEdit_DCSEnd.setTime(QtCore.QTime(22, 59, 59))
+-        self.dateTimeEdit_DCSEnd.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(1899, 12, 30), QtCore.QTime(23, 0, 0)))
+-        self.dateTimeEdit_DCSEnd.setMaximumTime(QtCore.QTime(22, 59, 59))
+-        self.dateTimeEdit_DCSEnd.setCurrentSection(QtWidgets.QDateTimeEdit.YearSection)
+-        self.dateTimeEdit_DCSEnd.setCalendarPopup(True)
+-        self.dateTimeEdit_DCSEnd.setTimeSpec(QtCore.Qt.UTC)
+-        self.dateTimeEdit_DCSEnd.setObjectName("dateTimeEdit_DCSEnd")
+-        self.gridLayout_3.addWidget(self.dateTimeEdit_DCSEnd, 1, 1, 1, 1)
+-        self.dateTimeEdit_DCSBegin = QtWidgets.QDateTimeEdit(self.layoutWidget)
+-        font = QtGui.QFont()
+-        font.setBold(False)
+-        font.setWeight(50)
+-        self.dateTimeEdit_DCSBegin.setFont(font)
+-        self.dateTimeEdit_DCSBegin.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedKingdom))
+-        self.dateTimeEdit_DCSBegin.setDateTime(QtCore.QDateTime(QtCore.QDate(2016, 12, 30), QtCore.QTime(23, 0, 0)))
+-        self.dateTimeEdit_DCSBegin.setDate(QtCore.QDate(2016, 12, 30))
+-        self.dateTimeEdit_DCSBegin.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(1899, 12, 30), QtCore.QTime(23, 0, 0)))
+-        self.dateTimeEdit_DCSBegin.setMinimumTime(QtCore.QTime(23, 0, 0))
+-        self.dateTimeEdit_DCSBegin.setCalendarPopup(True)
+-        self.dateTimeEdit_DCSBegin.setTimeSpec(QtCore.Qt.UTC)
+-        self.dateTimeEdit_DCSBegin.setObjectName("dateTimeEdit_DCSBegin")
+-        self.gridLayout_3.addWidget(self.dateTimeEdit_DCSBegin, 0, 1, 1, 1)
+-        self.label_DCSEnd = QtWidgets.QLabel(self.layoutWidget)
+-        self.label_DCSEnd.setObjectName("label_DCSEnd")
+-        self.gridLayout_3.addWidget(self.label_DCSEnd, 1, 0, 1, 1)
+-        self.label_DCSBegin = QtWidgets.QLabel(self.layoutWidget)
+-        self.label_DCSBegin.setObjectName("label_DCSBegin")
+-        self.gridLayout_3.addWidget(self.label_DCSBegin, 0, 0, 1, 1)
+-        self.horizontalLayout_7.addLayout(self.gridLayout_3)
+-        spacerItem15 = QtWidgets.QSpacerItem(118, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+-        self.horizontalLayout_7.addItem(spacerItem15)
+-        self.gridLayout_2.addWidget(self.groupBox_12, 1, 0, 1, 1)
+-        self.gridLayout_2.setRowStretch(0, 1)
+-        self.gridLayout_2.setRowStretch(1, 2)
+-        self.gridLayout_2.setRowStretch(2, 4)
+-        self.horizontalLayout_20.addLayout(self.gridLayout_2)
+-        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+-        self.verticalLayout_2.setObjectName("verticalLayout_2")
+-        self.gridLayout_6 = QtWidgets.QGridLayout()
+-        self.gridLayout_6.setContentsMargins(139, -1, -1, -1)
+-        self.gridLayout_6.setObjectName("gridLayout_6")
+-        self.groupBox_14 = QtWidgets.QGroupBox(self.tab_DCS)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Maximum)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.groupBox_14.sizePolicy().hasHeightForWidth())
+-        self.groupBox_14.setSizePolicy(sizePolicy)
+-        self.groupBox_14.setMinimumSize(QtCore.QSize(180, 70))
+-        self.groupBox_14.setObjectName("groupBox_14")
+-        self.spinBox_DCSCount = QtWidgets.QSpinBox(self.groupBox_14)
+-        self.spinBox_DCSCount.setEnabled(False)
+-        self.spinBox_DCSCount.setGeometry(QtCore.QRect(55, 30, 101, 27))
+-        self.spinBox_DCSCount.setMinimum(1)
+-        self.spinBox_DCSCount.setMaximum(9999)
+-        self.spinBox_DCSCount.setProperty("value", 10)
+-        self.spinBox_DCSCount.setObjectName("spinBox_DCSCount")
+-        self.checkBox_DCS_ActiveCount = QtWidgets.QCheckBox(self.groupBox_14)
+-        self.checkBox_DCS_ActiveCount.setGeometry(QtCore.QRect(22, 33, 31, 22))
+-        self.checkBox_DCS_ActiveCount.setText("")
+-        self.checkBox_DCS_ActiveCount.setChecked(True)
+-        self.checkBox_DCS_ActiveCount.setObjectName("checkBox_DCS_ActiveCount")
+-        self.gridLayout_6.addWidget(self.groupBox_14, 2, 0, 1, 1)
+-        self.groupBox_13 = QtWidgets.QGroupBox(self.tab_DCS)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.groupBox_13.sizePolicy().hasHeightForWidth())
+-        self.groupBox_13.setSizePolicy(sizePolicy)
+-        self.groupBox_13.setMinimumSize(QtCore.QSize(180, 90))
+-        self.groupBox_13.setLayoutDirection(QtCore.Qt.LeftToRight)
+-        self.groupBox_13.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+-        self.groupBox_13.setObjectName("groupBox_13")
+-        self.radioButton_ContOver = QtWidgets.QRadioButton(self.groupBox_13)
+-        self.radioButton_ContOver.setGeometry(QtCore.QRect(13, 28, 87, 22))
+-        self.radioButton_ContOver.setChecked(True)
+-        self.radioButton_ContOver.setAutoExclusive(True)
+-        self.radioButton_ContOver.setObjectName("radioButton_ContOver")
+-        self.radioButton_ContCont = QtWidgets.QRadioButton(self.groupBox_13)
+-        self.radioButton_ContCont.setGeometry(QtCore.QRect(13, 59, 87, 22))
+-        self.radioButton_ContCont.setObjectName("radioButton_ContCont")
+-        self.gridLayout_6.addWidget(self.groupBox_13, 1, 0, 1, 1)
+-        self.verticalLayout_2.addLayout(self.gridLayout_6)
+-        spacerItem16 = QtWidgets.QSpacerItem(20, 128, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
+-        self.verticalLayout_2.addItem(spacerItem16)
+-        self.checkBox_DCSFull = QtWidgets.QCheckBox(self.tab_DCS)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.checkBox_DCSFull.sizePolicy().hasHeightForWidth())
+-        self.checkBox_DCSFull.setSizePolicy(sizePolicy)
+-        self.checkBox_DCSFull.setMinimumSize(QtCore.QSize(300, 40))
+-        font = QtGui.QFont()
+-        font.setBold(True)
+-        font.setWeight(75)
+-        self.checkBox_DCSFull.setFont(font)
+-        self.checkBox_DCSFull.setLayoutDirection(QtCore.Qt.RightToLeft)
+-        self.checkBox_DCSFull.setIconSize(QtCore.QSize(16, 16))
+-        self.checkBox_DCSFull.setObjectName("checkBox_DCSFull")
+-        self.verticalLayout_2.addWidget(self.checkBox_DCSFull)
+-        self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
+-        self.horizontalLayout_6.setContentsMargins(41, 2, 0, 0)
+-        self.horizontalLayout_6.setSpacing(5)
+-        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+-        self.btnClose_DCS = QtWidgets.QPushButton(self.tab_DCS)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.btnClose_DCS.sizePolicy().hasHeightForWidth())
+-        self.btnClose_DCS.setSizePolicy(sizePolicy)
+-        self.btnClose_DCS.setMinimumSize(QtCore.QSize(85, 27))
+-        self.btnClose_DCS.setBaseSize(QtCore.QSize(40, 30))
+-        self.btnClose_DCS.setObjectName("btnClose_DCS")
+-        self.horizontalLayout_6.addWidget(self.btnClose_DCS)
+-        self.pushButton_DCS = QtWidgets.QPushButton(self.tab_DCS)
+-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+-        sizePolicy.setHorizontalStretch(0)
+-        sizePolicy.setVerticalStretch(0)
+-        sizePolicy.setHeightForWidth(self.pushButton_DCS.sizePolicy().hasHeightForWidth())
+-        self.pushButton_DCS.setSizePolicy(sizePolicy)
+-        self.pushButton_DCS.setMinimumSize(QtCore.QSize(190, 40))
+-        font = QtGui.QFont()
+-        font.setBold(True)
+-        font.setWeight(75)
+-        self.pushButton_DCS.setFont(font)
+-        self.pushButton_DCS.setLayoutDirection(QtCore.Qt.LeftToRight)
+-        self.pushButton_DCS.setObjectName("pushButton_DCS")
+-        self.horizontalLayout_6.addWidget(self.pushButton_DCS)
+-        self.horizontalLayout_6.setStretch(0, 1)
+-        self.horizontalLayout_6.setStretch(1, 1)
+-        self.verticalLayout_2.addLayout(self.horizontalLayout_6)
+-        self.horizontalLayout_20.addLayout(self.verticalLayout_2)
+-        self.verticalLayout_14.addLayout(self.horizontalLayout_20)
+-        # self.tabWidget_EOWcsClient2.addTab(self.tab_DCS, "")
+ 
+         self.tab_GCov = QtWidgets.QWidget()
+         self.tab_GCov.setEnabled(False)
+@@ -824,11 +417,15 @@ class Ui_QgsWcsClient2(object):
+         self.label_GCOvInfo2.setFont(font)
+         self.label_GCOvInfo2.setObjectName("label_GCOvInfo2")
+         self.verticalLayout_24.addWidget(self.label_GCOvInfo2)
++
++        # List of coverage Ids for GetCoverage
+         self.treeWidget_GCov = QtWidgets.QTreeWidget(self.tab_GCov)
+-        self.treeWidget_GCov.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
+         self.treeWidget_GCov.setColumnCount(1)
+         self.treeWidget_GCov.setObjectName("treeWidget_GCov")
+         self.treeWidget_GCov.header().setDefaultSectionSize(200)
++        self.treeWidget_GCov.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection) # select only one row
++        self.treeWidget_GCov.itemClicked.connect(self.handle_get_cov_tree_item_clicked)
++
+         self.verticalLayout_24.addWidget(self.treeWidget_GCov)
+         self.verticalLayout_26.addLayout(self.verticalLayout_24)
+         self.verticalLayout_25 = QtWidgets.QVBoxLayout()
+@@ -1007,17 +604,13 @@ class Ui_QgsWcsClient2(object):
+         self.btnEdit_Serv.clicked.connect(QgsWcsClient2.editServer) # type: ignore
+         self.pushButton_GCov.clicked.connect(QgsWcsClient2.exeGetCoverage) # type: ignore
+         self.pushButton_DC.clicked.connect(QgsWcsClient2.exeDescribeCoverage) # type: ignore
+-        self.btnClose_DCS.clicked.connect(QgsWcsClient2.close) # type: ignore
+         self.btnNew_Serv.clicked.connect(QgsWcsClient2.newServer) # type: ignore
+-        self.pushButton_DCS.clicked.connect(QgsWcsClient2.exeDescribeEOCoverageSet) # type: ignore
+         self.btnConnectServer_Serv.clicked.connect(QgsWcsClient2.connectServer) # type: ignore
+         self.toolButton_Serv_OutputLoc.clicked.connect(QgsWcsClient2.get_outputLoc)  # type: ignore
+ 
+-        self.checkBox_DCS_ActiveCount.stateChanged['int'].connect(QgsWcsClient2.enableDCS_ActiveCount) # type: ignore
+         self.radioButton_GCovOutputCRSOrig.clicked.connect(QgsWcsClient2.enableGCov_SubOrig) # type: ignore
+         self.radioButton_GCovOutputCRS.clicked.connect(QgsWcsClient2.enableGCov_SubCRS) # type: ignore
+ 
+-        self.checkBox_DCS_ActiveDate.stateChanged['int'].connect(QgsWcsClient2.enableDCS_ActiveDate) # type: ignore
+         self.btnImport_QgsWcsUrls.clicked.connect(QgsWcsClient2.importQgis_ServList) # type: ignore
+         self.btnSort_Serv.clicked.connect(QgsWcsClient2.sortServerListing) # type: ignore
+         QtCore.QMetaObject.connectSlotsByName(QgsWcsClient2)
+@@ -1045,17 +638,6 @@ class Ui_QgsWcsClient2(object):
+         QgsWcsClient2.setTabOrder(self.treeWidget_GCa, self.treeWidget_DC)
+         QgsWcsClient2.setTabOrder(self.treeWidget_DC, self.pushButton_DC)
+         QgsWcsClient2.setTabOrder(self.pushButton_DC, self.btnClose_DC)
+-        QgsWcsClient2.setTabOrder(self.btnClose_DC, self.pushButton_DCS)
+-        QgsWcsClient2.setTabOrder(self.pushButton_DCS, self.treeWidget_DCS)
+-        QgsWcsClient2.setTabOrder(self.treeWidget_DCS, self.btnClose_DCS)
+-        QgsWcsClient2.setTabOrder(self.btnClose_DCS, self.radioButton_ContOver)
+-        QgsWcsClient2.setTabOrder(self.radioButton_ContOver, self.radioButton_ContCont)
+-        QgsWcsClient2.setTabOrder(self.radioButton_ContCont, self.spinBox_DCSCount)
+-        QgsWcsClient2.setTabOrder(self.spinBox_DCSCount, self.checkBox_DCS_ActiveCount)
+-        QgsWcsClient2.setTabOrder(self.checkBox_DCS_ActiveCount, self.checkBox_DCSAll)
+-        QgsWcsClient2.setTabOrder(self.checkBox_DCSAll, self.checkBox_DCSDatSerDesc)
+-        QgsWcsClient2.setTabOrder(self.checkBox_DCSDatSerDesc, self.checkBox_DCSCovDesc)
+-        QgsWcsClient2.setTabOrder(self.checkBox_DCSCovDesc, self.pushButton_GCov)
+         QgsWcsClient2.setTabOrder(self.pushButton_GCov, self.btnClose_GCov)
+         QgsWcsClient2.setTabOrder(self.btnClose_GCov, self.treeWidget_GCov)
+ 
+@@ -1119,45 +701,11 @@ class Ui_QgsWcsClient2(object):
+         self.btnClose_DC.setText(_translate("QgsWcsClient2", "Close"))
+         self.pushButton_DC.setText(_translate("QgsWcsClient2", "DescribeCoverage"))
+         self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_DC), _translate("QgsWcsClient2", "DescribeCoverage"))
+-        self.label_DCSInfo1.setText(_translate("QgsWcsClient2", "Describe a DatsetSeries,  a Coverage, or a Stitched Mosaic:"))
+-        self.label_DCSInfo2.setText(_translate("QgsWcsClient2", "     Select the ID of interest, choose optional AOI and TOI, then press the DescribeEOCoverageSet button."))
+-        self.label_5.setText(_translate("QgsWcsClient2", "Selections from GetCapabilities Result:   Select item(s) for further usage:"))
+-        self.treeWidget_DCS.setSortingEnabled(True)
+-        self.treeWidget_DCS.headerItem().setText(0, _translate("QgsWcsClient2", "DataSeriesID"))
+-        self.treeWidget_DCS.headerItem().setText(1, _translate("QgsWcsClient2", "BeginTime"))
+-        self.treeWidget_DCS.headerItem().setText(2, _translate("QgsWcsClient2", "EndTime"))
+-        self.treeWidget_DCS.headerItem().setText(3, _translate("QgsWcsClient2", "UpperCorner [WGS84]"))
+-        self.treeWidget_DCS.headerItem().setText(4, _translate("QgsWcsClient2", "LowerCorner [WGS84]"))
+-        self.GroupBox_10.setTitle(_translate("QgsWcsClient2", "EOCoverageSet Document - Select Sections:"))
+-        self.checkBox_DCSAll.setText(_translate("QgsWcsClient2", "All"))
+-        self.checkBox_DCSDatSerDesc.setText(_translate("QgsWcsClient2", "DatasetSeriesDescriptions"))
+-        self.checkBox_DCSCovDesc.setText(_translate("QgsWcsClient2", "CoverageDescriptions"))
+-        self.label_8.setText(_translate("QgsWcsClient2", "(use only for XML viewing)"))
+-        self.groupBox_21.setTitle(_translate("QgsWcsClient2", "Area of Interest  (AOI in WGS-84):"))
+-        self.label_DCSMaxLat.setText(_translate("QgsWcsClient2", "Max. Latitude"))
+-        self.label_DCSMinLon.setText(_translate("QgsWcsClient2", "Min. \n"
+-"Longitude"))
+-        self.label_DCSMaxLon.setText(_translate("QgsWcsClient2", "Max. \n"
+-"Longitude"))
+-        self.label_DCSMinLat.setText(_translate("QgsWcsClient2", "Min. Latitude"))
+-        self.groupBox_12.setTitle(_translate("QgsWcsClient2", "Time of Interrest (TOI):"))
+-        self.dateTimeEdit_DCSEnd.setDisplayFormat(_translate("QgsWcsClient2", "yyyy-MM-ddThh:mm "))
+-        self.dateTimeEdit_DCSBegin.setDisplayFormat(_translate("QgsWcsClient2", "yyyy-MM-ddThh:mm "))
+-        self.label_DCSEnd.setText(_translate("QgsWcsClient2", "End Time:"))
+-        self.label_DCSBegin.setText(_translate("QgsWcsClient2", "Begin Time:"))
+-        self.groupBox_14.setTitle(_translate("QgsWcsClient2", "Hits Count: "))
+-        self.groupBox_13.setTitle(_translate("QgsWcsClient2", "Containment:"))
+-        self.radioButton_ContOver.setText(_translate("QgsWcsClient2", "overlaps"))
+-        self.radioButton_ContCont.setText(_translate("QgsWcsClient2", "contains"))
+-        self.checkBox_DCSFull.setText(_translate("QgsWcsClient2", "View DescribeEOCoverageSet XML "))
+-        self.btnClose_DCS.setText(_translate("QgsWcsClient2", "Close"))
+-        self.pushButton_DCS.setText(_translate("QgsWcsClient2", "DescribeEOCoverageSet"))
+-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_DCS), _translate("QgsWcsClient2", "DescribeEOCoverageSet"))
++
+         self.label_GCovInfo1.setText(_translate("QgsWcsClient2", "GetCoverage:   download a Coverage "))
+-        self.label_GCOvInfo2.setText(_translate("QgsWcsClient2", "Select the ID\'s of interest (and choose optional parameters), then press the GetCoverage button"))
++        self.label_GCOvInfo2.setText(_translate("QgsWcsClient2", "Select the ID of interest (and choose optional parameters), then press the GetCoverage button"))
+         self.treeWidget_GCov.setSortingEnabled(True)
+         self.treeWidget_GCov.headerItem().setText(0, _translate("QgsWcsClient2", "CoverageID"))
+-        self.treeWidget_GCov.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection) # select only one row
+         self.groupBox_15.setTitle(_translate("QgsWcsClient2", "Output Parameters:"))
+ 
+         self.label_GCOvBands.setText(_translate("QgsWcsClient2", "Ranges Subsets:"))

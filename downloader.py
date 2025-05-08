@@ -42,7 +42,7 @@ from qgis.PyQt.QtCore import QCoreApplication, QFile, QUrl
 from qgis.PyQt.QtNetwork import QNetworkRequest, QNetworkReply
 
 
-def download_url(manager, url, output_path, progress_dialog=None):
+def download_url(manager, url, output_path, progress_dialog=None, username='', password=''):
     global xml_result
     xml_result = []
 
@@ -74,6 +74,14 @@ def download_url(manager, url, output_path, progress_dialog=None):
 
         # request the content of the url
     request = QNetworkRequest(QUrl(url))
+
+    if username != '' and password != '':
+        credentials = f"{username}:{password}"
+        import base64
+        encoded_credentials = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
+        # Set the Authorization header
+        request.setRawHeader(b"Authorization", f"Basic {encoded_credentials}".encode("utf-8"))
+
     reply = manager.get(request)
 
     #print "EEE: ", reply.error(), reply.errorString(), reply.size()
@@ -160,6 +168,7 @@ def download_url(manager, url, output_path, progress_dialog=None):
         if output_path is not None:
             out_file.close()
         return result, str(reply.errorString())
+
 
     if  progress_dialog:
         progress_dialog.close()

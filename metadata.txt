@@ -44,11 +44,23 @@ deprecated=False
 
 # Uncomment the following line and add your changelog entries:
 changelog=
-  0.1: first release
-  0.2: bug fixed which prevented multiple-coverage downloads with single GetCoverage request
-  0:3: multiple bug fixes and added features (for a full list please see:  https://github.com/EOX-A/QgsWcsClient2 )
-  0.3.1: fixed issue with Windows installation of 'config_srvlist.pkl' - due to differernt line endings in Linux/Windows
-  0.3.2: fixed issue when modifying a Server-URL without changing Server-Name;
-         fixed issue with DescribeEOCoverageSet requests when using sections parameter
-  0.4: updated with support for QGIS 3.x
-  0.5: updated with support for Python 3.12
+  0.1 
+       * first release
+  0.2
+       * bug fixed which prevented multiple-coverage downloads with single GetCoverage request
+  0.3 
+       * multiple bug fixes and added features (for a full list please see:  https://github.com/EOX-A/QgsWcsClient2 )
+  0.3.1: 
+       * fixed issue with Windows installation of 'config_srvlist.pkl' - due to differernt line endings in Linux/Windows
+  0.3.2
+       * fixed issue when modifying a Server-URL without changing Server-Name;
+  0.4 
+       * updated with support for QGIS 3.x
+  0.5
+       * updated with support for Python 3.12
+  0.6:
+       * Added support for basic header authentication
+       * Simplified GetCapabilities tab
+       * Improved functionalities in GetCoverage tab
+       * Moved content of help and about as .html pages out of the python code
+       * Removed dependency on lxml python package

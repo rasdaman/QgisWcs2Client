@@ -1,0 +1,357 @@
+<html>
+    <body>
+        <p style="-qt-block-indent: 0; margin: 18px 0px 12px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>WCS 2.0 Client</strong></span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Author:</strong> Christian Schiller, Mikhail Rodyonichev, Bang Pham Huu, Dimitar Misev</span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Copyright:</strong> EOX IT Services GmbH, Vienna, Austria, 2014; rasdaman GmbH 2024</span>
+        </p>
+        <hr width="100%" />
+        <p style="-qt-block-indent: 0; margin: 16px 0px 12px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Help - QgsWcsClient2: Instructions and Hints</strong></span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 14px 0px 12px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">A listing of New Features and Bug-Fixes can be found at GitHub: </span>
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/rasdaman/QgisWcs2Client">
+                <span style="color: #0000ff; font-family: 'Ubuntu'; font-size: 11pt;"><u>https://github.com/rasdaman/QgisWcs2Client</u></span>
+            </a>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 14px 0px 12px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Content:</strong></span>
+        </p>
+        <ul style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    <a href="#Introduction">
+                        <span style="color: #0000ff;"><u>Introduction:</u></span>
+                    </a>
+                    What the QgsWcsClient2 plugin is about
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    <a href="#Getting Started">
+                        <span style="color: #0000ff;"><u>Getting Started:</u></span>
+                    </a>
+                    Initiating the QgsWcsClient2 plugin
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    <a href="#How To">
+                        <span style="color: #0000ff;"><u>How To:</u></span>
+                    </a>
+                    A detailed description of the available functionalities and settings
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    <a href="#Hint">
+                        <span style="color: #0000ff;"><u>Hint - Erroneous behaviour</u></span>
+                    </a>
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    <a href="#Quick How To">
+                        <span style="color: #0000ff;"><u>Quick How To:</u></span>
+                    </a>
+                    A very short, stepwise description
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    <a href="#Other Stuff">
+                        <span style="color: #0000ff;"><u>Other Stuff</u></span>
+                    </a>
+                </p>
+            </li>
+        </ul>
+        <p style="-qt-block-indent: 0; margin: 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Introduction:</strong></span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                This WCS 2.0/ client is intended to be used to access/download single Coverage (which are offered by OGC WCS 2.0 conformant servers) in a convenient way from within QGis (&gt;3.0). It does not work for WCS v. 1.0 or v1.1
+                protocol (use the QGis native WCS-client for those). Downloaded datasets are stored locally and loaded directly into QGis for further usage.&nbsp;
+            </span>
+            <br />
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                This client provides the possibility to send OGC <i>GetCapabilities</i>, <i>DescribeCoverage </i>and <i>GetCoverage</i> requests to a selected WCS 2.0 server. The respective request results are received and either shown
+                completely or the relevant information is extracted and provided in the GUI for further usage within the client.
+            </span>
+            <br />
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                The GUI provides tabs for each request, allowing to select optional parameters (e.g. sub-setting in space and/or time) to be sent with the request. However, not all servers may honor all optional parameters. So if you
+                receive an error message or no answser at all try it with different optional settings. See also the 'How To' section for further details and the 'Hint - Erroneous behaviour' section.
+            </span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Getting Started:</strong></span>
+        </p>
+        <ul style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    The first thing which needs to be done is to define at least one server in the "Server" tab. Press the "New" button, and enter a (personal) "Server Name" and the WCS Access "Server URL". Press "OK" when done. All server
+                    entries are stored in the QgsWcsClient2 plugin installation directory.
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Make sure the provided WCS Access "Server URL" complies to OGC OWS (e.g. usually OGC-Service Access-URls).</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">The supplied server information can be changed anytime utilizing the "Edit" button.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Any server entry can be deleted utilizing the "Delete" button".</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">When the server information has been provided, select the desired "Server" entry from the list and press the "Connect to Server" button.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">If the selected server requires authentication, then you can provide username and password to authenticate via basic authentication.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">You always need to be connected to a server before you can send requests!</p>
+            </li>
+        </ul>
+        <p style="-qt-block-indent: 0; margin: 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>How To:</strong></span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                This section shortly describes a 'typical' usage scenario, starting with a <i>GetCapabilities</i> request to the final download of Coverages utilizing a <i>GetCoverage</i> request.
+            </span>
+            <br />
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">It also explains the provided options available in the GUI.</span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Server tab</strong></span>
+        </p>
+        <ul style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">The QgsWcsClient2 plugin always starts with the "Server" tab.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Select the desired "Server" entry from the list and press the "Connect to Server" button. You always need to be connected to a server before you can send requests!</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    When the connection is established successfully, the line <span style="font-family: 'Courier New,courier'; font-size: large;">"Response: Server OK"</span> is printed in the "General Information / Errors / etc." field.
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    If you want to download a Coverage via WCS GetCoverage request, you need to supply a "Local Storage Path". Either type the path into the "Local Storage Path" field or use the "..." button for the path selection.
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">When the server connection is established click on the "GetCapabilities" tab.</p>
+            </li>
+        </ul>
+        <ul style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    If a server-redirection is encountered a warning message with the relevant information is presented. So if xou ancounter this,please update the server Url. An automatic redirection has not been implemented due to
+                    security concerns.
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">If the selected server requires authentication, then you can provide username and password to authenticate via basic authentication.</p>
+            </li>
+        </ul>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>GetCapabilities tab</strong></span>
+        </p>
+        <ul style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Click on "GetCapabilities" button.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">The returned results will be shown in the "Results of GetCapabilities Request" field. There you will see the the following columns:</p>
+                <ul style="-qt-list-indent: 2; list-style-type: circle; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;" type="circle">
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">CoverageID</p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">AxisLabels (if this metadata provided for each coverage on server)</p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">LowerCorner (axes' lower bounds of each coverage)</p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">UpperCorner (axes' upper bounds of each coverage</p>
+                        <p style="margin-left: 0px;">&nbsp;</p>
+                    </li>
+                </ul>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">When the <i>GetCapabilities</i> results are listed you have to choose at least one CoverageID. However, the selection of multiple IDs is possible.</p>
+                <ul style="-qt-list-indent: 1; list-style-type: circle; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;" type="circle">
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">The selected items will automatically show up in the "DescribeCoverage" tab and in the "GetCapabilities" tab (if a Coverage has been selected)</p>
+                    </li>
+                </ul>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Now continue, changing to the "DescribeCoverage" tab. If you have chosen only CoverageIDs you may also switch directly to the "GetCapabilities" tab.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    By selecting the "<i>View GetCapabilities XML</i>" checkbox (at the lower left) you can look at the actual XML returned. If you want to save it, please simply use copy/paste (Hint: Ctrl-A selects all the text) to do so.
+                </p>
+            </li>
+        </ul>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>DescribeCoverage tab</strong></span>
+        </p>
+        <ul style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    If one or more CoverageIDs have been selected in the "Results of GetCapabilities Request" field they will be shown in the "Selections from the GetCapabilities Results" field. You need to select a single CoverageID to
+                    send a <i>DescribeCoverage</i> request to the server. The full results of this request will be shown in a separate window. No optional parameters are available for a <i>DescribeCoverage</i> request.
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">The GML result is useful to know about the coverage's description (e.g. specified axes, bands) to be used in GetCoverage tab</p>
+            </li>
+        </ul>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>GetCoverage tab</strong></span>
+        </p>
+        <ul style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">The CoverageIDs selected in the "Results of GetCapabilities Request" field are shown in the "GetCoverage: download a Coverage" field.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Select one CoverageID which you want to download and access in QGis.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">The following optional parameters, to limit and configure the resulting downloaded Coverages, are provided:</p>
+                <ul>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">
+                            Axes Subsets: You can subset an axis by trimming / slicing which will reduce the size of processed result on server (e.g. to get a timeslice of a 3D coverage as a 2D image and overlay on QGIS as a layer). In
+                            order to slice on an axis, you can click on one of the radio button for lower bound or upper bound. If you want to trim, then do not check any radio buttons corresponding to the axis.
+                        </p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">
+                            Output Format: You may choose one of the supported "Output Formats" (file formats) in which the Coverages shall be delivered. The listing of the server side supported "Output Formats" is gathered during the
+                            "Connect to Server" initialization process.
+                        </p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">
+                            Ranges Subets: Here you may provide a comma-separated list of the desired bands (and their order). The delivered Coverages will be subsetted to contain only the provided bands in the provided order.
+                        </p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">
+                            Interpolation: The method of interpolation applied during subsetting and especially for resizing of the delivered Coverages. Here either the values provided in the Caopabilities document are set or some default
+                            values are provided (nearest, bilinear, average). Note: Not all possibilities might be supported by all WCS servers. These are usually overwritten by the values received from the GetCapabilities request.
+                        </p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">
+                            Output CRS: Independent of the original CRS, you may choose to reproject the delivered Coverage to another CRS offered by the WCS server. &nbsp;You need to check on CRS radio button then provide the EPSG code
+                            (e.g. 3857). Note: projection works on a 2D geo-referenced coverage, so you will need to add slicings on a 3D+ coverage to make it 2D.
+                        </p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">Once you have done with settings, select the "GetCoverage" button to start the download.</p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">
+                            This may take some time to process on server and to download result depending on the size of the requested coverage. Note: it is much faster to process and download result when you provided axes subsets and
+                            ranges subsets for the area of interest and interested band(s).&nbsp;
+                        </p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">The Coverage will be downloaded and stored in the provided location as a file, then if the result is 2D which is loadable on QGis then it will show as a QGis raster layer .</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <p style="-qt-block-indent: 0; margin: 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Hint - Erroneous behaviour</strong></span>
+        </p>
+        <ul style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">
+                    In most cases problems will be due to server errors e.g. an optional parameter is not supported. Unfortunately some servers do not indicate this directly but just issue a general server error. So please try the request
+                    with different parameter settings before sending error reports.
+                </p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">When the server returns an error, it is usually downloaded as a text file which you need to open to read the error message.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">I tried to anticipate the most common error issues and provide direct information and hints to the user. But I certainly haven't covered all the possibilities.</p>
+            </li>
+        </ul>
+        <p style="-qt-block-indent: 0; margin: 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>Quick How To:</strong></span>
+        </p>
+        <ol style="-qt-list-indent: 1; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;">
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Select a WCS server from the "Server" list and press the "Connect to Server" button</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Provide a "Local Storage Path" where downloaded Coverages shall be stored</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Switch to the "GetCapabiltites" tab and press the "GetCapabilties" button</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Select one or more CoveragesIDsof interest</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">If Coverages have been selected, switch to the "DescribeCoverage" tab</p>
+                <ol style="-qt-list-indent: 2; list-style-type: lower-latin; margin-bottom: 0px; margin-right: 0px; margin-top: 0px;" type="a">
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">Issue a DescribeCoverage request</p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">Check the returned DescribeCoverage result and close it</p>
+                    </li>
+                    <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                        <p style="margin-left: 0px;">Switch to the "GetCoverage" tab</p>
+                    </li>
+                </ol>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Optional: provide axes' subsets and range subets in “GetCoverage” tab</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Check for the desired "Output Format" and the "Output CRS" ! Only images can be incorporated into QGis i.e. a download in gml will not possible to display on QGis.</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Press "GetCoverage" button to start the download</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">The Coverage will be downloaded and stored in the provided location ("Local Storage Path") and if it is 2D image then it can be shown on QGis</p>
+            </li>
+            <li style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">
+                <p style="margin-left: 0px;">Please be patient. This may take some time (according to the size of requested coverage)</p>
+            </li>
+        </ol>
+        <p style="-qt-block-indent: 0; margin: 12px 0px 4px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;"><strong>About</strong></span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">General Information about: Author / Company / Contact / Copyright / Acknowledgements / License.</span><br />
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">Please see the separate "About" tab.</span>
+        </p>
+        <p style="-qt-block-indent: 0; margin: 12px 0px; text-indent: 0px;">
+            <span style="font-family: 'arial,helvetica,sans-serif'; font-size: 11pt;">Extra information (e.g. about recent bug-fixes, etc. can be found at GitHub: </span>
+            <a target="_blank" rel="noopener noreferrer" href="https://github.com/rasdaman/QgisWcs2Client">
+                <span style="color: #0000ff; font-family: 'Ubuntu'; font-size: 11pt;"><u>https://github.com/rasdaman/QgisWcs2Client</u></span>
+            </a>
+        </p>
+    </body>
+</html>
+

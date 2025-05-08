@@ -21,7 +21,7 @@ Added Features & Fixed Bugs:
 2024-01-15
 - Update for QGIS 3.x
 
-2017-05-03 - verison 0.3:
+2017-05-03 - version 0.3:
 - added Button to import WCS-Urls already stored in native QGis settings
 - added Button to sort the Server_List
 - enabled resizing of QgsWcsClient2-Client Window

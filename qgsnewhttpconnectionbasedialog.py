@@ -53,7 +53,7 @@ srvlst = []
 
 
 class qgsnewhttpconnectionbase(QDialog, QObject, Ui_qgsnewhttpconnectionbase):
-    MSG_BOX_TITLE = "WCS2.0/EO-WCS Client"
+    MSG_BOX_TITLE = "WCS 2 Client"
 
     def __init__(self, parent, fl, toEdit, choice):
         QDialog.__init__(self, parent, fl)
@@ -63,7 +63,7 @@ class qgsnewhttpconnectionbase(QDialog, QObject, Ui_qgsnewhttpconnectionbase):
         self.flags = fl
         self.setupUi(self)
         self.txt_NewSrvName.setFocus(True)
-        self.setWindowTitle('WCS2.0/EO-WCS Client')  # +version())
+        self.setWindowTitle('WCS 2 Client')  # +version())
 
     def accept(self):
         global config
@@ -83,30 +83,21 @@ class qgsnewhttpconnectionbase(QDialog, QObject, Ui_qgsnewhttpconnectionbase):
             srv_name = self.txt_NewSrvName.text()
 
         if self.toEdit is False:
-            try:
-                idx = list(zip(*config.srv_list['servers']))[0].index(srv_name)
-                while idx is not None:
-                    self.txt_NewSrvName.setText(srv_name + '_1')
-                    self.txt_NewSrvUrl.setText(srv_url)
-                    msg = "Sorry, but the 'Server Name' has to be unique.\n      A   '_1'   has been added to the name."
-                    self.warning_msg(msg)
-                    srv_name = self.txt_NewSrvName.text()
-                    idx = list(zip(*config.srv_list['servers']))[0].index(srv_name)
+            # NEW
+            for srv in config.srv_list["servers"]:
+                if srv_name == srv[0]:
+                    self.warning_msg("Server name already exists, please set another name")
+                    return
 
-
-            except ValueError:
-                srvlst.append([srv_name, srv_url])
+            srvlst.append([srv_name, srv_url])
+            self.idx_sel = len(srvlst) - 1
 
         if self.toEdit is True:
-            try:
-                idx = list(zip(*config.srv_list['servers']))[0].index(srv_name)
-            except ValueError:
-                idx = self.idx_sel
-                srvlst.pop(idx)
-                srvlst.insert(idx, [srv_name, srv_url])
+            # EDIT
+            srvlst[self.idx_sel] = [srv_name, srv_url]
 
         config.srv_list = {'servers': srvlst}
-        if (len(srv_name) > 0 and len(srv_url) > 10):
+        if (len(srv_name) > 0 and len(srv_url) > 0):
             self.parent.write_srv_list()
             self.parent.updateServerListing()
         else:
