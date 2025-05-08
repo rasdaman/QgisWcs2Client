@@ -1,20 +1,11 @@
-# This file contains metadata for your plugin. Beginning
-# with version 1.8 this is the preferred way to supply information about a
-# plugin. The current method of embedding metadata in __init__.py will
-# be supported until version 2.0
-
-# This file should be included when you package your plugin.
-
-# Mandatory items:
-
 [general]
 name = WCS 2
 qgisMinimumVersion = 3.0
-description = A OGC WCS 2.0 Client to download spatio-temporal subsets from datacubes.
-version = 0.5
+description = An OGC WCS 2.0 Client to download spatio-temporal subsets from datacubes.
+version = 0.6
 
 category = Web
-author = Christian Schiller at EOX IT Services GmbH, Vienna, Austria; Bang Pham Huu; Mikhail Rodionychev; Dimitar Misev
+author = Bang Pham Huu; Dimitar Misev; Mikhail Rodionychev; Christian Schiller
 email = misev@rasdaman.com
 
 about = The WCS 2.0 allows to send GetCapabilities, DescribeCoverage and GetCoverage requests from OGC WCS 2.0 compliant servers.
@@ -28,37 +19,35 @@ about = The WCS 2.0 allows to send GetCapabilities, DescribeCoverage and GetCove
 # Optional items:
 
 # tags are comma separated with spaces allowed
-tags = raster, wcs, wcs 2.0, webservice, ogc, download service, subsetting, AreaOfInterest, TimeOfInterest, online-access, time-series
+tags = raster, wcs, wcs 2.0, webservice, ogc, download service, subsetting, AreaOfInterest, TimeOfInterest, online-access, time-series, rasdaman
 
 homepage=https://github.com/rasdaman/QgisWcs2Client
 tracker=https://github.com/rasdaman/QgisWcs2Client/issues
 repository=https://github.com/rasdaman/QgisWcs2Client
 icon=icon.png
-# experimental flag
 experimental=False
-
-# deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
 
-# Uncomment the following line and add your changelog entries:
 changelog=
-  0.1 
-       * first release
-  0.2
-       * bug fixed which prevented multiple-coverage downloads with single GetCoverage request
-  0.3 
-       * multiple bug fixes and added features (for a full list please see:  https://github.com/EOX-A/QgsWcsClient2 )
-  0.3.1: 
-       * fixed issue with Windows installation of 'config_srvlist.pkl' - due to differernt line endings in Linux/Windows
-  0.3.2
-       * fixed issue when modifying a Server-URL without changing Server-Name;
-  0.4 
-       * updated with support for QGIS 3.x
-  0.5
-       * updated with support for Python 3.12
   0.6:
-       * Added support for basic header authentication
-       * Simplified GetCapabilities tab
-       * Improved functionalities in GetCoverage tab
-       * Moved content of help and about as .html pages out of the python code
-       * Removed dependency on lxml python package
+    * Added support for basic header authentication
+    * Simplified GetCapabilities tab
+    * Improved functionalities in GetCoverage tab
+    * Moved content of help and about as .html pages out of the python code
+    * Removed dependency on lxml python package
+  0.5
+    * updated with support for Python 3.12
+  0.4
+    * updated with support for QGIS 3.x
+  0.3.2
+    * fixed issue when modifying a Server-URL without changing Server-Name;
+    * fixed issue with DescribeEOCoverageSet requests when using sections parameter
+  0.3.1
+    * fixed issue with Windows installation of 'config_srvlist.pkl' - due to differernt line endings in Linux/Windows
+  0:3
+    * multiple bug fixes and added features (for a full list please see:  https://github.com/EOX-A/QgsWcsClient2)
+  0.2
+    * bug fixed which prevented multiple-coverage downloads with single GetCoverage request
+  0.1
+    * first release
+
