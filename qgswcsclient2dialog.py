@@ -607,13 +607,9 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
 
         #  place selected items also in the DescribeCoverage, GetCoverage Tab widgets
         for elem in sel_GCa_items:
-          #                           covID          BeginTime       EndTime            UpperCorner      LowerCorner      [C]/[S]
-            print('Selected Item: ', elem.data(0, 0), elem.data(1, 0), elem.data(2, 0), elem.data(3, 0), elem.data(4, 0), elem.data(5, 0))
             if elem.data(0, 0) in cov_ids:
-                item = QtWidgets.QTreeWidgetItem(self.treeWidget_DC, (elem.data(0, 0), ))
-                item2 = QtWidgets.QTreeWidgetItem(self.treeWidget_GCov, (elem.data(0, 0), ))
-            elif elem.data(0, 0) in dss_ids:
-                item1 = QtWidgets.QTreeWidgetItem(self.treeWidget_DCS, (elem.data(0, 0), elem.data(1, 0), elem.data(2, 0), elem.data(3, 0), elem.data(4, 0)))
+                QtWidgets.QTreeWidgetItem(self.treeWidget_DC, (elem.data(0, 0), ))
+                QtWidgets.QTreeWidgetItem(self.treeWidget_GCov, (elem.data(0, 0), ))
 
         self.treeWidget_DC.resizeColumnToContents(0)
         self.treeWidget_GCov.resizeColumnToContents(0)
@@ -740,8 +736,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
         global offered_version
         global use_wcs_GCo_call
 
-        subsets_requests_params_str = self.__get_axes_subsets_from_group_box(self.groupBox_get_cov_axes_subsets.layout())
-
         selected_serv, selected_url = self.get_serv_url()
 
         req_format = self.comboBox_GCOvOutFormat.currentText()
@@ -775,14 +769,20 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
             msg = "Error: For downloading coverages you need to supply a Local Storage Path --> see TAB Server / Storage"
             QMessageBox.critical(self, "Error", msg, QMessageBox.Ok)
                 # put focus on Server/STorage Tab to allow provision of Output Location
-            self.tabWidget_EOWcsClient2.setCurrentIndex(0)
+            self.tabWidget_WcsClient2.setCurrentIndex(0)
             self.get_outputLoc()
         elif len(req_outputLoc) == 0:
-            self.tabWidget_EOWcsClient2.setCurrentIndex(0)
+            self.tabWidget_WcsClient2.setCurrentIndex(0)
             self.get_outputLoc()
         else:
             req_outputLoc = self.lineEdit_Serv_OutputLoc.text()
 
+        if not (os.path.isdir(req_outputLoc) and os.access(req_outputLoc, os.W_OK)):
+            warning_msg(f"Configured output location is not writable for downloaded files. Given: \n\n'{req_outputLoc}'")
+            return
+
+        # Then, get the axes subsets for trimming / slicing
+        subsets_requests_params_str = self.__get_axes_subsets_from_group_box(self.groupBox_get_cov_axes_subsets.layout())
 
         try:
                 # a basic GetCoverage request
@@ -896,7 +896,11 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
 
             # first row (axis label)
             row = QtWidgets.QHBoxLayout()
-            label_axis = QtWidgets.QLabel(f"Dim{i + 1}: axis {axis_label} with extent:")
+
+            label_axis = QtWidgets.QLabel()
+            label_axis.setTextFormat(Qt.RichText)
+            label_axis.setText(f"Dim{i + 1}: axis <b>{axis_label}</b> with extent for trimming / slicing:")
+            label_axis.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
             row.addWidget(label_axis)
             layout_tmp.addLayout(row)
 
@@ -910,13 +914,19 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
             row = QtWidgets.QHBoxLayout()
 
             label_axis = QtWidgets.QLabel("Lower bound:")
+            label_axis.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
             textbox_lower = QtWidgets.QLineEdit()
+            textbox_lower.setFixedWidth(200)
             textbox_lower.setProperty("id", "lowerbound_" + axis_label)
             textbox_lower.setText(lower_bound)
+            textbox_lower.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
 
             lower_bound_radio = QtWidgets.QRadioButton("Slice")
             lower_bound_radio.setProperty("id", "lowerbound_" + axis_label)
             lower_bound_radio.setToolTip("Check button to slice on this axis' lower bound")
+            lower_bound_radio.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
             radio_buttons_group.addButton(lower_bound_radio)  # Add to this row's group
 
             row.addWidget(label_axis)
@@ -928,22 +938,29 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
             # third row (upper bound)
             row = QtWidgets.QHBoxLayout()
 
-            label_dash = QtWidgets.QLabel("Upper bound:")
+            label_axis = QtWidgets.QLabel("Upper bound:")
+            label_axis.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
             textbox_upper = QtWidgets.QLineEdit()
             textbox_upper.setProperty("id", "upperbound_" + axis_label)
+            textbox_upper.setFixedWidth(200)
             textbox_upper.setText(upper_bound)
+            textbox_upper.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
 
             upper_bound_radio = QtWidgets.QRadioButton("Slice")
             upper_bound_radio.setProperty("id", "upperbound_" + axis_label)
             upper_bound_radio.setToolTip("Check button to slice on this axis' upper bound")
+            upper_bound_radio.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+
             radio_buttons_group.addButton(upper_bound_radio)  # Add to the same row's group
 
-            row.addWidget(label_dash)
+            row.addWidget(label_axis)
             row.addWidget(textbox_upper)
             row.addWidget(upper_bound_radio)
 
             layout_tmp.addLayout(row)
 
+            # Store the two radio buttons per row to handle checked/unchecked events for getting slices later
             self.get_cov_axes_subsets_slicing_radios_buttons_rows.append((lower_bound_radio, upper_bound_radio))
 
             # # Connect the toggled signal to the toggle_radio function for both radio buttons
@@ -953,8 +970,7 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
             upper_bound_radio.toggled.connect(
                 lambda checked, rb=upper_bound_radio, r_index=i: self.__get_cov_toggle_axes_slice_radio(checked, rb,
                                                                                                         r_index))
-
-            # add the ruler to separate axes
+            # Finally, add the ruler to separate each row
             if i < len(axes_list) - 1:
                 line = QtWidgets.QFrame()
                 line.setFrameShape(QtWidgets.QFrame.HLine)
@@ -963,6 +979,7 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
                 layout_tmp.addWidget(line)
 
         # Then add all generated axes subsets to the layout
+        layout_tmp.addStretch()
         self.groupBox_get_cov_axes_subsets.setLayout(layout_tmp)
 
     def __get_axes_subsets_from_group_box(self, input_layout):
@@ -1026,7 +1043,6 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
         Get all text boxes and any checked radio buttons in axes subsets group box to build the subsets parameter for
         WCS GetCoverage request
         """
-        collected_widgets_tuples = []
         text_boxes = []
         radio_buttons = []
 
@@ -1082,7 +1098,7 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
 
 #---------------
         # activate the SubsetCRS setting and field
-    def enableGCov_SubCRS(self, *args):
+    def enableGCov_OutputCRS(self, *args):
         if self.radioButton_GCovOutputCRS.isChecked():
             self.radioButton_GCovOutputCRSOrig.setChecked(False)
             self.lineEdit_GCovOutputEPSG.setEnabled(True)
@@ -1090,50 +1106,10 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
 
 #---------------
         # activate the OriginalCRS setting
-    def enableGCov_SubOrig(self, *args):
+    def enableGCov_OutputCRSOrig(self, *args):
         if self.radioButton_GCovOutputCRSOrig.isChecked():
             self.radioButton_GCovOutputCRS.setChecked(False)
             self.lineEdit_GCovOutputEPSG.setEnabled(False)
-
-
-#---------------
-        # enabele scaling X-Size
-    def enableGCov_XSize(self, *args):
-        if self.radioButton_GCovXSize.isChecked():
-            self.radioButton_GCov_OutSizeOrig.setChecked(False)
-
-
-#---------------
-        # enabele scaling X-Resolution
-    def enableGCov_XResolution(self, *args):
-        if self.radioButton_GCovXRes.isChecked():
-            self.radioButton_GCov_OutSizeOrig.setChecked(False)
-
-
-#---------------
-        # enabele scaling Y-Size
-    def enableGCov_YSize(self, *args):
-        if self.radioButton_GCovYSize.isChecked():
-            self.radioButton_GCov_OutSizeOrig.setChecked(False)
-
-#---------------
-        # enabele scaling Y-Resolution
-    def enableGCov_YResolution(self, *args):
-        if self.radioButton_GCovYRes.isChecked():
-            self.radioButton_GCov_OutSizeOrig.setChecked(False)
-
-#---------------
-        # reset scaling to original size/resolution
-    def disableGCov_OutSize(self, *args):
-        if self.radioButton_GCov_OutSizeOrig.isChecked():
-            self.lineEdit_GCovXAxisLabel.setEnabled(False)
-            self.lineEdit_GCovXSize.setEnabled(False)
-            self.radioButton_GCovXSize.setChecked(False)
-            self.radioButton_GCovXRes.setChecked(False)
-            self.lineEdit_GCovYAxisLabel.setEnabled(False)
-            self.lineEdit_GCovYSize.setEnabled(False)
-            self.radioButton_GCovYSize.setChecked(False)
-            self.radioButton_GCovYRes.setChecked(False)
 
 ## ====== End of GetCoverage section ======
 

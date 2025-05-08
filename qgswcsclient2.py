@@ -78,9 +78,10 @@ class QgsWcsClient2(object):
 
     def initGui(self):
 
-        # Only used for debug (!). NOTE: disable these pydevd_pycharm lines before submitting to repository
-        import pydevd_pycharm
-        pydevd_pycharm.settrace('localhost', port=5678, stdoutToServer=True, stderrToServer=True)
+        # Only used for debug (!).
+        # NOTE: disable these pydevd_pycharm lines before submitting to repository
+        # import pydevd_pycharm
+        # pydevd_pycharm.settrace('localhost', port=5678, stdoutToServer=True, stderrToServer=True)
 
         icon_path = f'{self.plugin_dir}/icon.png'
 

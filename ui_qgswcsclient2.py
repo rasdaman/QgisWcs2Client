@@ -21,10 +21,10 @@ class Ui_QgsWcsClient2(object):
         QgsWcsClient2.resize(830, 748)
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(QgsWcsClient2)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.tabWidget_EOWcsClient2 = QtWidgets.QTabWidget(QgsWcsClient2)
-        self.tabWidget_EOWcsClient2.setEnabled(True)
-        self.tabWidget_EOWcsClient2.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
-        self.tabWidget_EOWcsClient2.setObjectName("tabWidget_EOWcsClient2")
+        self.tabWidget_WcsClient2 = QtWidgets.QTabWidget(QgsWcsClient2)
+        self.tabWidget_WcsClient2.setEnabled(True)
+        self.tabWidget_WcsClient2.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
+        self.tabWidget_WcsClient2.setObjectName("tabWidget_WcsClient2")
         self.tab_Serv = QtWidgets.QWidget()
         self.tab_Serv.setObjectName("tab_Serv")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.tab_Serv)
@@ -144,7 +144,7 @@ class Ui_QgsWcsClient2(object):
         self.horizontalLayout_17.addWidget(self.btnClose_Serv)
         self.verticalLayout_5.addLayout(self.horizontalLayout_17)
         self.verticalLayout_11.addWidget(self.groupBox)
-        self.tabWidget_EOWcsClient2.addTab(self.tab_Serv, "")
+        self.tabWidget_WcsClient2.addTab(self.tab_Serv, "")
         self.tab_GCa = QtWidgets.QWidget()
         self.tab_GCa.setEnabled(False)
         self.tab_GCa.setMouseTracking(False)
@@ -334,7 +334,7 @@ class Ui_QgsWcsClient2(object):
         self.pushButton_GCa.setObjectName("pushButton_GCa")
         self.horizontalLayout_3.addWidget(self.pushButton_GCa)
         self.verticalLayout_8.addLayout(self.horizontalLayout_3)
-        self.tabWidget_EOWcsClient2.addTab(self.tab_GCa, "")
+        self.tabWidget_WcsClient2.addTab(self.tab_GCa, "")
         self.tab_DC = QtWidgets.QWidget()
         self.tab_DC.setEnabled(False)
         self.tab_DC.setObjectName("tab_DC")
@@ -393,7 +393,7 @@ class Ui_QgsWcsClient2(object):
         self.pushButton_DC.setObjectName("pushButton_DC")
         self.horizontalLayout_4.addWidget(self.pushButton_DC)
         self.verticalLayout_7.addLayout(self.horizontalLayout_4)
-        self.tabWidget_EOWcsClient2.addTab(self.tab_DC, "")
+        self.tabWidget_WcsClient2.addTab(self.tab_DC, "")
 
         self.tab_GCov = QtWidgets.QWidget()
         self.tab_GCov.setEnabled(False)
@@ -435,96 +435,95 @@ class Ui_QgsWcsClient2(object):
         self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_16.setObjectName("horizontalLayout_16")
 
-        self.groupBox_15 = QtWidgets.QGroupBox(self.tab_GCov)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.groupBox_15.sizePolicy().hasHeightForWidth())
-        self.groupBox_15.setSizePolicy(sizePolicy)
-        self.groupBox_15.setMinimumSize(QtCore.QSize(400, 360))
-        self.groupBox_15.setBaseSize(QtCore.QSize(400, 360))
+        ### Output parameters group box on the left
+
+        self.groupBox_output_parameters_left = QtWidgets.QGroupBox(self.tab_GCov)
+        self.groupBox_output_parameters_left.setMinimumSize(QtCore.QSize(400, 360))
+        self.groupBox_output_parameters_left.setBaseSize(QtCore.QSize(400, 360))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.groupBox_15.setFont(font)
-        self.groupBox_15.setFlat(False)
-        self.groupBox_15.setObjectName("groupBox_15")
-        self.gridLayout_7 = QtWidgets.QGridLayout(self.groupBox_15)
+        self.groupBox_output_parameters_left.setFont(font)
+        self.groupBox_output_parameters_left.setFlat(False)
+        self.groupBox_output_parameters_left.setObjectName("groupBox_output_parameters_left")
+        self.gridLayout_7 = QtWidgets.QGridLayout(self.groupBox_output_parameters_left)
         self.gridLayout_7.setObjectName("gridLayout_7")
-
 
         self.formLayout = QtWidgets.QFormLayout()
         self.formLayout.setObjectName("formLayout")
 
-        self.label_GCovOutFormat = QtWidgets.QLabel(self.groupBox_15)
+        # Row 0 - Output formats
+        self.label_GCovOutFormat = QtWidgets.QLabel(self.groupBox_output_parameters_left)
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
         self.label_GCovOutFormat.setFont(font)
         self.label_GCovOutFormat.setObjectName("label_GCovOutFormat")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_GCovOutFormat)
-        self.comboBox_GCOvOutFormat = QtWidgets.QComboBox(self.groupBox_15)
+        self.comboBox_GCOvOutFormat = QtWidgets.QComboBox(self.groupBox_output_parameters_left)
         self.comboBox_GCOvOutFormat.setObjectName("comboBox_GCOvOutFormat")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.comboBox_GCOvOutFormat)
 
-        self.label_GCOvBands = QtWidgets.QLabel(self.groupBox_15)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
+        # Row 1 - Range Subsets
+        self.label_GCOvBands = QtWidgets.QLabel(self.groupBox_output_parameters_left)
         self.label_GCOvBands.setFont(font)
         self.label_GCOvBands.setObjectName("label_GCOvBands")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_GCOvBands)
-        self.lineEdit_GCovBands = QtWidgets.QLineEdit(self.groupBox_15)
+        self.lineEdit_GCovBands = QtWidgets.QLineEdit(self.groupBox_output_parameters_left)
         self.lineEdit_GCovBands.setObjectName("lineEdit_GCovBands")
         self.lineEdit_GCovBands.setPlaceholderText("e.g. Red from a RGB coverage")
 
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_GCovBands)
 
-        self.label_GCovInterpol = QtWidgets.QLabel(self.groupBox_15)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
+        # Row 2 - Interpolation
+        self.label_GCovInterpol = QtWidgets.QLabel(self.groupBox_output_parameters_left)
         self.label_GCovInterpol.setFont(font)
         self.label_GCovInterpol.setObjectName("label_GCovInterpol")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_GCovInterpol)
-        self.comboBox_GCovInterpol = QtWidgets.QComboBox(self.groupBox_15)
+
+        self.comboBox_GCovInterpol = QtWidgets.QComboBox(self.groupBox_output_parameters_left)
         self.comboBox_GCovInterpol.setObjectName("comboBox_GCovInterpol")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.comboBox_GCovInterpol)
 
+        # Row 3 - Output CRS
+        self.label_GCovOutputCRS = QtWidgets.QLabel(self.groupBox_output_parameters_left)
+        self.label_GCovOutputCRS.setFont(font)
+        self.label_GCovOutputCRS.setObjectName("label_GCovOutputCRS")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_GCovOutputCRS)
+
         # Output CRS group box
-        self.groupBox_17 = QtWidgets.QGroupBox()
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.groupBox_17)
+        self.groupBox_output_crs = QtWidgets.QGroupBox()
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.groupBox_output_crs)
 
-        self.groupBox_17.setMinimumSize(QtCore.QSize(370, 100))
-        self.groupBox_17.setObjectName("groupBox_17")
+        self.groupBox_output_crs.setMinimumSize(QtCore.QSize(370, 100))
+        self.groupBox_output_crs.setObjectName("groupBox_output_crs")
 
-        self.radioButton_GCovOutputCRSOrig = QtWidgets.QRadioButton(self.groupBox_17)
+        self.radioButton_GCovOutputCRSOrig = QtWidgets.QRadioButton(self.groupBox_output_crs)
         self.radioButton_GCovOutputCRSOrig.setGeometry(QtCore.QRect(54, 23, 116, 22))
         self.radioButton_GCovOutputCRSOrig.setChecked(True)
         self.radioButton_GCovOutputCRSOrig.setObjectName("radioButton_GCovOutputCRSOrig")
-        self.radioButton_GCovOutputCRS = QtWidgets.QRadioButton(self.groupBox_17)
+        self.radioButton_GCovOutputCRS = QtWidgets.QRadioButton(self.groupBox_output_crs)
         self.radioButton_GCovOutputCRS.setGeometry(QtCore.QRect(185, 23, 81, 22))
         self.radioButton_GCovOutputCRS.setObjectName("radioButton_GCovOutputCRS")
 
-        self.lineEdit_GCovOutputEPSG = QtWidgets.QLineEdit(self.groupBox_17)
+        self.lineEdit_GCovOutputEPSG = QtWidgets.QLineEdit(self.groupBox_output_crs)
         self.lineEdit_GCovOutputEPSG.setEnabled(False)
         self.lineEdit_GCovOutputEPSG.setToolTip("Project the 2D geo-referenced output to the target EPSG:code CRS")
         self.lineEdit_GCovOutputEPSG.setPlaceholderText("e.g. 3857")
         self.lineEdit_GCovOutputEPSG.setGeometry(QtCore.QRect(185, 71, 70, 27))
         self.lineEdit_GCovOutputEPSG.setObjectName("lineEdit_GCovOutputEPSG")
 
-        self.label_GCovOutputCRS = QtWidgets.QLabel(self.groupBox_17)
-        self.label_GCovOutputCRS.setGeometry(QtCore.QRect(187, 51, 66, 17))
-        self.label_GCovOutputCRS.setObjectName("label_GCovOutputCRS")
-
-
-        # Right column
+        self.label_GCovOutputCRS_epsg_code = QtWidgets.QLabel(self.groupBox_output_crs)
+        self.label_GCovOutputCRS_epsg_code.setGeometry(QtCore.QRect(187, 51, 66, 17))
+        self.label_GCovOutputCRS_epsg_code.setObjectName("label_GCovOutputCRS_epsg_code")
         self.gridLayout_7.addLayout(self.formLayout, 1, 0, 1, 1)
-        self.horizontalLayout_16.addWidget(self.groupBox_15)
+        self.horizontalLayout_16.addWidget(self.groupBox_output_parameters_left)
+
+        # Axes subsets group box on the right
         self.gridLayout_8 = QtWidgets.QGridLayout()
         self.gridLayout_8.setObjectName("gridLayout_8")
 
-        ### NOTE: Axes subsets generated dynamically based on the selected coverage (!)
+        ### NOTE: Axes subsets in GetCoverage tab generated dynamically in source code file qgswcsclient2dialog.py based on the selected coverage (!)
         self.groupBox_get_cov_axes_subsets = QtWidgets.QGroupBox()
         self.groupBox_get_cov_axes_subsets.setMinimumSize(QtCore.QSize(400, 360))
         self.gridLayout_8.addWidget(self.groupBox_get_cov_axes_subsets, 0, 0, 1, 1)
@@ -536,6 +535,7 @@ class Ui_QgsWcsClient2(object):
         self.verticalLayout_25.addLayout(self.horizontalLayout_16)
         self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_15.setObjectName("horizontalLayout_15")
+
         spacerItem17 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_15.addItem(spacerItem17)
         self.btnClose_GCov = QtWidgets.QPushButton(self.tab_GCov)
@@ -548,6 +548,7 @@ class Ui_QgsWcsClient2(object):
         sizePolicy.setHeightForWidth(self.pushButton_GCov.sizePolicy().hasHeightForWidth())
         self.pushButton_GCov.setSizePolicy(sizePolicy)
         self.pushButton_GCov.setMinimumSize(QtCore.QSize(190, 40))
+
         font = QtGui.QFont()
         font.setBold(True)
         font.setWeight(75)
@@ -557,7 +558,7 @@ class Ui_QgsWcsClient2(object):
         self.verticalLayout_25.addLayout(self.horizontalLayout_15)
         self.verticalLayout_26.addLayout(self.verticalLayout_25)
         self.verticalLayout_27.addLayout(self.verticalLayout_26)
-        self.tabWidget_EOWcsClient2.addTab(self.tab_GCov, "")
+        self.tabWidget_WcsClient2.addTab(self.tab_GCov, "")
         self.tab_Help = QtWidgets.QWidget()
         self.tab_Help.setObjectName("tab_Help")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.tab_Help)
@@ -573,7 +574,7 @@ class Ui_QgsWcsClient2(object):
         self.btnClose_Help.setObjectName("btnClose_Help")
         self.horizontalLayout_18.addWidget(self.btnClose_Help)
         self.verticalLayout_3.addLayout(self.horizontalLayout_18)
-        self.tabWidget_EOWcsClient2.addTab(self.tab_Help, "")
+        self.tabWidget_WcsClient2.addTab(self.tab_Help, "")
         self.tab_About = QtWidgets.QWidget()
         self.tab_About.setObjectName("tab_About")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.tab_About)
@@ -589,11 +590,11 @@ class Ui_QgsWcsClient2(object):
         self.btnClose_About.setObjectName("btnClose_About")
         self.horizontalLayout_19.addWidget(self.btnClose_About)
         self.verticalLayout.addLayout(self.horizontalLayout_19)
-        self.tabWidget_EOWcsClient2.addTab(self.tab_About, "")
-        self.verticalLayout_6.addWidget(self.tabWidget_EOWcsClient2)
+        self.tabWidget_WcsClient2.addTab(self.tab_About, "")
+        self.verticalLayout_6.addWidget(self.tabWidget_WcsClient2)
 
         self.retranslateUi(QgsWcsClient2)
-        self.tabWidget_EOWcsClient2.setCurrentIndex(0)
+        self.tabWidget_WcsClient2.setCurrentIndex(0)
         self.btnClose_Serv.clicked.connect(QgsWcsClient2.close) # type: ignore
         self.btnClose_GCa.clicked.connect(QgsWcsClient2.close) # type: ignore
         self.checkBox_GCa_ActiveDate.stateChanged['int'].connect(QgsWcsClient2.updateDateChanged) # type: ignore
@@ -610,8 +611,8 @@ class Ui_QgsWcsClient2(object):
         self.btnConnectServer_Serv.clicked.connect(QgsWcsClient2.connectServer) # type: ignore
         self.toolButton_Serv_OutputLoc.clicked.connect(QgsWcsClient2.get_outputLoc)  # type: ignore
 
-        self.radioButton_GCovOutputCRSOrig.clicked.connect(QgsWcsClient2.enableGCov_SubOrig) # type: ignore
-        self.radioButton_GCovOutputCRS.clicked.connect(QgsWcsClient2.enableGCov_SubCRS) # type: ignore
+        self.radioButton_GCovOutputCRSOrig.clicked.connect(QgsWcsClient2.enableGCov_OutputCRSOrig) # type: ignore
+        self.radioButton_GCovOutputCRS.clicked.connect(QgsWcsClient2.enableGCov_OutputCRS) # type: ignore
 
         self.btnImport_QgsWcsUrls.clicked.connect(QgsWcsClient2.importQgis_ServList) # type: ignore
         self.btnSort_Serv.clicked.connect(QgsWcsClient2.sortServerListing) # type: ignore
@@ -668,7 +669,7 @@ class Ui_QgsWcsClient2(object):
         self.groupBox.setTitle(_translate("QgsWcsClient2", "Set local storage path  (only required for downloading output / error file in GetCoverage tab): "))
         self.toolButton_Serv_OutputLoc.setText(_translate("QgsWcsClient2", "..."))
         self.btnClose_Serv.setText(_translate("QgsWcsClient2", "Close"))
-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_Serv), _translate("QgsWcsClient2", "Server"))
+        self.tabWidget_WcsClient2.setTabText(self.tabWidget_WcsClient2.indexOf(self.tab_Serv), _translate("QgsWcsClient2", "Server"))
         self.GroupBox_4.setTitle(_translate("QgsWcsClient2", "Capabilities Document - Select Sections:"))
         self.label.setText(_translate("QgsWcsClient2", "( Note:  some WCS Servers might not respect these section parameters )"))
         self.checkBox_GCaDaSerSum.setText(_translate("QgsWcsClient2", "DatasetSeriesSummary"))
@@ -694,7 +695,7 @@ class Ui_QgsWcsClient2(object):
         self.checkBox_GCaFull.setText(_translate("QgsWcsClient2", "View GetCapabilities XML  "))
         self.btnClose_GCa.setText(_translate("QgsWcsClient2", "Close"))
         self.pushButton_GCa.setText(_translate("QgsWcsClient2", "GetCapabilities"))
-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_GCa), _translate("QgsWcsClient2", "GetCapabilities"))
+        self.tabWidget_WcsClient2.setTabText(self.tabWidget_WcsClient2.indexOf(self.tab_GCa), _translate("QgsWcsClient2", "GetCapabilities"))
         self.label_DCInfo1.setText(_translate("QgsWcsClient2", "Describe a Coverage:"))
         self.label_DCInfo2.setText(_translate("QgsWcsClient2", "Select the CoverageID of interest, then press the DescribeCoverage button."))
         self.label_4.setText(_translate("QgsWcsClient2", "Selections from GetCapabilities Result:  Select one item to be used in a DescribeCoverage Requests:"))
@@ -702,25 +703,22 @@ class Ui_QgsWcsClient2(object):
         self.treeWidget_DC.headerItem().setText(0, _translate("QgsWcsClient2", "CoverageIDs"))
         self.btnClose_DC.setText(_translate("QgsWcsClient2", "Close"))
         self.pushButton_DC.setText(_translate("QgsWcsClient2", "DescribeCoverage"))
-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_DC), _translate("QgsWcsClient2", "DescribeCoverage"))
+        self.tabWidget_WcsClient2.setTabText(self.tabWidget_WcsClient2.indexOf(self.tab_DC), _translate("QgsWcsClient2", "DescribeCoverage"))
 
         self.label_GCovInfo1.setText(_translate("QgsWcsClient2", "GetCoverage:   download a Coverage "))
         self.label_GCOvInfo2.setText(_translate("QgsWcsClient2", "Select the ID of interest (and choose optional parameters), then press the GetCoverage button"))
         self.treeWidget_GCov.setSortingEnabled(True)
         self.treeWidget_GCov.headerItem().setText(0, _translate("QgsWcsClient2", "CoverageID"))
-        self.groupBox_15.setTitle(_translate("QgsWcsClient2", "Output Parameters:"))
+        self.groupBox_output_parameters_left.setTitle(_translate("QgsWcsClient2", "Output Parameters:"))
 
         self.label_GCOvBands.setText(_translate("QgsWcsClient2", "Ranges Subsets:"))
-        self.label_GCovInterpol.setText(_translate("QgsWcsClient2", "Interpolation: "))
-        self.comboBox_GCovInterpol.setItemText(0, _translate("QgsWcsClient2", "nearest (default)"))
-        self.comboBox_GCovInterpol.setItemText(1, _translate("QgsWcsClient2", "bilinear"))
-        self.comboBox_GCovInterpol.setItemText(2, _translate("QgsWcsClient2", "average (slow)"))
         self.label_GCovOutFormat.setText(_translate("QgsWcsClient2", "Output Format:"))
+        self.label_GCovInterpol.setText(_translate("QgsWcsClient2", "Interpolation: "))
+        self.label_GCovOutputCRS.setText(_translate("QgsWcsClient2", "Output CRS: "))
 
-        self.groupBox_17.setTitle(_translate("QgsWcsClient2", "Output CRS:"))
         self.radioButton_GCovOutputCRSOrig.setText(_translate("QgsWcsClient2", "Original"))
         self.radioButton_GCovOutputCRS.setText(_translate("QgsWcsClient2", "CRS"))
-        self.label_GCovOutputCRS.setText(_translate("QgsWcsClient2", "EPSG No.:"))
+        self.label_GCovOutputCRS_epsg_code.setText(_translate("QgsWcsClient2", "EPSG No.:"))
 
 
         # Second right column
@@ -728,7 +726,7 @@ class Ui_QgsWcsClient2(object):
 
         self.btnClose_GCov.setText(_translate("QgsWcsClient2", "Close"))
         self.pushButton_GCov.setText(_translate("QgsWcsClient2", "GetCoverage"))
-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_GCov), _translate("QgsWcsClient2", "GetCoverage"))
+        self.tabWidget_WcsClient2.setTabText(self.tabWidget_WcsClient2.indexOf(self.tab_GCov), _translate("QgsWcsClient2", "GetCoverage"))
 
         # Help tab
         with open(self.plugin_dir + os.path.sep + "help.html") as f:
@@ -736,7 +734,7 @@ class Ui_QgsWcsClient2(object):
 
         self.textEdit_tab_help_content.setHtml(help_content)
         self.btnClose_Help.setText(_translate("QgsWcsClient2", "Close"))
-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_Help), _translate("QgsWcsClient2", "Help"))
+        self.tabWidget_WcsClient2.setTabText(self.tabWidget_WcsClient2.indexOf(self.tab_Help), _translate("QgsWcsClient2", "Help"))
 
         # About tab
         with open(self.plugin_dir + os.path.sep + "about.html") as f:
@@ -744,4 +742,4 @@ class Ui_QgsWcsClient2(object):
 
         self.textEdit_tab_about_content.setHtml(about_content)
         self.btnClose_About.setText(_translate("QgsWcsClient2", "Close"))
-        self.tabWidget_EOWcsClient2.setTabText(self.tabWidget_EOWcsClient2.indexOf(self.tab_About), _translate("QgsWcsClient2", "About"))
+        self.tabWidget_WcsClient2.setTabText(self.tabWidget_WcsClient2.indexOf(self.tab_About), _translate("QgsWcsClient2", "About"))
