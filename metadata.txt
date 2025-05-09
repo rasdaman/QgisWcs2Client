@@ -21,9 +21,9 @@ about = The WCS 2.0 allows to send GetCapabilities, DescribeCoverage and GetCove
 # tags are comma separated with spaces allowed
 tags = raster, wcs, wcs 2.0, webservice, ogc, download service, subsetting, AreaOfInterest, TimeOfInterest, online-access, time-series, rasdaman
 
-homepage=https://github.com/rasdaman/QgisWcs2Client
-tracker=https://github.com/rasdaman/QgisWcs2Client/issues
-repository=https://github.com/rasdaman/QgisWcs2Client
+homepage=https://doc.rasdaman.org/11_cheatsheets.html#wcs-plugin
+tracker=https://github.com/rasdaman/QgisWcs2Plugin/issues
+repository=https://github.com/rasdaman/QgisWcs2Plugin
 icon=icon.png
 experimental=False
 deprecated=False
