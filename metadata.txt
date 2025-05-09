@@ -33,7 +33,7 @@ changelog=
     * Added support for basic header authentication
     * Simplified GetCapabilities tab
     * Improved functionalities in GetCoverage tab
-    * Moved content of help and about as .html pages out of the python code
+    * Moved content of help and about to separate HTML pages out of the python code
     * Removed dependency on lxml python package
   0.5
     * updated with support for Python 3.12
