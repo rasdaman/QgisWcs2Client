@@ -338,10 +338,10 @@ class QgsWcsClient2Dialog(QDialog, Ui_QgsWcsClient2):
             self.checkBox_GCaFull.setChecked(False)
 
         url_base = selected_url
-            # request only  &sections=ServiceMetadata -- this makes if faster (especially on large sites),
-            # but some Servers don't provide/accept it, so there is a fallback implemented
-        url_ext = "?service=WCS&request=GetCapabilities"
-        myUrl = url_base + url_ext
+        if not url_base.endswith("?"):
+            url_base += "?"
+
+        myUrl = url_base + "service=WCS&request=GetCapabilities"
 
         msg = "Your choice:    "+selected_serv+"\n"
         msg = msg+"URL:                   "+selected_url+"\n"
