@@ -35,6 +35,7 @@ changelog=
     * Improved functionalities in GetCoverage tab
     * Moved content of help and about to separate HTML pages out of the python code
     * Removed dependency on lxml python package
+    * New more appropriate icon as a cube with a cutout from it
   0.5
     * updated with support for Python 3.12
   0.4
